@@ -1,0 +1,626 @@
+/* ==========================================================================
+   AUTOFORUM × Mercedes-Maybach atelier page
+   Estetyka: kremowe tło #e6e0d7 (ivory), ciemny tekst, brązowo-złoty akcent.
+   Tylko Corporate A Pro + Inter. Brak italica.
+   ========================================================================== */
+
+.mh-page {
+  background: #e6e0d7;
+  color: #1a1a1a;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.mh-page h1,
+.mh-page h2,
+.mh-page h3 {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+}
+
+/* color palette helpers */
+.mh-bronze { color: #8b6f3f; }
+.mh-deep { color: #0a0a0a; }
+
+/* ----- Topbar overrides --------------------------------------------------- */
+
+.mh-page .topbar {
+  color: #1a1a1a;
+}
+
+.mh-page .topbar a {
+  color: #1a1a1a;
+}
+
+/* ----- Hero --------------------------------------------------------------- */
+
+.mh-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 760px;
+  width: 100%;
+  overflow: hidden;
+  background: #e6e0d7;
+}
+
+.mh-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.mh-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.02) saturate(0.95);
+  animation: mhKenBurns 22s ease-in-out infinite alternate;
+}
+
+@keyframes mhKenBurns {
+  0%   { transform: scale(1.04); }
+  100% { transform: scale(1.16) translateX(-2%); }
+}
+
+.mh-hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(230,224,215,0.92) 0%, rgba(230,224,215,0.55) 30%, rgba(230,224,215,0.1) 60%, rgba(230,224,215,0) 100%),
+    linear-gradient(180deg, rgba(230,224,215,0) 0%, rgba(230,224,215,0) 55%, rgba(230,224,215,1) 100%);
+  z-index: 1;
+}
+
+.mh-hero__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 8vw;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.mh-hero__crest {
+  width: 80px;
+  height: auto;
+  margin-bottom: 2.4rem;
+  opacity: 0.95;
+}
+
+.mh-hero__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: #8b6f3f;
+  margin-bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mh-hero__eyebrow::before,
+.mh-hero__eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.65;
+}
+
+.mh-hero__title {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: clamp(2.8rem, 6.5vw, 6.4rem);
+  line-height: 1.04;
+  letter-spacing: 0.005em;
+  color: #0a0a0a;
+  max-width: 18ch;
+  margin-bottom: 2rem;
+}
+
+.mh-hero__title b {
+  font-weight: 400;
+  color: #8b6f3f;
+}
+
+.mh-hero__sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 52ch;
+  opacity: 0.78;
+  margin-bottom: 3rem;
+  letter-spacing: 0.01em;
+}
+
+.mh-hero__cta {
+  display: flex;
+  gap: 1.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mh-hero__scroll {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.mh-hero__scroll::after {
+  content: '';
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(180deg, #8b6f3f, transparent);
+  animation: mhScroll 2.6s ease-in-out infinite;
+  transform-origin: top;
+}
+
+@keyframes mhScroll {
+  0%, 100% { transform: scaleY(0); opacity: 0.3; }
+  40% { transform: scaleY(1); opacity: 1; }
+  60% { transform: scaleY(1); opacity: 1; transform-origin: bottom; }
+  90% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+}
+
+/* ----- Quote ribbon ------------------------------------------------------- */
+
+.mh-quote {
+  padding: 16vh 8vw;
+  text-align: center;
+  background: #dcd2c2;
+  border-top: 1px solid rgba(139, 111, 63, 0.15);
+  border-bottom: 1px solid rgba(139, 111, 63, 0.15);
+}
+
+.mh-quote__mark {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: 5rem;
+  color: #8b6f3f;
+  line-height: 0.4;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+.mh-quote__text {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: clamp(1.6rem, 3.2vw, 2.8rem);
+  line-height: 1.3;
+  color: #0a0a0a;
+  max-width: 30ch;
+  margin: 0 auto 2.4rem;
+  letter-spacing: -0.005em;
+}
+
+.mh-quote__attr {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: #8b6f3f;
+}
+
+/* ----- Section base ------------------------------------------------------- */
+
+.mh-section {
+  padding: 14vh 8vw;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.mh-section__head {
+  text-align: center;
+  margin-bottom: 7rem;
+}
+
+.mh-section__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: #8b6f3f;
+  margin-bottom: 1.6rem;
+  display: inline-block;
+}
+
+.mh-section__title {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+  line-height: 1.1;
+  color: #0a0a0a;
+  max-width: 22ch;
+  margin: 0 auto;
+  letter-spacing: -0.005em;
+}
+
+.mh-section__title b {
+  font-weight: 400;
+  color: #8b6f3f;
+}
+
+/* ----- Models showcase ---------------------------------------------------- */
+
+.mh-models {
+  display: flex;
+  flex-direction: column;
+  gap: 12vh;
+}
+
+.mh-model {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 8vw;
+  align-items: center;
+}
+
+.mh-model:nth-child(even) {
+  grid-template-columns: 1fr 1.2fr;
+  direction: rtl;
+}
+
+.mh-model:nth-child(even) > * {
+  direction: ltr;
+}
+
+.mh-model__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #cfc3ad;
+}
+
+.mh-model__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mh-model:hover .mh-model__img {
+  transform: scale(1.05);
+}
+
+.mh-model__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(139, 111, 63, 0.22);
+  pointer-events: none;
+}
+
+.mh-model__copy h3 {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.1;
+  color: #0a0a0a;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.005em;
+}
+
+.mh-model__copy h3 b {
+  font-weight: 400;
+  color: #8b6f3f;
+}
+
+.mh-model__series {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: #8b6f3f;
+  margin-bottom: 1.4rem;
+  display: block;
+}
+
+.mh-model__copy p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  opacity: 0.78;
+  max-width: 44ch;
+  margin-bottom: 2.2rem;
+}
+
+.mh-model__specs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem;
+  margin-bottom: 2.4rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid rgba(139, 111, 63, 0.25);
+}
+
+.mh-spec__label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.mh-spec__value {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: 1.7rem;
+  color: #0a0a0a;
+  line-height: 1;
+}
+
+.mh-spec__value sup {
+  color: #8b6f3f;
+  font-size: 1rem;
+  margin-left: 0.2rem;
+  vertical-align: super;
+}
+
+/* ----- Bespoke section (darker cream block) ------------------------------- */
+
+.mh-bespoke {
+  background: #d4c9b5;
+  padding: 18vh 8vw;
+  border-top: 1px solid rgba(139, 111, 63, 0.18);
+  border-bottom: 1px solid rgba(139, 111, 63, 0.18);
+}
+
+.mh-bespoke__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6vw;
+  align-items: center;
+}
+
+.mh-bespoke__copy h2 {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.15;
+  color: #0a0a0a;
+  margin-bottom: 2rem;
+  max-width: 16ch;
+  letter-spacing: -0.005em;
+}
+
+.mh-bespoke__copy h2 b {
+  font-weight: 400;
+  color: #8b6f3f;
+}
+
+.mh-bespoke__copy p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  opacity: 0.8;
+  max-width: 48ch;
+  margin-bottom: 1.2rem;
+}
+
+.mh-bespoke__list {
+  list-style: none;
+  margin-top: 2.4rem;
+  padding-top: 2.4rem;
+  border-top: 1px solid rgba(139, 111, 63, 0.25);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem 2rem;
+}
+
+.mh-bespoke__list li {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.mh-bespoke__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 1px;
+  background: #8b6f3f;
+}
+
+.mh-bespoke__media {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #cfc3ad;
+}
+
+.mh-bespoke__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mh-bespoke__media::after {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(139, 111, 63, 0.45);
+  pointer-events: none;
+}
+
+/* ----- Visit section ------------------------------------------------------ */
+
+.mh-visit {
+  padding: 20vh 8vw;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(139, 111, 63, 0.1) 0%, transparent 60%),
+    #e6e0d7;
+  text-align: center;
+}
+
+.mh-visit h2 {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  line-height: 1.1;
+  color: #0a0a0a;
+  max-width: 22ch;
+  margin: 0 auto 2rem;
+  letter-spacing: -0.005em;
+}
+
+.mh-visit h2 b {
+  font-weight: 400;
+  color: #8b6f3f;
+}
+
+.mh-visit p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 56ch;
+  margin: 0 auto 3rem;
+  opacity: 0.78;
+}
+
+.mh-visit__address {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: 1.2rem;
+  color: #8b6f3f;
+  margin-bottom: 3rem;
+  letter-spacing: 0.05em;
+}
+
+/* ----- Footer ------------------------------------------------------------- */
+
+.mh-footer {
+  background: #1a1a1a;
+  color: rgba(230, 224, 215, 0.65);
+  padding: 8vh 8vw 4vh;
+  border-top: 1px solid rgba(139, 111, 63, 0.2);
+}
+
+.mh-footer__top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 3rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-bottom: 4vh;
+  border-bottom: 1px solid rgba(139, 111, 63, 0.15);
+}
+
+.mh-footer__brand .af-logo {
+  margin-bottom: 1.2rem;
+}
+
+.mh-footer__brand p {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 32ch;
+  opacity: 0.75;
+}
+
+.mh-footer h4 {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #c8a26b;
+  margin-bottom: 1.2rem;
+}
+
+.mh-footer ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+}
+
+.mh-footer ul a {
+  opacity: 0.7;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.mh-footer ul a:hover {
+  opacity: 1;
+  color: #c8a26b;
+}
+
+.mh-footer__bottom {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-top: 3vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(230, 224, 215, 0.45);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ----- Responsive --------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .mh-model,
+  .mh-model:nth-child(even) {
+    grid-template-columns: 1fr;
+    direction: ltr;
+    gap: 3rem;
+  }
+
+  .mh-bespoke__inner {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .mh-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .mh-hero__content {
+    padding: 0 22px;
+  }
+
+  .mh-section,
+  .mh-bespoke,
+  .mh-visit,
+  .mh-footer {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .mh-bespoke__list {
+    grid-template-columns: 1fr;
+  }
+
+  .mh-footer__top {
+    grid-template-columns: 1fr;
+  }
+
+  .mh-model__specs {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

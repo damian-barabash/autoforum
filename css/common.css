@@ -1,0 +1,411 @@
+/* ==========================================================================
+   AUTOFORUM Demo — common styles
+   Tylko dwa fonty: Corporate A Pro Regular + Inter Regular (lokalne).
+   Brak italica, brak innych wag.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Corporate A';
+  src: url('../assets/fonts/CorporateAPro-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/Inter-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.55;
+  color: #0a0a0a;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection {
+  background: #0a0a0a;
+  color: #fff;
+}
+
+/* Italic in classes is forbidden — accents come from size, spacing or color. */
+em, i {
+  font-style: normal;
+}
+
+/* ----- AUTOFORUM dealer logo (using PNG asset) ---------------------------- */
+
+.af-logo {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  line-height: 0;
+}
+
+.af-logo__img {
+  height: 100%;
+  width: auto;
+  display: block;
+  /* original is dark text — base case (light backgrounds, scrolled topbar) */
+}
+
+/* On dark backgrounds — invert dark logo to white */
+.af-logo--light .af-logo__img,
+.topbar:not(.scrolled) .af-logo--adaptive .af-logo__img {
+  filter: brightness(0) invert(1);
+}
+
+/* ----- Top navbar (Mercedes / Maybach pages) ------------------------------ */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 48px;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease;
+}
+
+.topbar.scrolled {
+  padding: 14px 48px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.topbar-cream.scrolled {
+  background: rgba(230, 224, 215, 0.92);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+}
+
+.topbar-left,
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.topbar-nav a {
+  position: relative;
+  padding: 4px 0;
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
+}
+
+.topbar-nav a:hover {
+  opacity: 1;
+}
+
+.topbar-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.35s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.topbar-nav a:hover::after {
+  width: 100%;
+}
+
+.topbar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.topbar-back:hover {
+  opacity: 1;
+  transform: translateX(-3px);
+}
+
+/* ----- Page reveal -------------------------------------------------------- */
+
+.page-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: #fff;
+  transform-origin: top;
+  animation: pageReveal 1.4s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+}
+
+.page-reveal--cream {
+  background: #e6e0d7;
+}
+
+@keyframes pageReveal {
+  0% {
+    transform: scaleY(1);
+  }
+  60% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+.page-reveal__mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: markFade 1s ease forwards;
+}
+
+.page-reveal__mark img {
+  width: 110px;
+  height: auto;
+  display: block;
+}
+
+@keyframes markFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  85% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+  }
+}
+
+/* Stagger reveal for hero content after the curtain leaves */
+
+.intro-stagger > * {
+  opacity: 0;
+  transform: translateY(28px);
+  animation: introIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.intro-stagger > *:nth-child(1) { animation-delay: 1.1s; }
+.intro-stagger > *:nth-child(2) { animation-delay: 1.25s; }
+.intro-stagger > *:nth-child(3) { animation-delay: 1.4s; }
+.intro-stagger > *:nth-child(4) { animation-delay: 1.55s; }
+.intro-stagger > *:nth-child(5) { animation-delay: 1.7s; }
+.intro-stagger > *:nth-child(6) { animation-delay: 1.85s; }
+
+@keyframes introIn {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reveal-on-scroll utility */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ----- Buttons ------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 14px 26px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.4s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: currentColor;
+}
+
+.btn:hover .btn-label {
+  color: var(--btn-hover-color, #fff);
+}
+
+.btn-arrow {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.4s ease;
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn--solid {
+  background: #0a0a0a;
+  color: #fff;
+  border-color: #0a0a0a;
+}
+
+.btn--solid:hover {
+  background: transparent;
+  color: #0a0a0a;
+}
+
+.btn--bronze {
+  border-color: #8b6f3f;
+  color: #8b6f3f;
+}
+
+.btn--bronze:hover {
+  background: #8b6f3f;
+  color: #e6e0d7;
+}
+
+.btn--dark {
+  border-color: #1a1a1a;
+  color: #1a1a1a;
+}
+
+.btn--dark:hover {
+  background: #1a1a1a;
+  color: #e6e0d7;
+}
+
+/* Helpers */
+
+.eyebrow {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+  opacity: 0.7;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 16px 22px;
+  }
+
+  .topbar.scrolled {
+    padding: 10px 22px;
+  }
+
+  .topbar-nav {
+    display: none;
+  }
+
+  .container {
+    padding: 0 22px;
+  }
+}

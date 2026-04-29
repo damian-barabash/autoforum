@@ -1,0 +1,324 @@
+/* ==========================================================================
+   AUTOFORUM Landing — split screen Mercedes-Benz / Mercedes-Maybach
+   Lewa: jasna (białe / Mercedes), prawa: kremowa #e6e0d7 (Maybach)
+   ========================================================================== */
+
+.landing {
+  height: 100vh;
+  background: #fff;
+  color: #0a0a0a;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ----- Header ------------------------------------------------------------- */
+
+.landing-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 48px;
+  pointer-events: none;
+}
+
+.landing-header > * {
+  pointer-events: auto;
+}
+
+.landing-header__meta {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  text-align: right;
+  line-height: 1.6;
+}
+
+.landing-header__meta b {
+  font-weight: 400;
+  opacity: 1;
+}
+
+/* ----- Split panels ------------------------------------------------------- */
+
+.split {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.half {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.9s cubic-bezier(0.77, 0, 0.175, 1),
+              filter 0.6s ease;
+}
+
+.half--mb {
+  background: #f3f3f3;
+  color: #0a0a0a;
+}
+
+.half--mh {
+  background: #e6e0d7;
+  color: #1a1a1a;
+}
+
+.half-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  background-size: cover;
+  background-position: center;
+}
+
+.half--mb .half-bg {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 60%, rgba(255,255,255,0.85) 100%),
+    url('https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1920&q=85');
+}
+
+.half--mh .half-bg {
+  background-image:
+    linear-gradient(180deg, rgba(230,224,215,0.6) 0%, rgba(230,224,215,0.2) 60%, rgba(230,224,215,0.92) 100%),
+    url('https://cdn.auto-swiat.pl/1/Xhak9lBaHR0cHM6Ly9vY2RuLmV1L3B1bHNjbXMvTURBXy80ZmU3YmJhOTFhMWUzODcyYzlhYTdmNTEwZGQyYjY5Ni5qcGeSlQPNAXHNAb_NBcjNA0GTBc0GzM0D1N4AAqEwB6ExBA');
+}
+
+.half-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1),
+              opacity 0.5s ease;
+}
+
+.half-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.half-logo__img {
+  display: block;
+  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.12));
+}
+
+.half--mb .half-logo__img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.half--mh .half-logo__img {
+  width: 200px;
+  height: auto;
+}
+
+.half-brand {
+  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+}
+
+.half--mh .half-brand {
+  letter-spacing: 0.5em;
+}
+
+.half-meta {
+  position: absolute;
+  bottom: 9vh;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  transition: opacity 0.5s ease, transform 0.6s ease;
+}
+
+.half-meta b {
+  font-weight: 400;
+  opacity: 1;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+}
+
+.half-cta {
+  position: absolute;
+  bottom: 18vh;
+  left: 50%;
+  transform: translate(-50%, 30px);
+  z-index: 5;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 12px 22px;
+  border: 1px solid currentColor;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* ----- Hover behaviour ---------------------------------------------------- */
+
+.split:hover .half:not(:hover) {
+  flex: 0.85;
+  filter: brightness(0.92) saturate(0.85);
+}
+
+.half:hover .half-bg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.half:hover .half-content {
+  transform: translateY(-7vh);
+}
+
+.half:hover .half-meta {
+  opacity: 0.85;
+  transform: translateY(-12px);
+}
+
+.half:hover .half-cta {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ----- Center divider ----------------------------------------------------- */
+
+.divider {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 70vh;
+  z-index: 6;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(120,120,120,0.4) 30%, rgba(120,120,120,0.4) 70%, transparent 100%);
+  transition: opacity 0.5s ease;
+}
+
+.split:hover .divider {
+  opacity: 0.3;
+}
+
+/* ----- Footer strip ------------------------------------------------------- */
+
+.landing-footer {
+  position: fixed;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 48px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  pointer-events: none;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.landing-footer .ft-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ----- Click transition --------------------------------------------------- */
+
+.half--clicked {
+  flex: 1.6 !important;
+  z-index: 50;
+}
+
+.half--clicked + .divider,
+.half--clicked ~ .half {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.half--clicked .half-content {
+  transform: translateY(-5vh) scale(2.2);
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1),
+              opacity 1s ease 0.2s;
+}
+
+.half--clicked .half-bg {
+  opacity: 1;
+  transform: scale(1.15);
+  transition: opacity 0.6s ease, transform 1.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ----- Responsive --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .landing-header {
+    padding: 18px 22px;
+  }
+
+  .split {
+    flex-direction: column;
+  }
+
+  .half {
+    flex: 1;
+  }
+
+  .half--mb .half-logo__img { width: 90px; height: 90px; }
+  .half--mh .half-logo__img { width: 130px; }
+
+  .divider {
+    width: 70vw;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(120,120,120,0.4) 30%, rgba(120,120,120,0.4) 70%, transparent 100%);
+  }
+
+  .split:hover .half:not(:hover) {
+    flex: 1;
+    filter: none;
+  }
+
+  .landing-footer {
+    padding: 0 22px;
+    font-size: 9px;
+  }
+
+  .landing-footer .ft-center {
+    display: none;
+  }
+}
