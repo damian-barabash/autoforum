@@ -759,10 +759,13 @@
     padding: 1.6rem 1.8rem 1.8rem;
   }
 
-  /* wyższa mapa na telefonie — karta adresu i pin się nie nakładają */
+  /* wyższa mapa na telefonie — karta adresu i pin się nie nakładają.
+     height jawny (nie min-height): iframe ma height:100%, a % rozwiązuje
+     się tylko względem OKREŚLONEJ wysokości rodzica — min-height nie wystarcza
+     (mapa zapadała się do ~150px → wyglądała jakby się nie ładowała) */
   .mb-map__frame {
     aspect-ratio: auto;
-    min-height: 620px;
+    height: 620px;
   }
 
   .mb-map__pin {
