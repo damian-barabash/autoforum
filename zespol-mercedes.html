@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Autoforum Warszawa · Nasz zespół — Mercedes-Benz</title>
+  <meta name="description" content="Zespół salonu Mercedes-Benz Autoforum w Warszawie. Doradcy, jazdy próbne, serwis autoryzowany." />
+
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/mercedes.css" />
+</head>
+<body class="mb-page">
+
+  <!-- Page reveal curtain -->
+  <div class="page-reveal" aria-hidden="true">
+    <div class="page-reveal__mark">
+      <img src="assets/img/Mercedes-Logo.svg.png" alt="" />
+    </div>
+  </div>
+
+  <!-- ============ Top navigation ============ -->
+  <header class="topbar topbar--solid">
+    <div class="topbar-left">
+      <a class="af-logo" href="index.html">
+        <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" />
+      </a>
+    </div>
+
+    <nav class="topbar-nav" aria-label="Menu">
+      <a href="mercedes.html#models">Modele</a>
+      <a href="mercedes.html#showroom">Salon</a>
+      <a href="mercedes.html#contact">Kontakt</a>
+      <a href="zespol-mercedes.html">Nasz zespół</a>
+    </nav>
+
+    <div class="topbar-right">
+      <a class="topbar-back" href="index.html">
+        <span aria-hidden="true">←</span>
+        Wybór salonu
+      </a>
+    </div>
+
+    <button class="topbar-burger" type="button" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ============ Hero (stand-in) ============ -->
+  <section class="team-hero team-hero--media">
+    <img class="team-hero__img" src="assets/img/zdj/team/team.webp"
+         alt="Zespół salonu Mercedes-Benz Autoforum" />
+  </section>
+
+  <!-- ============ Team ============ -->
+  <section class="team-list" id="zespol">
+
+    <article class="team-member">
+      <div class="team-member__ph" aria-hidden="true">
+        <span class="team-ph__lead">Portret</span>
+        <span class="team-ph__sub">Stand in</span>
+      </div>
+      <div class="team-member__info">
+        <h2 class="team-member__name">Karol Borkowski</h2>
+        <p class="team-member__contact">
+          mail@mail.pl<br />
+          Numer Telefonu
+        </p>
+      </div>
+    </article>
+
+    <article class="team-member">
+      <div class="team-member__ph" aria-hidden="true">
+        <span class="team-ph__lead">Portret</span>
+        <span class="team-ph__sub">Stand in</span>
+      </div>
+      <div class="team-member__info">
+        <h2 class="team-member__name">Kajetan Kwiatkowski</h2>
+        <p class="team-member__contact">
+          mail@mail.pl<br />
+          Numer Telefonu
+        </p>
+      </div>
+    </article>
+
+    <article class="team-member">
+      <div class="team-member__ph" aria-hidden="true">
+        <span class="team-ph__lead">Portret</span>
+        <span class="team-ph__sub">Stand in</span>
+      </div>
+      <div class="team-member__info">
+        <h2 class="team-member__name">Łukasz Kołłb-Sielecki</h2>
+        <p class="team-member__contact">
+          mail@mail.pl<br />
+          Numer Telefonu
+        </p>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============ Visit ============ -->
+  <section class="mb-visit" id="contact">
+    <h2 class="reveal">Zapraszamy na <b>jazdę próbną.</b></h2>
+    <p class="reveal reveal-delay-1">
+      Już teraz możesz umówić indywidualne spotkanie z naszym doradcą
+      i zarezerwować jazdę próbną wybranym modelem.
+    </p>
+    <a class="btn mb-visit__btn reveal reveal-delay-2" href="#book-modal"
+       data-modal-open="book-modal">
+      <span class="btn-label">Umów spotkanie</span>
+      <span class="btn-arrow" aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <!-- ============ Footer ============ -->
+  <footer class="mb-footer">
+    <div class="mb-footer__top">
+      <div class="mb-footer__brand">
+        <a class="af-logo af-logo--light" href="index.html">
+          <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" />
+        </a>
+        <p>
+          Autoryzowany dealer Mercedes-Benz w Warszawie.
+          Salon · Serwis · Części oryginalne · Finansowanie.
+        </p>
+      </div>
+
+      <div>
+        <h4>Salon</h4>
+        <ul>
+          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123" target="_blank" rel="noopener noreferrer">Modele</a></li>
+          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123" target="_blank" rel="noopener noreferrer">Konfigurator</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Serwis</h4>
+        <ul>
+          <li><a href="#book-modal" data-modal-open="book-modal">Umów wizytę</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li>Nowy Świat 6/12</li>
+          <li>00-496 Warszawa</li>
+          <li><a href="tel:+48224000000">+48 22 400 00 00</a></li>
+          <li><a href="mailto:salon@autoforum.pl">salon@autoforum.pl</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mb-footer__bottom">
+      <span>© 2026 Autoforum sp. z o.o.</span>
+      <span>Mercedes-Benz · Authorised Dealer</span>
+    </div>
+  </footer>
+
+  <!-- ============ Booking modal ============ -->
+  <div class="af-modal" id="book-modal" aria-hidden="true">
+    <div class="af-modal__overlay" data-modal-close></div>
+    <div class="af-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="book-title">
+      <button class="af-modal__close" type="button" aria-label="Zamknij" data-modal-close>
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <div class="af-modal__body">
+        <span class="eyebrow">Salon Mercedes-Benz</span>
+        <h2 class="af-modal__title" id="book-title">Umów wizytę</h2>
+        <p class="af-modal__sub">
+          Zostaw kontakt &mdash; doradca oddzwoni i ustali dogodny termin
+          wizyty lub jazdy próbnej.
+        </p>
+
+        <form class="af-modal__form" novalidate>
+          <div class="af-field">
+            <label for="bk-name">Imię i nazwisko</label>
+            <input id="bk-name" name="name" type="text" required autocomplete="name" />
+          </div>
+          <div class="af-field af-field--half">
+            <label for="bk-phone">Telefon</label>
+            <input id="bk-phone" name="phone" type="tel" required autocomplete="tel" />
+          </div>
+          <div class="af-field af-field--half">
+            <label for="bk-email">E-mail</label>
+            <input id="bk-email" name="email" type="email" autocomplete="email" />
+          </div>
+          <div class="af-field af-field--half">
+            <label for="bk-model">Model</label>
+            <input id="bk-model" name="model" type="text" placeholder="np. S 580 e 4MATIC" />
+          </div>
+          <div class="af-field af-field--half">
+            <label for="bk-date">Preferowany termin</label>
+            <input id="bk-date" name="date" type="date" />
+          </div>
+          <div class="af-field">
+            <label for="bk-msg">Wiadomość <span>(opcjonalnie)</span></label>
+            <textarea id="bk-msg" name="message" rows="3"></textarea>
+          </div>
+
+          <button class="btn btn--solid af-modal__submit" type="submit">
+            <span class="btn-label">Wyślij zgłoszenie</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="af-modal__note">
+            Wysyłając formularz wyrażają Państwo zgodę na kontakt w sprawie wizyty.
+          </p>
+        </form>
+
+        <div class="af-modal__success" hidden>
+          <span class="eyebrow">Dziękujemy</span>
+          <h2 class="af-modal__title">Zgłoszenie przyjęte.</h2>
+          <p class="af-modal__sub">
+            Skontaktujemy się wkrótce, aby potwierdzić termin wizyty
+            w salonie Mercedes-Benz.
+          </p>
+          <button class="btn btn--solid" type="button" data-modal-close>
+            <span class="btn-label">Zamknij</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/page.js"></script>
+</body>
+</html>

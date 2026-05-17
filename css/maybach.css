@@ -1,483 +1,287 @@
 /* ==========================================================================
-   AUTOFORUM × Mercedes-Maybach atelier page
-   Estetyka: kremowe tło #e6e0d7 (ivory), ciemny tekst, brązowo-złoty akcent.
+   AUTOFORUM × Mercedes-Maybach — atelier (1:1 wg makiety Strona_Maybach)
+   Paleta: kremowe tło #e6e0d7, ciemny hero #080a14, brąz #8b6f3f.
    Tylko Corporate A Pro + Inter. Brak italica.
    ========================================================================== */
 
 .mh-page {
   background: #e6e0d7;
   color: #1a1a1a;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Corporate A', sans-serif;
   overflow-x: hidden;
 }
 
 .mh-page h1,
 .mh-page h2,
 .mh-page h3 {
-  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-family: 'Corporate A', sans-serif;
+  font-weight: 400;
 }
 
-/* color palette helpers */
-.mh-bronze { color: #8b6f3f; }
-.mh-deep { color: #0a0a0a; }
+/* ----- Topbar (ciemny hero — ciemny tekst na jasnym świetle) -------------- */
 
-/* ----- Topbar overrides --------------------------------------------------- */
-
-.mh-page .topbar {
-  color: #1a1a1a;
-}
-
+.mh-page .topbar,
 .mh-page .topbar a {
   color: #1a1a1a;
+}
+
+.mh-page .topbar.scrolled,
+.mh-page .topbar.scrolled a {
+  color: #1a1a1a;
+}
+
+/* menu dokładnie na środku ekranu, logo zostaje po lewej */
+.mh-page .topbar-nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* ----- Hero --------------------------------------------------------------- */
 
 .mh-hero {
   position: relative;
-  height: 100vh;
-  min-height: 760px;
-  width: 100%;
-  overflow: hidden;
-  background: #e6e0d7;
+  background: #080a14;
 }
 
 .mh-hero__media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
 }
 
 .mh-hero__img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: contrast(1.02) saturate(0.95);
-  animation: mhKenBurns 22s ease-in-out infinite alternate;
+  height: auto;
+  display: block;
+  animation: mhKenBurns 24s ease-in-out infinite alternate;
+  transform-origin: center 60%;
 }
 
 @keyframes mhKenBurns {
-  0%   { transform: scale(1.04); }
-  100% { transform: scale(1.16) translateX(-2%); }
+  0%   { transform: scale(1.0); }
+  100% { transform: scale(1.05); }
 }
 
+/* ciemny scrim u dołu zdjęcia — pod tekst intro */
 .mh-hero__media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(230,224,215,0.92) 0%, rgba(230,224,215,0.55) 30%, rgba(230,224,215,0.1) 60%, rgba(230,224,215,0) 100%),
-    linear-gradient(180deg, rgba(230,224,215,0) 0%, rgba(230,224,215,0) 55%, rgba(230,224,215,1) 100%);
-  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(8, 10, 20, 0.97) 0%,
+    rgba(8, 10, 20, 0.85) 16%,
+    rgba(8, 10, 20, 0.4) 33%,
+    rgba(8, 10, 20, 0) 52%
+  );
 }
 
-.mh-hero__content {
+.mh-hero__intro {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 6%;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 8vw;
-  max-width: 1440px;
+  max-width: 2040px;
   margin: 0 auto;
+  padding: 0 8vw;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
 }
 
-.mh-hero__crest {
-  width: 80px;
-  height: auto;
-  margin-bottom: 2.4rem;
-  opacity: 0.95;
-}
-
-.mh-hero__eyebrow {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.55em;
-  text-transform: uppercase;
-  color: #8b6f3f;
-  margin-bottom: 2rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.mh-hero__eyebrow::before,
-.mh-hero__eyebrow::after {
-  content: '';
-  display: inline-block;
-  width: 28px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.65;
-}
-
-.mh-hero__title {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: clamp(2.8rem, 6.5vw, 6.4rem);
-  line-height: 1.04;
-  letter-spacing: 0.005em;
-  color: #0a0a0a;
-  max-width: 18ch;
-  margin-bottom: 2rem;
-}
-
-.mh-hero__title b {
-  font-weight: 400;
-  color: #8b6f3f;
-}
-
-.mh-hero__sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.05rem;
+.mh-hero__intro p {
+  font-family: 'Corporate A', sans-serif;
+  font-size: clamp(1.2rem, 1.55vw, 1.55rem);
   line-height: 1.7;
-  max-width: 52ch;
-  opacity: 0.78;
-  margin-bottom: 3rem;
+  margin: 0 auto 1.4rem;
   letter-spacing: 0.01em;
+  max-width: 70ch;
 }
 
-.mh-hero__cta {
-  display: flex;
-  gap: 1.4rem;
-  align-items: center;
-  flex-wrap: wrap;
+.mh-hero__intro p:first-child {
+  max-width: none;
 }
 
-.mh-hero__scroll {
-  position: absolute;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.55);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+.mh-hero__intro p:last-child {
+  margin-bottom: 0;
 }
 
-.mh-hero__scroll::after {
-  content: '';
-  width: 1px;
-  height: 50px;
-  background: linear-gradient(180deg, #8b6f3f, transparent);
-  animation: mhScroll 2.6s ease-in-out infinite;
-  transform-origin: top;
-}
-
-@keyframes mhScroll {
-  0%, 100% { transform: scaleY(0); opacity: 0.3; }
-  40% { transform: scaleY(1); opacity: 1; }
-  60% { transform: scaleY(1); opacity: 1; transform-origin: bottom; }
-  90% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+.mh-hero__intro p:last-child {
+  margin-bottom: 0;
 }
 
 /* ----- Quote ribbon ------------------------------------------------------- */
 
 .mh-quote {
-  padding: 16vh 8vw;
-  text-align: center;
   background: #dcd2c2;
-  border-top: 1px solid rgba(139, 111, 63, 0.15);
-  border-bottom: 1px solid rgba(139, 111, 63, 0.15);
-}
-
-.mh-quote__mark {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: 5rem;
-  color: #8b6f3f;
-  line-height: 0.4;
-  margin-bottom: 1.5rem;
-  display: inline-block;
+  padding: 14vh 8vw;
+  text-align: center;
 }
 
 .mh-quote__text {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: clamp(1.6rem, 3.2vw, 2.8rem);
+  font-family: 'Corporate A', sans-serif;
+  font-size: clamp(1.5rem, 3.1vw, 2.7rem);
   line-height: 1.3;
   color: #0a0a0a;
-  max-width: 30ch;
-  margin: 0 auto 2.4rem;
-  letter-spacing: -0.005em;
-}
-
-.mh-quote__attr {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.45em;
-  text-transform: uppercase;
-  color: #8b6f3f;
-}
-
-/* ----- Section base ------------------------------------------------------- */
-
-.mh-section {
-  padding: 14vh 8vw;
-  max-width: 1440px;
+  max-width: 36ch;
   margin: 0 auto;
+  letter-spacing: 0.005em;
 }
 
-.mh-section__head {
+/* ----- Salon feature (stand-in) ------------------------------------------- */
+
+.mh-standin {
+  position: relative;
+  line-height: 0;
+}
+
+.mh-standin__img {
+  width: 100%;
+  height: clamp(560px, 82vh, 920px);
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+
+.mh-standin__box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #d9d0bf;
+  padding: 30px 64px;
   text-align: center;
-  margin-bottom: 7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  line-height: 1;
 }
 
-.mh-section__eyebrow {
-  font-family: 'Inter', sans-serif;
+.mh-standin__lead {
+  font-family: 'Corporate A', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #6f5a32;
+}
+
+.mh-standin__sub {
+  font-family: 'Corporate A', sans-serif;
   font-size: 11px;
-  letter-spacing: 0.55em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.5);
+}
+
+/* ----- Shared eyebrow ----------------------------------------------------- */
+
+.mh-eyebrow {
+  display: inline-block;
+  font-family: 'Corporate A', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #8b6f3f;
   margin-bottom: 1.6rem;
-  display: inline-block;
 }
 
-.mh-section__title {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: clamp(2.4rem, 4.8vw, 4.2rem);
-  line-height: 1.1;
+/* ----- Headline section --------------------------------------------------- */
+
+.mh-headline {
+  background: #e6e0d7;
+  padding: 17vh 8vw;
+  text-align: center;
+}
+
+.mh-headline__title {
+  font-family: 'Corporate A', sans-serif;
+  font-size: clamp(2.3rem, 5vw, 4.4rem);
+  line-height: 1.12;
   color: #0a0a0a;
-  max-width: 22ch;
+  max-width: 20ch;
   margin: 0 auto;
   letter-spacing: -0.005em;
 }
 
-.mh-section__title b {
+.mh-headline__title b {
   font-weight: 400;
   color: #8b6f3f;
 }
 
-/* ----- Models showcase ---------------------------------------------------- */
+/* ----- Atelier split ------------------------------------------------------ */
 
-.mh-models {
-  display: flex;
-  flex-direction: column;
-  gap: 12vh;
-}
-
-.mh-model {
+.mh-split {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 4vh 8vw 16vh;
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 8vw;
+  grid-template-columns: 0.85fr 1fr;
+  gap: 7vw;
   align-items: center;
 }
 
-.mh-model:nth-child(even) {
-  grid-template-columns: 1fr 1.2fr;
-  direction: rtl;
-}
-
-.mh-model:nth-child(even) > * {
-  direction: ltr;
-}
-
-.mh-model__media {
-  position: relative;
-  aspect-ratio: 4 / 3;
+.mh-split__media {
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   background: #cfc3ad;
 }
 
-.mh-model__img {
+.mh-split__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.mh-model:hover .mh-model__img {
-  transform: scale(1.05);
+.mh-split__media:hover img {
+  transform: scale(1.04);
 }
 
-.mh-model__media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(139, 111, 63, 0.22);
-  pointer-events: none;
-}
-
-.mh-model__copy h3 {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: clamp(2rem, 3.5vw, 3rem);
-  line-height: 1.1;
+.mh-split__title {
+  font-family: 'Corporate A', sans-serif;
+  font-size: clamp(2rem, 3.6vw, 3.1rem);
+  line-height: 1.12;
   color: #0a0a0a;
-  margin-bottom: 1.2rem;
+  margin: 0 0 2rem;
   letter-spacing: -0.005em;
 }
 
-.mh-model__copy h3 b {
-  font-weight: 400;
-  color: #8b6f3f;
+.mh-split__copy p {
+  font-family: 'Corporate A', sans-serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(26, 26, 26, 0.78);
+  max-width: 42ch;
+  margin: 0 0 1.6rem;
 }
 
-.mh-model__series {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.45em;
-  text-transform: uppercase;
-  color: #8b6f3f;
-  margin-bottom: 1.4rem;
+.mh-split__rule {
   display: block;
-}
-
-.mh-model__copy p {
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  line-height: 1.75;
-  opacity: 0.78;
-  max-width: 44ch;
-  margin-bottom: 2.2rem;
-}
-
-.mh-model__specs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.8rem;
-  margin-bottom: 2.4rem;
-  padding-top: 1.8rem;
-  border-top: 1px solid rgba(139, 111, 63, 0.25);
-}
-
-.mh-spec__label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  opacity: 0.55;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-.mh-spec__value {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: 1.7rem;
-  color: #0a0a0a;
-  line-height: 1;
-}
-
-.mh-spec__value sup {
-  color: #8b6f3f;
-  font-size: 1rem;
-  margin-left: 0.2rem;
-  vertical-align: super;
-}
-
-/* ----- Bespoke section (darker cream block) ------------------------------- */
-
-.mh-bespoke {
-  background: #d4c9b5;
-  padding: 18vh 8vw;
-  border-top: 1px solid rgba(139, 111, 63, 0.18);
-  border-bottom: 1px solid rgba(139, 111, 63, 0.18);
-}
-
-.mh-bespoke__inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6vw;
-  align-items: center;
-}
-
-.mh-bespoke__copy h2 {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  line-height: 1.15;
-  color: #0a0a0a;
-  margin-bottom: 2rem;
-  max-width: 16ch;
-  letter-spacing: -0.005em;
-}
-
-.mh-bespoke__copy h2 b {
-  font-weight: 400;
-  color: #8b6f3f;
-}
-
-.mh-bespoke__copy p {
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  line-height: 1.75;
-  opacity: 0.8;
-  max-width: 48ch;
-  margin-bottom: 1.2rem;
-}
-
-.mh-bespoke__list {
-  list-style: none;
-  margin-top: 2.4rem;
-  padding-top: 2.4rem;
-  border-top: 1px solid rgba(139, 111, 63, 0.25);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.4rem 2rem;
-}
-
-.mh-bespoke__list li {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: #1a1a1a;
-  position: relative;
-  padding-left: 1.4rem;
-}
-
-.mh-bespoke__list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 8px;
+  width: 56%;
+  max-width: 320px;
   height: 1px;
-  background: #8b6f3f;
+  margin-top: 1.6rem;
+  background: rgba(139, 111, 63, 0.35);
 }
 
-.mh-bespoke__media {
-  position: relative;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  background: #cfc3ad;
-}
-
-.mh-bespoke__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.mh-bespoke__media::after {
-  content: '';
-  position: absolute;
-  inset: 16px;
-  border: 1px solid rgba(139, 111, 63, 0.45);
-  pointer-events: none;
-}
-
-/* ----- Visit section ------------------------------------------------------ */
+/* ----- Visit -------------------------------------------------------------- */
 
 .mh-visit {
-  padding: 20vh 8vw;
-  background:
-    radial-gradient(ellipse at 50% 30%, rgba(139, 111, 63, 0.1) 0%, transparent 60%),
-    #e6e0d7;
+  background: #e6e0d7;
+  padding: 16vh 8vw 18vh;
   text-align: center;
 }
 
 .mh-visit h2 {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: clamp(2.6rem, 5.5vw, 5rem);
-  line-height: 1.1;
+  font-family: 'Corporate A', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+  line-height: 1.12;
   color: #0a0a0a;
-  max-width: 22ch;
-  margin: 0 auto 2rem;
+  max-width: 18ch;
+  margin: 0 auto 1.8rem;
   letter-spacing: -0.005em;
 }
 
@@ -487,20 +291,123 @@
 }
 
 .mh-visit p {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  max-width: 56ch;
+  font-family: 'Corporate A', sans-serif;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: rgba(26, 26, 26, 0.7);
+  max-width: 46ch;
   margin: 0 auto 3rem;
-  opacity: 0.78;
 }
 
-.mh-visit__address {
-  font-family: 'Corporate A', 'Inter', sans-serif;
-  font-size: 1.2rem;
+.mh-visit .btn {
+  margin: 0 auto;
+}
+
+/* ----- Map (stand-in) ----------------------------------------------------- */
+
+.mh-map {
+  background: #d4c9b5;
+  padding: 12vh 8vw;
+}
+
+.mh-map__frame {
+  position: relative;
+  max-width: 1320px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  border: 1px solid rgba(139, 111, 63, 0.4);
+  background: #e6e0d7;
+}
+
+.mh-map__embed {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  /* dopasowanie kolorystyki mapy do kremowo-brązowej palety strony */
+  filter: grayscale(0.65) sepia(0.42) saturate(0.78)
+          contrast(1.04) brightness(0.97);
+}
+
+.mh-map__pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 58px;
+  height: 80px;
+  transform: translate(-50%, -100%);
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 14px rgba(10, 10, 10, 0.35));
+  animation: mhPinDrop 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mh-map__pin svg {
+  display: block;
+}
+
+.mh-map__pulse {
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 26px;
+  height: 26px;
+  transform: translate(-50%, 50%);
+  border-radius: 50%;
+  background: rgba(139, 111, 63, 0.35);
+  animation: mhPinPulse 2.4s ease-out infinite;
+}
+
+@keyframes mhPinPulse {
+  0%   { transform: translate(-50%, 50%) scale(0.4); opacity: 0.8; }
+  70%  { transform: translate(-50%, 50%) scale(2.6); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes mhPinDrop {
+  0%   { transform: translate(-50%, -180%); opacity: 0; }
+  100% { transform: translate(-50%, -100%); opacity: 1; }
+}
+
+.mh-map__card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #e6e0d7;
+  padding: 2.4rem 3rem 2.6rem;
+  max-width: 320px;
+  border-right: 1px solid rgba(139, 111, 63, 0.4);
+  border-bottom: 1px solid rgba(139, 111, 63, 0.4);
+}
+
+.mh-map__card .mh-eyebrow {
+  margin-bottom: 1.1rem;
+}
+
+.mh-map__addr {
+  font-family: 'Corporate A', sans-serif;
+  font-size: clamp(1.25rem, 1.8vw, 1.7rem);
+  line-height: 1.35;
+  color: #0a0a0a;
+  margin: 0 0 1.6rem;
+  letter-spacing: -0.005em;
+}
+
+.mh-map__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Corporate A', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: #8b6f3f;
-  margin-bottom: 3rem;
-  letter-spacing: 0.05em;
+  transition: gap 0.3s ease;
+}
+
+.mh-map__link:hover {
+  gap: 0.9rem;
 }
 
 /* ----- Footer ------------------------------------------------------------- */
@@ -527,17 +434,17 @@
 }
 
 .mh-footer__brand p {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Corporate A', sans-serif;
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.7;
   max-width: 32ch;
-  opacity: 0.75;
+  opacity: 0.7;
 }
 
 .mh-footer h4 {
-  font-family: 'Corporate A', 'Inter', sans-serif;
+  font-family: 'Corporate A', sans-serif;
   font-size: 12px;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #c8a26b;
   margin-bottom: 1.2rem;
@@ -548,7 +455,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Corporate A', sans-serif;
   font-size: 13px;
 }
 
@@ -569,9 +476,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Corporate A', sans-serif;
   font-size: 11px;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: rgba(230, 224, 215, 0.45);
   flex-wrap: wrap;
@@ -581,46 +488,188 @@
 /* ----- Responsive --------------------------------------------------------- */
 
 @media (max-width: 1024px) {
-  .mh-model,
-  .mh-model:nth-child(even) {
+  .mh-split {
     grid-template-columns: 1fr;
-    direction: ltr;
     gap: 3rem;
+    padding-bottom: 12vh;
   }
 
-  .mh-bespoke__inner {
-    grid-template-columns: 1fr;
-    gap: 4rem;
+  .mh-split__media {
+    aspect-ratio: 4 / 3;
+    max-height: 60vh;
   }
 
   .mh-footer__top {
     grid-template-columns: 1fr 1fr;
   }
+
+  .mh-map__frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .mh-map__card {
+    max-width: none;
+    right: 0;
+    border-right: 0;
+  }
 }
 
 @media (max-width: 640px) {
-  .mh-hero__content {
-    padding: 0 22px;
-  }
-
-  .mh-section,
-  .mh-bespoke,
+  .mh-hero__intro,
+  .mh-quote,
+  .mh-headline,
+  .mh-split,
   .mh-visit,
-  .mh-footer {
+  .mh-map {
     padding-left: 22px;
     padding-right: 22px;
   }
 
-  .mh-bespoke__list {
-    grid-template-columns: 1fr;
+  .mh-map__card {
+    padding: 1.6rem 1.8rem 1.8rem;
+  }
+
+  .mh-standin__img {
+    height: clamp(420px, 70vh, 620px);
+  }
+
+  .mh-standin__box {
+    padding: 22px 36px;
   }
 
   .mh-footer__top {
     grid-template-columns: 1fr;
   }
 
-  .mh-model__specs {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .mh-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ----- Booking modal — motyw Maybach (kremowy / brąz) -------------------- */
+
+.mh-page .af-modal__overlay {
+  background: rgba(20, 16, 10, 0.55);
+}
+
+.mh-page .af-modal__dialog {
+  background: #e6e0d7;
+  color: #1a1a1a;
+  border: 1px solid rgba(139, 111, 63, 0.35);
+}
+
+.mh-page .af-modal__close {
+  color: #1a1a1a;
+}
+
+.mh-page .af-modal__title {
+  color: #0a0a0a;
+}
+
+.mh-page .af-modal__form .mh-eyebrow,
+.mh-page .af-modal__success .mh-eyebrow {
+  margin-bottom: 1.2rem;
+}
+
+.mh-page .af-field input,
+.mh-page .af-field textarea {
+  border-bottom-color: rgba(139, 111, 63, 0.4);
+}
+
+.mh-page .af-field input:focus,
+.mh-page .af-field textarea:focus {
+  border-bottom-color: #8b6f3f;
+}
+
+.mh-page .af-field input::placeholder,
+.mh-page .af-field textarea::placeholder {
+  color: rgba(26, 26, 26, 0.4);
+}
+
+/* ----- Team page — motyw Maybach (kremowy / brąz, wg makiety) ------------ */
+
+.mh-page .team-hero {
+  background: #e6e0d7;
+}
+
+.mh-page .team-hero__ph {
+  background: #d9d0bf;
+}
+
+.mh-page .team-hero__ph .team-ph__lead {
+  color: #6f5a32;
+}
+
+.mh-page .team-list {
+  background: #d4c9b5;
+}
+
+.mh-page .team-member + .team-member {
+  border-top: 1px solid rgba(139, 111, 63, 0.18);
+}
+
+.mh-page .team-member__ph {
+  background: #e6e0d7;
+}
+
+.mh-page .team-member__ph .team-ph__lead {
+  color: #0a0a0a;
+}
+
+.mh-page .team-member__ph .team-ph__sub {
+  color: #8b6f3f;
+  opacity: 1;
+}
+
+.mh-page .team-member__name {
+  color: #0a0a0a;
+}
+
+.mh-page .team-member__contact {
+  color: rgba(26, 26, 26, 0.72);
+}
+
+/* ----- Responsive: mobilne menu + hero intro pod zdjęciem --------------- */
+
+@media (max-width: 768px) {
+  /* nadpisanie wycentrowanego absolutnie menu → pełnoekranowy panel */
+  .mh-page .topbar-nav {
+    position: fixed;
+    inset: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(-100%);
+    background: #e6e0d7;
+  }
+
+  .mh-page .topbar.nav-open .topbar-nav {
+    transform: translateY(0);
+  }
+
+  /* hero: tekst intro pod zdjęciem (nie absolutnie na krótkim foto) */
+  .mh-hero__media::after {
+    display: none;
+  }
+
+  .mh-hero__intro {
+    position: static;
+    transform: none;
+    max-width: none;
+    padding: 7vh 22px 8vh;
+  }
+
+  .mh-hero__intro p {
+    font-size: 1.05rem;
+    max-width: none;
+    margin-bottom: 1.2rem;
+  }
+
+  .mh-headline {
+    padding: 13vh 22px;
+  }
+
+  .mh-visit {
+    padding: 13vh 22px 15vh;
   }
 }

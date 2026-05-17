@@ -67,4 +67,13 @@
       }
     });
   });
+
+  // --- restore from bfcache: drop click-state classes ----------------------
+  window.addEventListener('pageshow', () => {
+    halves.forEach((h) => {
+      h.classList.remove('half--clicked', 'half--dimmed');
+      const bg = h.querySelector('.half-bg');
+      if (bg) bg.style.transform = '';
+    });
+  });
 })();
