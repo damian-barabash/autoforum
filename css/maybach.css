@@ -555,10 +555,6 @@
     height: 620px;
   }
 
-  .mh-map__pin {
-    top: 64%;
-  }
-
   .mh-standin__img {
     height: clamp(420px, 70vh, 620px);
   }
