@@ -512,6 +512,23 @@
     right: 0;
     border-right: 0;
   }
+
+  /* iPad: intro pod zdjęciem (na ciemnym tle hero), nie absolutnie
+     na krótkim foto — biały tekst nie nachodzi już na auto */
+  .mh-hero__media::after {
+    display: none;
+  }
+
+  .mh-hero__intro {
+    position: static;
+    transform: none;
+    max-width: none;
+    padding: 7vh 8vw 8vh;
+  }
+
+  .mh-hero__intro p {
+    max-width: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -527,6 +544,16 @@
 
   .mh-map__card {
     padding: 1.6rem 1.8rem 1.8rem;
+  }
+
+  /* wyższa mapa na telefonie — karta adresu i pin się nie nakładają */
+  .mh-map__frame {
+    aspect-ratio: auto;
+    min-height: 620px;
+  }
+
+  .mh-map__pin {
+    top: 64%;
   }
 
   .mh-standin__img {

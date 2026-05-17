@@ -801,6 +801,19 @@ em, i {
   body.nav-locked {
     overflow: hidden;
   }
+
+  /* Otwarte menu: zdejmij backdrop-filter z topbara.
+     backdrop-filter na .scrolled tworzy containing-block dla position:fixed
+     potomka → pełnoekranowe .topbar-nav zapadało się w pasek po scrollu.
+     transition:none, by zmiana była natychmiastowa (bez „skoku" menu). */
+  .topbar.nav-open,
+  .topbar.nav-open.scrolled {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
+    transition: none;
+  }
 }
 
 /* ----- Small phones ------------------------------------------------------- */

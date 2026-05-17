@@ -759,6 +759,16 @@
     padding: 1.6rem 1.8rem 1.8rem;
   }
 
+  /* wyższa mapa na telefonie — karta adresu i pin się nie nakładają */
+  .mb-map__frame {
+    aspect-ratio: auto;
+    min-height: 620px;
+  }
+
+  .mb-map__pin {
+    top: 64%;
+  }
+
   .mb-hero__content {
     padding: 0 22px 14vh;
   }

@@ -336,6 +336,24 @@
   }
 }
 
+/* iPad (i inne touch ≤1024): pionowy układ zamiast 2 wąskich kolumn,
+   bo background:cover mocno przycinał auta na portretowym tablecie.
+   Desktop (hover: hover) zostaje przy podzielonym ekranie. */
+@media (max-width: 1024px) and (hover: none) {
+  .split {
+    flex-direction: column;
+  }
+
+  .half {
+    flex: 1;
+  }
+
+  .split:hover .half:not(:hover) {
+    flex: 1;
+    filter: none;
+  }
+}
+
 /* ----- Stabilna wysokość na mobilnych przeglądarkach -------------------- */
 
 @supports (height: 100svh) {
