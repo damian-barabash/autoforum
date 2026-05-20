@@ -837,3 +837,74 @@ em, i {
     padding: 13px 22px;
   }
 }
+
+/* ==========================================================================
+   CMS — minimal styles for dynamic block types not reusing existing classes
+   ========================================================================== */
+
+.cms-region:empty {
+  display: none;
+}
+
+.cms-promo-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  padding: 1.1rem 6vw;
+  text-decoration: none;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.86rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  background: #0a0a0a;
+  color: #fafafa;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background-color 0.25s ease;
+}
+
+.cms-promo-strip:hover {
+  background: #1a1a1a;
+}
+
+.cms-promo-strip__text {
+  display: inline-block;
+}
+
+.cms-promo-strip__cta {
+  display: inline-block;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+/* bronze (Maybach) variant */
+.cms-promo-strip--bronze {
+  background: #8b6f3f;
+  color: #f5ede0;
+  border-color: rgba(255, 255, 255, 0.10);
+}
+
+.cms-promo-strip--bronze:hover {
+  background: #9c7e48;
+}
+
+/* cream (Maybach light) variant */
+.cms-promo-strip--cream {
+  background: #dcd2c2;
+  color: #1a1a1a;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.cms-promo-strip--cream:hover {
+  background: #d4c9b5;
+}
+
+@media (max-width: 720px) {
+  .cms-promo-strip {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 6vw;
+    font-size: 0.78rem;
+  }
+}

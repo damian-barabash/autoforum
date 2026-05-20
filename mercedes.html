@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Autoforum Warszawa · Salon Mercedes-Benz</title>
-  <meta name="description" content="Salon Mercedes-Benz Autoforum w Warszawie. Pełna gama modeli, EQ, AMG, klasyka S. Indywidualna obsługa, finansowanie, serwis autoryzowany." />
+  <title data-cms="mercedes.title">Autoforum Warszawa · Salon Mercedes-Benz</title>
+  <meta name="description" content="Salon Mercedes-Benz Autoforum w Warszawie. Pełna gama modeli, EQ, AMG, klasyka S. Indywidualna obsługa, finansowanie, serwis autoryzowany." data-cms-attr="content:mercedes.meta_description" />
 
   <link rel="stylesheet" href="css/common.css" />
   <link rel="stylesheet" href="css/mercedes.css" />
 </head>
-<body class="mb-page">
+<body class="mb-page" data-cms-page="mercedes">
 
   <!-- Page reveal curtain -->
   <div class="page-reveal" aria-hidden="true">
     <div class="page-reveal__mark">
-      <img src="assets/img/Mercedes-Logo.svg.png" alt="" />
+      <img src="assets/img/Mercedes-Logo.svg.png" alt="" data-cms-src="global.logo.mb_star" />
     </div>
   </div>
 
@@ -22,21 +22,21 @@
   <header class="topbar">
     <div class="topbar-left">
       <a class="af-logo af-logo--adaptive" href="index.html">
-        <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" />
+        <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" data-cms-src="global.logo.autoforum" />
       </a>
     </div>
 
     <nav class="topbar-nav" aria-label="Menu">
-      <a href="#models">Modele</a>
-      <a href="#showroom">Salon</a>
-      <a href="#contact">Kontakt</a>
-      <a href="zespol-mercedes.html">Nasz zespół</a>
+      <a href="#models" data-cms="mercedes.nav.models">Modele</a>
+      <a href="#showroom" data-cms="mercedes.nav.showroom">Salon</a>
+      <a href="#contact" data-cms="mercedes.nav.contact">Kontakt</a>
+      <a href="zespol-mercedes.html" data-cms="mercedes.nav.team">Nasz zespół</a>
     </nav>
 
     <div class="topbar-right">
       <a class="topbar-back" href="index.html">
         <span aria-hidden="true">←</span>
-        Wybór salonu
+        <span data-cms="mercedes.topbar.back">Wybór salonu</span>
       </a>
     </div>
 
@@ -51,46 +51,53 @@
       <img class="mb-hero__img"
            data-parallax
            src="assets/img/zdj/mercedes/20260324-MCH02329.webp"
-           alt="Mercedes-AMG SL" />
+           alt="Mercedes-AMG SL"
+           data-cms-src="mercedes.hero.image" />
     </div>
 
     <div class="mb-hero__content intro-stagger">
-      <h1 class="mb-hero__title">
+      <h1 class="mb-hero__title" data-cms="mercedes.hero.title">
         Każda jazda zaczyna się od gwiazdy.
       </h1>
-      <p class="mb-hero__sub">
+      <p class="mb-hero__sub" data-cms="mercedes.hero.sub">
         Nowy salon Mercedes-Benz w sercu Mokotowa. Pełna gama modeli &mdash;
         od kompaktowej Klasy A, przez ikoniczną Klasę S, po elektryczne EQ
         i sportowe AMG. Konsjerż, jazdy próbne i pełen serwis autoryzowany.
       </p>
       <div class="mb-hero__cta">
-        <a class="btn btn--filled" href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123" target="_blank" rel="noopener noreferrer">
-          <span class="btn-label">Modele 2026</span>
+        <a class="btn btn--filled"
+           href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123"
+           target="_blank" rel="noopener noreferrer"
+           data-cms-href="mercedes.hero.cta1.href">
+          <span class="btn-label" data-cms="mercedes.hero.cta1.label">Modele 2026</span>
           <span class="btn-arrow" aria-hidden="true">→</span>
         </a>
         <a class="btn" href="#book-modal" data-modal-open="book-modal">
-          <span class="btn-label">Umów wizytę</span>
+          <span class="btn-label" data-cms="mercedes.hero.cta2.label">Umów wizytę</span>
         </a>
       </div>
     </div>
 
-    <span class="mb-hero__scroll" aria-hidden="true">Scroll</span>
+    <span class="mb-hero__scroll" aria-hidden="true" data-cms="mercedes.hero.scroll_label">Scroll</span>
   </section>
+
+  <div class="cms-region" data-cms-region="mercedes.after-hero"></div>
 
   <!-- ============ Models ============ -->
   <section class="mb-section" id="models">
     <header class="mb-section__head">
-      <h2 class="mb-section__title reveal">
+      <h2 class="mb-section__title reveal" data-cms="mercedes.models.title">
         Modele <b>2026.</b><br />Każdy z osobnym charakterem.
       </h2>
-      <p class="mb-section__lede reveal reveal-delay-1">
+      <p class="mb-section__lede reveal reveal-delay-1" data-cms="mercedes.models.lede">
         Wybierz spośród całej gamy Mercedes-Benz dostępnej w Autoforum.
         Limuzyny, SUV-y, modele elektryczne EQ i sportowe AMG &mdash;
         każdy do obejrzenia w salonie i jazdy próbnej.
       </p>
     </header>
 
-    <div class="mb-models">
+    <div class="mb-models" data-cms-region="mercedes.models">
+      <!-- Fallback static cards: replaced by JS-rendered model_card blocks from cms_blocks on load. -->
       <a class="mb-model mb-model--xl reveal" href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/motorization-S%20450%20d%204MATIC/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123" target="_blank" rel="noopener noreferrer">
         <img class="mb-model__img"
              src="https://cdn.myshoptet.com/usr/www.autoibuy.com/user/shop/big/11614_mercedes-benz-s-580-4matic-amg-9g-tronic-long-cerna-obsidian-metaliza.jpg?627b7f24"
@@ -183,32 +190,37 @@
     </div>
   </section>
 
+  <div class="cms-region" data-cms-region="mercedes.after-models"></div>
+
   <!-- ============ Showroom feature ============ -->
   <section class="mb-feature" id="showroom">
     <div class="mb-feature__media reveal"
-         style="background-image: linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0.22)), url('assets/img/zdj/mercedes/20260324-MCH02358.webp');">
+         style="background-image: linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0.22)), url('assets/img/zdj/mercedes/20260324-MCH02358.webp');"
+         data-cms-bg="mercedes.feature.image">
     </div>
     <div class="mb-feature__copy reveal reveal-delay-1">
-      <span class="eyebrow">Salon</span>
-      <h2>Architektura, w której <b>auto staje się eksponatem.</b></h2>
-      <p>
+      <span class="eyebrow" data-cms="mercedes.feature.eyebrow">Salon</span>
+      <h2 data-cms="mercedes.feature.title">Architektura, w której <b>auto staje się eksponatem.</b></h2>
+      <p data-cms="mercedes.feature.p1">
         2&nbsp;400&nbsp;m² ekspozycji, otwarty parter z widokiem na ulicę,
         dedykowane strefy dla EQ i AMG. Sufit z anodyzowanego aluminium,
         oświetlenie scenograficzne, podłoga z lanej żywicy.
       </p>
-      <p>
+      <p data-cms="mercedes.feature.p2">
         Strefa konsultacji 1-na-1, kącik kawowy, otwarta kuchnia gospodarska,
         odgrodzona sala dla przekazań. Wnętrze zaprojektowane tak, by skupić
         uwagę na samochodzie &mdash; nic poza nim nie odwraca wzroku.
       </p>
       <ul>
-        <li>16 stanowisk ekspozycyjnych</li>
-        <li>Strefa AMG Performance</li>
-        <li>EQ Lounge</li>
-        <li>Studio konfiguracji</li>
+        <li data-cms="mercedes.feature.li1">16 stanowisk ekspozycyjnych</li>
+        <li data-cms="mercedes.feature.li2">Strefa AMG Performance</li>
+        <li data-cms="mercedes.feature.li3">EQ Lounge</li>
+        <li data-cms="mercedes.feature.li4">Studio konfiguracji</li>
       </ul>
     </div>
   </section>
+
+  <div class="cms-region" data-cms-region="mercedes.after-feature"></div>
 
   <!-- ============ Map ============ -->
   <section class="mb-map" id="map">
@@ -218,18 +230,20 @@
         src="https://www.google.com/maps?q=Nowy%20%C5%9Awiat%206%2F12%2C%2000-496%20Warszawa&z=16&hl=pl&output=embed"
         title="Mapa — Salon Mercedes-Benz, Nowy Świat 6/12, Warszawa"
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+        referrerpolicy="no-referrer-when-downgrade"
+        data-cms-map-src="mercedes.map.embed_query"></iframe>
 
       <div class="mb-map__card">
-        <span class="eyebrow">Salon · Warszawa</span>
+        <span class="eyebrow" data-cms="mercedes.map.eyebrow">Salon · Warszawa</span>
         <p class="mb-map__addr">
-          Nowy Świat 6/12<br />
-          00-496 Warszawa
+          <span data-cms="mercedes.map.addr_line1">Nowy Świat 6/12</span><br />
+          <span data-cms="mercedes.map.addr_line2">00-496 Warszawa</span>
         </p>
         <a class="mb-map__link"
            href="https://www.google.com/maps/search/?api=1&query=Nowy%20%C5%9Awiat%206%2F12%2C%2000-496%20Warszawa"
-           target="_blank" rel="noopener">
-          Wyznacz trasę
+           target="_blank" rel="noopener"
+           data-cms-map-href="mercedes.map.embed_query">
+          <span data-cms="mercedes.map.link_label">Wyznacz trasę</span>
           <span aria-hidden="true">→</span>
         </a>
       </div>
@@ -238,60 +252,62 @@
 
   <!-- ============ Visit ============ -->
   <section class="mb-visit" id="contact">
-    <h2 class="reveal">Zapraszamy na <b>jazdę próbną.</b></h2>
-    <p class="reveal reveal-delay-1">
+    <h2 class="reveal" data-cms="mercedes.visit.title">Zapraszamy na <b>jazdę próbną.</b></h2>
+    <p class="reveal reveal-delay-1" data-cms="mercedes.visit.sub">
       Już teraz możesz umówić indywidualne spotkanie z naszym doradcą
       i zarezerwować jazdę próbną wybranym modelem.
     </p>
     <a class="btn mb-visit__btn reveal reveal-delay-2" href="#book-modal"
        data-modal-open="book-modal">
-      <span class="btn-label">Umów spotkanie</span>
+      <span class="btn-label" data-cms="mercedes.visit.cta.label">Umów spotkanie</span>
       <span class="btn-arrow" aria-hidden="true">→</span>
     </a>
   </section>
+
+  <div class="cms-region" data-cms-region="mercedes.before-footer"></div>
 
   <!-- ============ Footer ============ -->
   <footer class="mb-footer" id="kontakt-footer">
     <div class="mb-footer__top">
       <div class="mb-footer__brand">
         <a class="af-logo af-logo--light" href="index.html">
-          <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" />
+          <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" data-cms-src="global.logo.autoforum" />
         </a>
-        <p>
+        <p data-cms="mercedes.footer.brand_p">
           Autoryzowany dealer Mercedes-Benz w Warszawie.
           Salon · Serwis · Części oryginalne · Finansowanie.
         </p>
       </div>
 
       <div>
-        <h4>Salon</h4>
+        <h4 data-cms="mercedes.footer.h4_salon">Salon</h4>
         <ul>
-          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123" target="_blank" rel="noopener noreferrer">Modele</a></li>
-          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123" target="_blank" rel="noopener noreferrer">Konfigurator</a></li>
+          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123" target="_blank" rel="noopener noreferrer" data-cms-href="mercedes.footer.link_models.href" data-cms="mercedes.footer.link_models.label">Modele</a></li>
+          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Benz.Mercedes-AMG/sortType-name-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all&emhdealerId=GS00112123" target="_blank" rel="noopener noreferrer" data-cms-href="mercedes.footer.link_config.href" data-cms="mercedes.footer.link_config.label">Konfigurator</a></li>
         </ul>
       </div>
 
       <div>
-        <h4>Serwis</h4>
+        <h4 data-cms="mercedes.footer.h4_serwis">Serwis</h4>
         <ul>
-          <li><a href="#book-modal" data-modal-open="book-modal">Umów wizytę</a></li>
+          <li><a href="#book-modal" data-modal-open="book-modal" data-cms="mercedes.footer.link_book.label">Umów wizytę</a></li>
         </ul>
       </div>
 
       <div>
-        <h4>Kontakt</h4>
+        <h4 data-cms="mercedes.footer.h4_kontakt">Kontakt</h4>
         <ul>
-          <li>Nowy Świat 6/12</li>
-          <li>00-496 Warszawa</li>
-          <li><a href="tel:+48224000000">+48 22 400 00 00</a></li>
-          <li><a href="mailto:salon@autoforum.pl">salon@autoforum.pl</a></li>
+          <li data-cms="mercedes.footer.addr1">Nowy Świat 6/12</li>
+          <li data-cms="mercedes.footer.addr2">00-496 Warszawa</li>
+          <li><a href="tel:+48224000000" data-cms-href="mercedes.footer.phone.href" data-cms="mercedes.footer.phone.label">+48 22 400 00 00</a></li>
+          <li><a href="mailto:salon@autoforum.pl" data-cms-href="mercedes.footer.email.href" data-cms="mercedes.footer.email.label">salon@autoforum.pl</a></li>
         </ul>
       </div>
     </div>
 
     <div class="mb-footer__bottom">
-      <span>© 2026 Auto forum sp. z o.o.</span>
-      <span>Mercedes-Benz · Authorised Dealer</span>
+      <span data-cms="mercedes.footer.copyright">© 2026 Auto forum sp. z o.o.</span>
+      <span data-cms="mercedes.footer.dealer_line">Mercedes-Benz · Authorised Dealer</span>
     </div>
   </footer>
 
@@ -304,9 +320,9 @@
       </button>
 
       <div class="af-modal__body">
-        <span class="eyebrow">Salon Mercedes-Benz</span>
-        <h2 class="af-modal__title" id="book-title">Umów wizytę</h2>
-        <p class="af-modal__sub">
+        <span class="eyebrow" data-cms="mercedes.modal.eyebrow">Salon Mercedes-Benz</span>
+        <h2 class="af-modal__title" id="book-title" data-cms="mercedes.modal.title">Umów wizytę</h2>
+        <p class="af-modal__sub" data-cms="mercedes.modal.sub">
           Zostaw kontakt &mdash; doradca oddzwoni i ustali dogodny termin
           wizyty lub jazdy próbnej.
         </p>
@@ -361,6 +377,7 @@
     </div>
   </div>
 
+  <script src="js/cms.js"></script>
   <script src="js/page.js"></script>
 </body>
 </html>

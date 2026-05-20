@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Autoforum Warszawa · Atelier Mercedes-Maybach</title>
-  <meta name="description" content="Nowe atelier Mercedes-Maybach Nowy Świat w Warszawie. Przestrzeń premium, indywidualna obsługa, Maybach Manufaktur." />
+  <title data-cms="maybach.title">Autoforum Warszawa · Atelier Mercedes-Maybach</title>
+  <meta name="description" content="Nowe atelier Mercedes-Maybach Nowy Świat w Warszawie. Przestrzeń premium, indywidualna obsługa, Maybach Manufaktur." data-cms-attr="content:maybach.meta_description" />
 
   <link rel="stylesheet" href="css/common.css" />
   <link rel="stylesheet" href="css/maybach.css" />
 </head>
-<body class="mh-page">
+<body class="mh-page" data-cms-page="maybach">
 
   <!-- Page reveal curtain -->
   <div class="page-reveal page-reveal--cream" aria-hidden="true">
     <div class="page-reveal__mark">
-      <img src="assets/img/maybach-sign-logo.png" alt="" />
+      <img src="assets/img/maybach-sign-logo.png" alt="" data-cms-src="global.logo.mh_crest" />
     </div>
   </div>
 
@@ -22,15 +22,15 @@
   <header class="topbar topbar-cream">
     <div class="topbar-left">
       <a class="af-logo" href="index.html">
-        <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" />
+        <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" data-cms-src="global.logo.autoforum" />
       </a>
     </div>
 
     <nav class="topbar-nav" aria-label="Menu">
-      <a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Maybach/sortType-price-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all" target="_blank" rel="noopener noreferrer">Kolekcja</a>
-      <a href="#atelier">Atelier</a>
-      <a href="#wizyta">Wizyta</a>
-      <a href="zespol-maybach.html">Nasz zespół</a>
+      <a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Maybach/sortType-price-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all" target="_blank" rel="noopener noreferrer" data-cms-href="maybach.nav.kolekcja.href" data-cms="maybach.nav.kolekcja.label">Kolekcja</a>
+      <a href="#atelier" data-cms="maybach.nav.atelier">Atelier</a>
+      <a href="#wizyta" data-cms="maybach.nav.wizyta">Wizyta</a>
+      <a href="zespol-maybach.html" data-cms="maybach.nav.team">Nasz zespół</a>
     </nav>
 
     <button class="topbar-burger" type="button" aria-label="Menu" aria-expanded="false">
@@ -42,39 +42,45 @@
   <section class="mh-hero">
     <div class="mh-hero__media">
       <img class="mh-hero__img" src="assets/img/zdj/majbach/1.webp"
-           alt="Mercedes-Maybach" />
+           alt="Mercedes-Maybach"
+           data-cms-src="maybach.hero.image" />
     </div>
 
     <div class="mh-hero__intro">
-      <p>
+      <p data-cms="maybach.hero.intro_p1">
         Nowe atelier Mercedes-Maybach Nowy Świat to przestrzeń premium,
         w której komfort, nowoczesność i indywidualna obsługa tworzą
         doświadczenie wykraczające poza standardową wizytę w salonie
         samochodowym.
       </p>
-      <p>
+      <p data-cms="maybach.hero.intro_p2">
         Doskonale znane, legendarne już auta marki Mercedes-Maybach teraz w prestiżowej lokalizacji w samym sercu Warszawy.
       </p>
     </div>
   </section>
 
+  <div class="cms-region" data-cms-region="maybach.after-hero"></div>
+
   <!-- ============ Quote ribbon ============ -->
   <section class="mh-quote">
-    <blockquote class="mh-quote__text reveal">
+    <blockquote class="mh-quote__text reveal" data-cms="maybach.quote">
       Maybach nie konkuruje &mdash; Maybach kreuje
     </blockquote>
   </section>
 
+  <div class="cms-region" data-cms-region="maybach.after-quote"></div>
+
   <!-- ============ Salon feature (stand-in) ============ -->
   <section class="mh-standin" id="kolekcja">
     <img class="mh-standin__img" src="assets/img/zdj/majbach/2.webp"
-         alt="Salon Mercedes-Maybach — Warszawa Nowy Świat" />
+         alt="Salon Mercedes-Maybach — Warszawa Nowy Świat"
+         data-cms-src="maybach.standin.image" />
   </section>
 
   <!-- ============ Headline ============ -->
   <section class="mh-headline" id="atelier">
-    <span class="mh-eyebrow reveal">Atelier · Warszawa Wilanów</span>
-    <h2 class="mh-headline__title reveal reveal-delay-1">
+    <span class="mh-eyebrow reveal" data-cms="maybach.headline.eyebrow">Atelier · Warszawa Wilanów</span>
+    <h2 class="mh-headline__title reveal reveal-delay-1" data-cms="maybach.headline.title">
       Miejsce, w którym czas <b>zwalnia.</b>
     </h2>
   </section>
@@ -82,19 +88,19 @@
   <!-- ============ Atelier split ============ -->
   <section class="mh-split" id="manufactur">
     <div class="mh-split__media reveal">
-      <img src="assets/img/zdj/majbach/3.webp" alt="Mercedes-Maybach" />
+      <img src="assets/img/zdj/majbach/3.webp" alt="Mercedes-Maybach" data-cms-src="maybach.split.image" />
     </div>
 
     <div class="mh-split__copy reveal reveal-delay-1">
-      <span class="mh-eyebrow">Atelier prywatne</span>
-      <h2 class="mh-split__title">Ustal termin wizyty</h2>
-      <p>
+      <span class="mh-eyebrow" data-cms="maybach.split.eyebrow">Atelier prywatne</span>
+      <h2 class="mh-split__title" data-cms="maybach.split.title">Ustal termin wizyty</h2>
+      <p data-cms="maybach.split.p1">
         Atelier Mercedes-Maybach to nie salon w klasycznym znaczeniu.
         Przyjmujemy gości wyłącznie po wcześniejszym ustaleniu terminu,
         w godzinach dostosowanych do Państwa kalendarza &mdash; również
         poza godzinami urzędowania.
       </p>
-      <p>
+      <p data-cms="maybach.split.p2">
         Sześć stanowisk ekspozycyjnych, prywatny boks na samochód
         podstawowy, biblioteka z próbkami materiałów, kominek &mdash;
         i konsjerż oddany jednej rzeczy: by wizyta w atelier była
@@ -104,16 +110,18 @@
     </div>
   </section>
 
+  <div class="cms-region" data-cms-region="maybach.after-split"></div>
+
   <!-- ============ Visit ============ -->
   <section class="mh-visit" id="wizyta">
-    <h2 class="reveal">Zaproszenie do <b>atelier.</b></h2>
-    <p class="reveal reveal-delay-1">
+    <h2 class="reveal" data-cms="maybach.visit.title">Zaproszenie do <b>atelier.</b></h2>
+    <p class="reveal reveal-delay-1" data-cms="maybach.visit.sub">
       Już dziś rezerwujemy terminy pierwszych prywatnych spotkań
       i konsultacji Maybach Manufaktur.
     </p>
     <a class="btn btn--bronze reveal reveal-delay-2" href="#book-modal"
        data-modal-open="book-modal">
-      <span class="btn-label">Umów spotkanie</span>
+      <span class="btn-label" data-cms="maybach.visit.cta.label">Umów spotkanie</span>
       <span class="btn-arrow" aria-hidden="true">→</span>
     </a>
   </section>
@@ -126,68 +134,72 @@
         src="https://www.google.com/maps?q=Nowy%20%C5%9Awiat%206%2F12%2C%2000-496%20Warszawa&z=16&hl=pl&output=embed"
         title="Mapa — Atelier Mercedes-Maybach, Nowy Świat 6/12, Warszawa"
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+        referrerpolicy="no-referrer-when-downgrade"
+        data-cms-map-src="maybach.map.embed_query"></iframe>
 
       <div class="mh-map__card">
-        <span class="mh-eyebrow">Atelier · Warszawa</span>
+        <span class="mh-eyebrow" data-cms="maybach.map.eyebrow">Atelier · Warszawa</span>
         <p class="mh-map__addr">
-          Nowy Świat 6/12<br />
-          00-496 Warszawa
+          <span data-cms="maybach.map.addr_line1">Nowy Świat 6/12</span><br />
+          <span data-cms="maybach.map.addr_line2">00-496 Warszawa</span>
         </p>
         <a class="mh-map__link"
            href="https://www.google.com/maps/search/?api=1&query=Nowy%20%C5%9Awiat%206%2F12%2C%2000-496%20Warszawa"
-           target="_blank" rel="noopener">
-          Wyznacz trasę
+           target="_blank" rel="noopener"
+           data-cms-map-href="maybach.map.embed_query">
+          <span data-cms="maybach.map.link_label">Wyznacz trasę</span>
           <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
   </section>
 
+  <div class="cms-region" data-cms-region="maybach.before-footer"></div>
+
   <!-- ============ Footer ============ -->
   <footer class="mh-footer" id="zespol">
     <div class="mh-footer__top">
       <div class="mh-footer__brand">
         <a class="af-logo af-logo--light" href="index.html">
-          <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" />
+          <img class="af-logo__img" src="assets/img/autoforumlogo.png" alt="Auto Forum" data-cms-src="global.logo.autoforum" />
         </a>
-        <p>
+        <p data-cms="maybach.footer.brand_p">
           Autoryzowane atelier Mercedes-Maybach w Warszawie.
           Sprzedaż · Manufaktur · Concierge · Serwis dyskretny.
         </p>
       </div>
 
       <div>
-        <h4>Kolekcja</h4>
+        <h4 data-cms="maybach.footer.h4_kolekcja">Kolekcja</h4>
         <ul>
-          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Maybach/modelIdentifier-S/sortType-price-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all" target="_blank" rel="noopener noreferrer">Maybach S-Class</a></li>
-          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Maybach/modelIdentifier-SL/sortType-price-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all" target="_blank" rel="noopener noreferrer">Maybach SL</a></li>
-          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Maybach/motorization-SL%20680/sortType-price-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all" target="_blank" rel="noopener noreferrer">Maybach SL 680</a></li>
+          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Maybach/modelIdentifier-S/sortType-price-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all" target="_blank" rel="noopener noreferrer" data-cms-href="maybach.footer.link_s.href" data-cms="maybach.footer.link_s.label">Maybach S-Class</a></li>
+          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Maybach/modelIdentifier-SL/sortType-price-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all" target="_blank" rel="noopener noreferrer" data-cms-href="maybach.footer.link_sl.href" data-cms="maybach.footer.link_sl.label">Maybach SL</a></li>
+          <li><a href="https://www.mercedes-benz.pl/passengercars/buy/new-car/search-results.html/vehicleCategory-new-passenger-cars/brand-Mercedes-Maybach/motorization-SL%20680/sortType-price-asc?pid=mc-int_cn-onlinestore_ci-NCOS_si-onewebstorefront_pi-subnavigation_cri-fahrzeuge_ai-all" target="_blank" rel="noopener noreferrer" data-cms-href="maybach.footer.link_sl680.href" data-cms="maybach.footer.link_sl680.label">Maybach SL 680</a></li>
         </ul>
       </div>
 
       <div>
-        <h4>Manufaktur</h4>
+        <h4 data-cms="maybach.footer.h4_manufaktur">Manufaktur</h4>
         <ul>
           <li><a href="#book-modal"
-       data-modal-open="book-modal">Konsultacje</a></li>
+       data-modal-open="book-modal" data-cms="maybach.footer.link_konsult.label">Konsultacje</a></li>
         </ul>
       </div>
 
       <div>
-        <h4>Kontakt</h4>
+        <h4 data-cms="maybach.footer.h4_kontakt">Kontakt</h4>
         <ul>
-          <li>Nowy Świat 6/12</li>
-          <li>00-496 Warszawa</li>
-          <li><a href="tel:+48224000077">+48 22 400 00 77</a></li>
-          <li><a href="mailto:atelier@autoforum.pl">atelier@autoforum.pl</a></li>
+          <li data-cms="maybach.footer.addr1">Nowy Świat 6/12</li>
+          <li data-cms="maybach.footer.addr2">00-496 Warszawa</li>
+          <li><a href="tel:+48224000077" data-cms-href="maybach.footer.phone.href" data-cms="maybach.footer.phone.label">+48 22 400 00 77</a></li>
+          <li><a href="mailto:atelier@autoforum.pl" data-cms-href="maybach.footer.email.href" data-cms="maybach.footer.email.label">atelier@autoforum.pl</a></li>
         </ul>
       </div>
     </div>
 
     <div class="mh-footer__bottom">
-      <span>© 2026 Autoforum sp. z o.o.</span>
-      <span>Mercedes-Maybach · Authorised Atelier</span>
+      <span data-cms="maybach.footer.copyright">© 2026 Autoforum sp. z o.o.</span>
+      <span data-cms="maybach.footer.dealer_line">Mercedes-Maybach · Authorised Atelier</span>
     </div>
   </footer>
 
@@ -200,9 +212,9 @@
       </button>
 
       <div class="af-modal__body">
-        <span class="mh-eyebrow">Atelier Mercedes-Maybach</span>
-        <h2 class="af-modal__title" id="book-title">Umów spotkanie</h2>
-        <p class="af-modal__sub">
+        <span class="mh-eyebrow" data-cms="maybach.modal.eyebrow">Atelier Mercedes-Maybach</span>
+        <h2 class="af-modal__title" id="book-title" data-cms="maybach.modal.title">Umów spotkanie</h2>
+        <p class="af-modal__sub" data-cms="maybach.modal.sub">
           Prosimy o kontakt &mdash; konsjerż oddzwoni i ustali dogodny,
           prywatny termin wizyty w atelier.
         </p>
@@ -257,6 +269,7 @@
     </div>
   </div>
 
+  <script src="js/cms.js"></script>
   <script src="js/page.js"></script>
 </body>
 </html>

@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Autoforum — Panel administracyjny</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #161a22;
+      --panel-2: #1c212b;
+      --border: #262c38;
+      --text: #e8eaf0;
+      --muted: #8a93a6;
+      --accent: #7a9cff;
+      --accent-2: #a4baff;
+      --ok: #56c896;
+      --err: #ff6b6b;
+      --warn: #ffd166;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.5; min-height: 100vh; }
+    a { color: var(--accent); }
+    button { font: inherit; cursor: pointer; }
+    input, textarea, select { font: inherit; color: inherit; background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; width: 100%; outline: none; }
+    input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 70px; }
+
+    /* ---- Login ---- */
+    #login { min-height: 100vh; display: grid; place-items: center; padding: 2rem; }
+    #login form { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; width: 100%; max-width: 380px; }
+    #login h1 { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.02em; }
+    #login .field { margin-bottom: 1rem; }
+    #login label { display: block; margin-bottom: 0.4rem; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    #login button[type=submit] { width: 100%; padding: 10px; background: var(--accent); color: #0a1430; border: none; border-radius: 6px; font-weight: 600; margin-top: 0.5rem; }
+    #login button[type=submit]:hover { background: var(--accent-2); }
+    #login .signup-toggle { background: none; border: none; color: var(--muted); margin-top: 1rem; text-decoration: underline; font-size: 0.85rem; display: block; width: 100%; text-align: center; }
+    #login .err { color: var(--err); margin-top: 0.7rem; font-size: 0.85rem; min-height: 1.2em; }
+
+    /* ---- App layout ---- */
+    #app { display: none; min-height: 100vh; grid-template-columns: 240px 1fr; grid-template-rows: 56px 1fr; grid-template-areas: "topbar topbar" "sidebar main"; }
+    #app.ready { display: grid; }
+    .topbar { grid-area: topbar; display: flex; align-items: center; justify-content: space-between; padding: 0 1.4rem; background: var(--panel); border-bottom: 1px solid var(--border); }
+    .topbar-brand { font-weight: 600; letter-spacing: 0.04em; }
+    .topbar-brand b { color: var(--accent); }
+    .topbar-right { display: flex; align-items: center; gap: 1rem; }
+    .topbar-right .user { color: var(--muted); font-size: 0.85rem; }
+    .topbar-right button { background: none; border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 6px; }
+    .topbar-right button:hover { border-color: var(--accent); }
+
+    .sidebar { grid-area: sidebar; background: var(--panel); border-right: 1px solid var(--border); padding: 1rem 0.6rem; overflow-y: auto; }
+    .sidebar h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); padding: 0.5rem 0.8rem; margin-top: 0.8rem; }
+    .sidebar h4:first-child { margin-top: 0; }
+    .sidebar .tab { display: block; width: 100%; text-align: left; background: none; border: none; color: var(--text); padding: 0.55rem 0.8rem; border-radius: 6px; font-size: 0.9rem; }
+    .sidebar .tab:hover { background: var(--panel-2); }
+    .sidebar .tab.active { background: var(--accent); color: #0a1430; font-weight: 600; }
+
+    .main { grid-area: main; overflow-y: auto; padding: 2rem 2.5rem 4rem; }
+    .main h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .main .sub { color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; }
+    .section { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.6rem; margin-bottom: 1.5rem; }
+    .section > h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .section > .help { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
+
+    .field-row { display: grid; grid-template-columns: 1fr; gap: 0.4rem; padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
+    .field-row:last-child { border-bottom: none; }
+    .field-row .label { display: flex; align-items: baseline; gap: 0.6rem; }
+    .field-row .label-text { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .field-row .label-key { font-size: 0.7rem; font-family: ui-monospace, SFMono-Regular, monospace; color: #555c6e; }
+    .field-row .ctrl { display: flex; gap: 0.5rem; align-items: center; }
+    .field-row .save-state { font-size: 0.78rem; color: var(--muted); min-width: 80px; text-align: right; }
+    .field-row .save-state.ok { color: var(--ok); }
+    .field-row .save-state.err { color: var(--err); }
+
+    /* Media */
+    .media-row { display: grid; grid-template-columns: 100px 1fr auto; gap: 1rem; align-items: center; padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
+    .media-row:last-child { border-bottom: none; }
+    .media-thumb { width: 100px; height: 70px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; display: grid; place-items: center; overflow: hidden; }
+    .media-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .media-thumb .empty { color: var(--muted); font-size: 0.75rem; }
+    .media-info .label-text { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+    .media-info .url { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.75rem; color: #6c7588; word-break: break-all; }
+    .media-row .upload-btn { padding: 8px 14px; background: var(--accent); color: #0a1430; border: none; border-radius: 6px; font-weight: 500; white-space: nowrap; }
+    .media-row .upload-btn:hover { background: var(--accent-2); }
+    .media-row .save-state { font-size: 0.78rem; color: var(--muted); min-width: 100px; text-align: right; }
+    .media-row .save-state.ok { color: var(--ok); }
+    .media-row .save-state.err { color: var(--err); }
+
+    /* Blocks */
+    .region { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.2rem; margin-bottom: 1rem; }
+    .region-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; gap: 0.8rem; }
+    .region-head h4 { font-size: 0.95rem; font-weight: 600; }
+    .region-head .desc { font-size: 0.78rem; color: var(--muted); }
+    .region-head .add-btn { padding: 6px 12px; background: var(--accent); color: #0a1430; border: none; border-radius: 6px; font-weight: 500; font-size: 0.85rem; }
+    .region-head .add-btn:hover { background: var(--accent-2); }
+    .block-card { display: grid; grid-template-columns: auto 1fr auto auto auto auto; gap: 0.7rem; align-items: center; padding: 0.65rem 0.8rem; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 0.5rem; }
+    .block-card .order { width: 50px; }
+    .block-card .order input { padding: 4px 6px; text-align: center; font-size: 0.85rem; }
+    .block-card .summary { font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .block-card .summary .type-chip { display: inline-block; background: var(--accent); color: #0a1430; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; margin-right: 0.6rem; font-weight: 500; letter-spacing: 0.04em; }
+    .block-card .visible-toggle { padding: 4px 10px; background: var(--panel-2); border: 1px solid var(--border); color: var(--text); border-radius: 4px; font-size: 0.78rem; }
+    .block-card .visible-toggle.hidden { color: var(--muted); }
+    .block-card .edit-btn, .block-card .del-btn { padding: 4px 10px; border: 1px solid var(--border); background: none; color: var(--text); border-radius: 4px; font-size: 0.78rem; }
+    .block-card .edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .block-card .del-btn:hover { border-color: var(--err); color: var(--err); }
+
+    /* Modal (block editor + type picker) */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 2rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal-head { padding: 1.2rem 1.6rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .modal-head h3 { font-size: 1.05rem; font-weight: 600; }
+    .modal-head button.close { background: none; border: none; color: var(--muted); font-size: 1.4rem; padding: 0; }
+    .modal-body { padding: 1.4rem 1.6rem; }
+    .modal-foot { padding: 1rem 1.6rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.6rem; }
+    .modal-foot button { padding: 8px 18px; border-radius: 6px; font-weight: 500; border: 1px solid var(--border); background: none; color: var(--text); }
+    .modal-foot button.primary { background: var(--accent); color: #0a1430; border-color: var(--accent); }
+    .modal-foot button.primary:hover { background: var(--accent-2); }
+    .modal-foot button:not(.primary):hover { border-color: var(--accent); }
+    .modal-field { margin-bottom: 1rem; }
+    .modal-field label { display: block; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+    .modal-field .upload-img { display: flex; gap: 0.6rem; align-items: center; }
+    .modal-field .upload-img .preview { width: 60px; height: 45px; background: var(--panel-2); border-radius: 4px; overflow: hidden; flex: 0 0 60px; }
+    .modal-field .upload-img .preview img { width: 100%; height: 100%; object-fit: cover; }
+    .modal-field small.hint { display: block; color: var(--muted); font-size: 0.78rem; margin-top: 0.3rem; }
+    .type-picker { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .type-picker button { padding: 0.9rem 1rem; background: var(--panel-2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; text-align: left; cursor: pointer; }
+    .type-picker button:hover { border-color: var(--accent); }
+    .type-picker button b { display: block; font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .type-picker button span { color: var(--muted); font-size: 0.8rem; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; padding: 0.8rem 1.2rem; background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); font-size: 0.9rem; opacity: 0; transform: translateY(20px); transition: opacity 0.3s, transform 0.3s; z-index: 999; max-width: 360px; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.ok { border-left-color: var(--ok); }
+    .toast.err { border-left-color: var(--err); }
+
+    .empty-state { color: var(--muted); font-style: italic; font-size: 0.85rem; padding: 0.5rem 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ============ Login ============ -->
+  <div id="login">
+    <form id="login-form">
+      <h1>Autoforum — panel administracyjny</h1>
+      <div class="field">
+        <label for="li-email">E-mail</label>
+        <input id="li-email" type="email" required autocomplete="email" />
+      </div>
+      <div class="field">
+        <label for="li-pass">Hasło</label>
+        <input id="li-pass" type="password" required autocomplete="current-password" />
+      </div>
+      <button type="submit" id="li-submit">Zaloguj się</button>
+      <div class="err" id="li-err"></div>
+      <p style="color:var(--muted);font-size:0.78rem;margin-top:1rem;line-height:1.5;text-align:center;">
+        Konta tworzy administrator w panelu Supabase.<br />Aby uzyskać dostęp — skontaktuj się.
+      </p>
+    </form>
+  </div>
+
+  <!-- ============ App ============ -->
+  <div id="app">
+    <div class="topbar">
+      <div class="topbar-brand">Autoforum · <b>CMS</b></div>
+      <div class="topbar-right">
+        <span class="user" id="who"></span>
+        <button id="logout">Wyloguj</button>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <h4>Strony</h4>
+      <button class="tab" data-tab="landing">Strona główna</button>
+      <button class="tab" data-tab="mercedes">Mercedes-Benz</button>
+      <button class="tab" data-tab="maybach">Mercedes-Maybach</button>
+      <button class="tab" data-tab="zespol-mercedes">Zespół — Mercedes</button>
+      <button class="tab" data-tab="zespol-maybach">Zespół — Maybach</button>
+      <h4>Globalne</h4>
+      <button class="tab" data-tab="global">Logo · wspólne</button>
+    </aside>
+
+    <main class="main" id="main"></main>
+  </div>
+
+  <!-- ============ Modal ============ -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+      <div class="modal-head">
+        <h3 id="modal-title">…</h3>
+        <button class="close" type="button" id="modal-close">×</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-foot" id="modal-foot"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ============================================================
+  // Config
+  // ============================================================
+  const SUPABASE_URL = 'https://wjxatkkftxuztgsvrnkl.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_g1ViZZHf6mUXxw9e5DOaeQ_GQZmgFfa';
+  const STORAGE_BUCKET = 'cms-media';
+
+  const PAGE_LABELS = {
+    landing: 'Strona główna',
+    mercedes: 'Mercedes-Benz',
+    maybach: 'Mercedes-Maybach',
+    'zespol-mercedes': 'Zespół — Mercedes',
+    'zespol-maybach': 'Zespół — Maybach',
+    global: 'Globalne'
+  };
+
+  const REGION_LABELS = {
+    'landing.before-footer':              { name: 'Przed stopką',                desc: 'Pasek promocyjny (np. „Otwarcie 15.06")' },
+    'mercedes.after-hero':                { name: 'Po hero',                     desc: 'Pasek promo lub dodatkowa sekcja' },
+    'mercedes.models':                    { name: 'Modele (siatka)',             desc: 'Karty modeli — XL/MD/SM' },
+    'mercedes.after-models':              { name: 'Po sekcji "Modele"',          desc: 'Dowolny blok' },
+    'mercedes.after-feature':             { name: 'Po sekcji "Salon"',           desc: 'Dowolny blok' },
+    'mercedes.before-footer':             { name: 'Przed stopką',                desc: 'Dowolny blok' },
+    'maybach.after-hero':                 { name: 'Po hero',                     desc: 'Dowolny blok' },
+    'maybach.after-quote':                { name: 'Po cytacie',                  desc: 'Dowolny blok' },
+    'maybach.after-split':                { name: 'Po sekcji "Atelier"',         desc: 'Dowolny blok' },
+    'maybach.before-footer':              { name: 'Przed stopką',                desc: 'Dowolny blok' },
+    'zespol-mercedes.before-team-list':   { name: 'Przed listą zespołu',         desc: 'Dowolny blok' },
+    'zespol-mercedes.team-list':          { name: 'Lista zespołu',               desc: 'Karty doradców' },
+    'zespol-mercedes.before-footer':      { name: 'Przed stopką',                desc: 'Dowolny blok' },
+    'zespol-maybach.before-team-list':    { name: 'Przed listą zespołu',         desc: 'Dowolny blok' },
+    'zespol-maybach.team-list':           { name: 'Lista zespołu',               desc: 'Karty doradców' },
+    'zespol-maybach.before-footer':       { name: 'Przed stopką',                desc: 'Dowolny blok' }
+  };
+
+  // Block type schemas: declare fields with label, kind, optional default
+  const BLOCK_SCHEMA = {
+    model_card: {
+      label: 'Karta modelu',
+      desc: 'Zdjęcie + nazwa + cena + link (Mercedes)',
+      regions: ['mercedes.models'],
+      fields: [
+        { key: 'image_url', label: 'Zdjęcie', kind: 'image' },
+        { key: 'alt',       label: 'Tekst alternatywny (alt)', kind: 'text' },
+        { key: 'series',    label: 'Linia (np. „Klasa S · Sedan · 2026")', kind: 'text' },
+        { key: 'name',      label: 'Nazwa modelu (np. „S 580 e 4MATIC")', kind: 'text' },
+        { key: 'price',     label: 'Cena (np. „od 599 000 zł")', kind: 'text' },
+        { key: 'href',      label: 'Link (na kliknięcie karty)', kind: 'url' },
+        { key: 'size',      label: 'Wielkość karty', kind: 'select', options: [['xl','XL (1 duża)'],['md','MD (średnia)'],['sm','SM (mała)']], default: 'sm' }
+      ]
+    },
+    team_member: {
+      label: 'Doradca / pracownik',
+      desc: 'Portret + imię + email + telefon',
+      regions: ['zespol-mercedes.team-list', 'zespol-maybach.team-list'],
+      fields: [
+        { key: 'portrait_url', label: 'Portret (zdjęcie)', kind: 'image' },
+        { key: 'name',         label: 'Imię i nazwisko', kind: 'text' },
+        { key: 'email',        label: 'E-mail', kind: 'text' },
+        { key: 'phone',        label: 'Telefon', kind: 'text' }
+      ]
+    },
+    promo_strip: {
+      label: 'Pasek promocyjny',
+      desc: 'Wąski poziomy pasek z tekstem i linkiem',
+      universal: true,
+      fields: [
+        { key: 'text',       label: 'Tekst', kind: 'text' },
+        { key: 'link_label', label: 'Etykieta linku (opcjonalna)', kind: 'text' },
+        { key: 'link_href',  label: 'Link (opcjonalny)', kind: 'url' },
+        { key: 'color',      label: 'Kolor', kind: 'select', options: [['default','Czarny (Mercedes)'],['bronze','Brąz (Maybach)'],['cream','Krem (Maybach light)']], default: 'default' }
+      ]
+    },
+    feature_split: {
+      label: 'Sekcja split (zdjęcie + tekst)',
+      desc: 'Pełna sekcja z fotem po lewej/prawej i opisem',
+      universal: true,
+      fields: [
+        { key: 'image_url',      label: 'Zdjęcie', kind: 'image' },
+        { key: 'image_position', label: 'Pozycja zdjęcia', kind: 'select', options: [['left','Po lewej'],['right','Po prawej']], default: 'left' },
+        { key: 'eyebrow',        label: 'Etykieta (mała, nad tytułem)', kind: 'text' },
+        { key: 'title',          label: 'Tytuł (część zwykła)', kind: 'text' },
+        { key: 'title_bold',     label: 'Tytuł (część pogrubiona)', kind: 'text' },
+        { key: 'body_p1',        label: 'Akapit 1', kind: 'longtext' },
+        { key: 'body_p2',        label: 'Akapit 2', kind: 'longtext' },
+        { key: 'list_items',     label: 'Lista (po jednej pozycji w linii)', kind: 'lines' }
+      ]
+    },
+    quote_ribbon: {
+      label: 'Cytat na wstążce',
+      desc: 'Jedna linia tekstu na pełnej szerokości',
+      universal: true,
+      fields: [
+        { key: 'text', label: 'Tekst cytatu', kind: 'text' }
+      ]
+    },
+    image_full: {
+      label: 'Duże zdjęcie (pełna szerokość)',
+      desc: 'Full-bleed obrazek z opcjonalnym podpisem',
+      universal: true,
+      fields: [
+        { key: 'image_url', label: 'Zdjęcie', kind: 'image' },
+        { key: 'alt',       label: 'Tekst alternatywny', kind: 'text' },
+        { key: 'caption',   label: 'Podpis (opcjonalny)', kind: 'text' }
+      ]
+    },
+    cta_section: {
+      label: 'Sekcja CTA',
+      desc: 'Tytuł + krótki opis + duży przycisk',
+      universal: true,
+      fields: [
+        { key: 'title',       label: 'Tytuł (część zwykła)', kind: 'text' },
+        { key: 'title_bold',  label: 'Tytuł (część pogrubiona)', kind: 'text' },
+        { key: 'sub',         label: 'Opis', kind: 'longtext' },
+        { key: 'button_label',label: 'Etykieta przycisku', kind: 'text' },
+        { key: 'button_href', label: 'Link przycisku', kind: 'url' }
+      ]
+    },
+    text_section: {
+      label: 'Sekcja tekstowa',
+      desc: 'Tytuł + kilka akapitów',
+      universal: true,
+      fields: [
+        { key: 'eyebrow',         label: 'Etykieta nad tytułem', kind: 'text' },
+        { key: 'title',           label: 'Tytuł (część zwykła)', kind: 'text' },
+        { key: 'title_bold',      label: 'Tytuł (część pogrubiona)', kind: 'text' },
+        { key: 'body_paragraphs', label: 'Akapity (każdy w osobnej linii)', kind: 'lines' }
+      ]
+    }
+  };
+
+  // Map page → list of regions for that page
+  const PAGE_REGIONS = {
+    landing: ['landing.before-footer'],
+    mercedes: ['mercedes.after-hero','mercedes.models','mercedes.after-models','mercedes.after-feature','mercedes.before-footer'],
+    maybach: ['maybach.after-hero','maybach.after-quote','maybach.after-split','maybach.before-footer'],
+    'zespol-mercedes': ['zespol-mercedes.before-team-list','zespol-mercedes.team-list','zespol-mercedes.before-footer'],
+    'zespol-maybach': ['zespol-maybach.before-team-list','zespol-maybach.team-list','zespol-maybach.before-footer']
+  };
+
+  // ============================================================
+  // State
+  // ============================================================
+  let auth = null;        // { access_token, refresh_token, user: {id, email} }
+  let strings = [];       // all cms_strings
+  let media = [];         // all cms_media
+  let blocks = [];        // all cms_blocks (incl hidden)
+  let currentTab = null;
+
+  // ============================================================
+  // Auth
+  // ============================================================
+  function saveAuth(a) {
+    auth = a;
+    localStorage.setItem('cms.auth', JSON.stringify(a));
+  }
+  function loadAuth() {
+    try {
+      const raw = localStorage.getItem('cms.auth');
+      if (!raw) return null;
+      const a = JSON.parse(raw);
+      if (!a || !a.access_token) return null;
+      return a;
+    } catch (_) { return null; }
+  }
+  function clearAuth() {
+    auth = null;
+    localStorage.removeItem('cms.auth');
+  }
+
+  function authHeaders(extra) {
+    return Object.assign({
+      apikey: SUPABASE_KEY,
+      Authorization: 'Bearer ' + (auth ? auth.access_token : SUPABASE_KEY)
+    }, extra || {});
+  }
+
+  // ============================================================
+  // API helpers
+  // ============================================================
+  async function apiFetch(path, opts) {
+    opts = opts || {};
+    const headers = authHeaders(opts.headers);
+    if (opts.body && typeof opts.body === 'object' && !(opts.body instanceof Blob) && !(opts.body instanceof FormData)) {
+      headers['Content-Type'] = 'application/json';
+      opts.body = JSON.stringify(opts.body);
+    }
+    if (opts.prefer) headers['Prefer'] = opts.prefer;
+    const url = path.startsWith('http') ? path : (SUPABASE_URL + path);
+    const r = await fetch(url, Object.assign({}, opts, { headers }));
+    if (!r.ok) {
+      let msg = 'HTTP ' + r.status;
+      try { const j = await r.json(); msg = j.message || j.error_description || j.error || msg; } catch(_){}
+      throw new Error(msg);
+    }
+    const ct = r.headers.get('content-type') || '';
+    if (ct.indexOf('json') >= 0) return r.json();
+    return null;
+  }
+
+  async function loginRequest(email, password, isSignup) {
+    const endpoint = isSignup ? '/auth/v1/signup' : '/auth/v1/token?grant_type=password';
+    return apiFetch(endpoint, { method: 'POST', body: { email, password } });
+  }
+
+  async function loadAll() {
+    const [s, m, b] = await Promise.all([
+      apiFetch('/rest/v1/cms_strings?select=key,value,page,label,kind&order=page.asc,key.asc'),
+      apiFetch('/rest/v1/cms_media?select=key,url,page,label,alt&order=page.asc,key.asc'),
+      apiFetch('/rest/v1/cms_blocks?select=id,page,region,type,data,order_index,visible&order=region.asc,order_index.asc')
+    ]);
+    strings = s; media = m; blocks = b;
+  }
+
+  async function updateString(key, value) {
+    return apiFetch('/rest/v1/cms_strings?key=eq.' + encodeURIComponent(key), {
+      method: 'PATCH',
+      prefer: 'return=minimal',
+      body: { value: value, updated_at: new Date().toISOString(), updated_by: auth.user.id }
+    });
+  }
+  async function updateMediaUrl(key, url) {
+    return apiFetch('/rest/v1/cms_media?key=eq.' + encodeURIComponent(key), {
+      method: 'PATCH',
+      prefer: 'return=minimal',
+      body: { url: url, updated_at: new Date().toISOString(), updated_by: auth.user.id }
+    });
+  }
+  async function upsertBlock(block) {
+    if (block.id) {
+      return apiFetch('/rest/v1/cms_blocks?id=eq.' + block.id, {
+        method: 'PATCH',
+        prefer: 'return=representation',
+        body: {
+          page: block.page, region: block.region, type: block.type,
+          data: block.data, order_index: block.order_index, visible: block.visible,
+          updated_at: new Date().toISOString(), updated_by: auth.user.id
+        }
+      });
+    } else {
+      return apiFetch('/rest/v1/cms_blocks', {
+        method: 'POST',
+        prefer: 'return=representation',
+        body: {
+          page: block.page, region: block.region, type: block.type,
+          data: block.data, order_index: block.order_index, visible: block.visible !== false,
+          updated_by: auth.user.id
+        }
+      });
+    }
+  }
+  async function deleteBlock(id) {
+    return apiFetch('/rest/v1/cms_blocks?id=eq.' + id, { method: 'DELETE', prefer: 'return=minimal' });
+  }
+  async function setBlockVisibility(id, visible) {
+    return apiFetch('/rest/v1/cms_blocks?id=eq.' + id, {
+      method: 'PATCH', prefer: 'return=minimal',
+      body: { visible: visible, updated_at: new Date().toISOString(), updated_by: auth.user.id }
+    });
+  }
+  async function setBlockOrder(id, order_index) {
+    return apiFetch('/rest/v1/cms_blocks?id=eq.' + id, {
+      method: 'PATCH', prefer: 'return=minimal',
+      body: { order_index: order_index, updated_at: new Date().toISOString(), updated_by: auth.user.id }
+    });
+  }
+
+  // ====== Storage upload ======
+  async function uploadFile(file) {
+    const ext = (file.name.split('.').pop() || 'bin').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const safe = file.name.replace(/\.[^.]+$/,'').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,40) || 'image';
+    const path = Date.now() + '_' + safe + '.' + ext;
+    const url = SUPABASE_URL + '/storage/v1/object/' + STORAGE_BUCKET + '/' + encodeURIComponent(path);
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: authHeaders({ 'Content-Type': file.type || 'application/octet-stream' }),
+      body: file
+    });
+    if (!r.ok) {
+      let msg = 'Upload failed ' + r.status;
+      try { const j = await r.json(); msg = j.message || msg; } catch(_){}
+      throw new Error(msg);
+    }
+    return SUPABASE_URL + '/storage/v1/object/public/' + STORAGE_BUCKET + '/' + encodeURIComponent(path);
+  }
+
+  // ============================================================
+  // UI: Toast
+  // ============================================================
+  const toastEl = document.getElementById('toast');
+  let toastTimer = null;
+  function toast(msg, kind) {
+    toastEl.textContent = msg;
+    toastEl.className = 'toast show ' + (kind || '');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.className = 'toast ' + (kind || ''); }, 2600);
+  }
+
+  // ============================================================
+  // UI: Login
+  // ============================================================
+  const loginEl = document.getElementById('login');
+  const appEl = document.getElementById('app');
+  const errEl = document.getElementById('li-err');
+
+  document.getElementById('login-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    errEl.textContent = '';
+    const email = document.getElementById('li-email').value.trim();
+    const pass = document.getElementById('li-pass').value;
+    try {
+      const r = await loginRequest(email, pass, false);
+      saveAuth({ access_token: r.access_token, refresh_token: r.refresh_token, user: { id: r.user.id, email: r.user.email } });
+      await bootApp();
+    } catch (e) {
+      errEl.textContent = e.message || String(e);
+    }
+  });
+
+  document.getElementById('logout').addEventListener('click', function () {
+    clearAuth();
+    location.reload();
+  });
+
+  // ============================================================
+  // UI: Boot
+  // ============================================================
+  async function bootApp() {
+    try {
+      await loadAll();
+    } catch (e) {
+      // Token might be invalid → force re-login
+      if (/JWT|token|401|403/i.test(e.message)) {
+        clearAuth();
+        toast('Sesja wygasła, zaloguj się ponownie.', 'err');
+        location.reload();
+        return;
+      }
+      toast('Błąd ładowania: ' + e.message, 'err');
+      return;
+    }
+    loginEl.style.display = 'none';
+    appEl.classList.add('ready');
+    document.getElementById('who').textContent = auth.user.email;
+
+    // Wire tabs
+    document.querySelectorAll('.sidebar .tab').forEach(function (btn) {
+      btn.addEventListener('click', function () { activateTab(btn.dataset.tab); });
+    });
+    activateTab('landing');
+  }
+
+  // ============================================================
+  // UI: Tabs / Page rendering
+  // ============================================================
+  function activateTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.sidebar .tab').forEach(function (b) { b.classList.toggle('active', b.dataset.tab === tab); });
+    renderPage(tab);
+  }
+
+  function renderPage(page) {
+    const main = document.getElementById('main');
+    main.innerHTML = '';
+
+    const h2 = document.createElement('h2');
+    h2.textContent = PAGE_LABELS[page] || page;
+    main.appendChild(h2);
+    const sub = document.createElement('div');
+    sub.className = 'sub';
+    sub.textContent = page === 'global'
+      ? 'Logo pojawiające się na wielu stronach naraz.'
+      : 'Wszystkie edytowalne elementy tej strony. Zmiany zapisują się automatycznie po wyjściu z pola.';
+    main.appendChild(sub);
+
+    // STRINGS
+    const pageStrings = strings.filter(function (s) { return s.page === page; });
+    if (pageStrings.length) {
+      const sec = makeSection('Teksty, linki', 'Klikni w pole i edytuj. Zapis automatyczny.');
+      pageStrings.forEach(function (s) { sec.appendChild(renderStringRow(s)); });
+      main.appendChild(sec);
+    }
+
+    // MEDIA
+    const pageMedia = media.filter(function (m) { return m.page === page; });
+    if (pageMedia.length) {
+      const sec = makeSection('Zdjęcia, logo', 'Kliknij „Wymień zdjęcie" aby załadować nowy plik (jpg / png / webp).');
+      pageMedia.forEach(function (m) { sec.appendChild(renderMediaRow(m)); });
+      main.appendChild(sec);
+    }
+
+    // BLOCKS (only on real pages, not global)
+    const regions = PAGE_REGIONS[page];
+    if (regions && regions.length) {
+      const sec = makeSection('Bloki — dodawanie, edycja, kolejność', 'Każdy blok pojawia się na stronie w odpowiednim miejscu (np. „Po hero" = zaraz po pierwszym ekranie).');
+      regions.forEach(function (r) { sec.appendChild(renderRegion(page, r)); });
+      main.appendChild(sec);
+    }
+
+    if (!pageStrings.length && !pageMedia.length && !(regions && regions.length)) {
+      const e = document.createElement('div');
+      e.className = 'empty-state';
+      e.textContent = 'Brak elementów do edycji na tej stronie.';
+      main.appendChild(e);
+    }
+  }
+
+  function makeSection(title, help) {
+    const sec = document.createElement('section');
+    sec.className = 'section';
+    const h3 = document.createElement('h3');
+    h3.textContent = title;
+    sec.appendChild(h3);
+    if (help) {
+      const p = document.createElement('p');
+      p.className = 'help';
+      p.textContent = help;
+      sec.appendChild(p);
+    }
+    return sec;
+  }
+
+  // ====== String row ======
+  function renderStringRow(row) {
+    const wrap = document.createElement('div');
+    wrap.className = 'field-row';
+
+    const lab = document.createElement('div');
+    lab.className = 'label';
+    const labText = document.createElement('span');
+    labText.className = 'label-text';
+    labText.textContent = row.label || row.key;
+    const labKey = document.createElement('span');
+    labKey.className = 'label-key';
+    labKey.textContent = row.key + (row.kind && row.kind !== 'text' ? ' · ' + row.kind : '');
+    lab.appendChild(labText);
+    lab.appendChild(labKey);
+
+    const ctrl = document.createElement('div');
+    ctrl.className = 'ctrl';
+    const input = row.kind === 'longtext' || row.kind === 'html'
+      ? document.createElement('textarea')
+      : document.createElement('input');
+    if (input.tagName === 'INPUT') input.type = (row.kind === 'href' || row.kind === 'url') ? 'url' : 'text';
+    input.value = row.value || '';
+
+    const state = document.createElement('span');
+    state.className = 'save-state';
+
+    let saving = false, last = row.value || '';
+    async function save() {
+      if (saving || input.value === last) return;
+      saving = true; state.textContent = 'Zapisuję…'; state.className = 'save-state';
+      try {
+        await updateString(row.key, input.value);
+        last = input.value; row.value = input.value;
+        state.textContent = 'Zapisano ✓'; state.className = 'save-state ok';
+        setTimeout(function(){ if (state.textContent === 'Zapisano ✓') state.textContent = ''; }, 2000);
+      } catch (e) {
+        state.textContent = 'Błąd: ' + e.message; state.className = 'save-state err';
+      } finally { saving = false; }
+    }
+    input.addEventListener('blur', save);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter' && input.tagName === 'INPUT') { e.preventDefault(); input.blur(); } });
+
+    ctrl.appendChild(input);
+    ctrl.appendChild(state);
+    wrap.appendChild(lab);
+    wrap.appendChild(ctrl);
+    return wrap;
+  }
+
+  // ====== Media row ======
+  function renderMediaRow(row) {
+    const wrap = document.createElement('div');
+    wrap.className = 'media-row';
+
+    const thumb = document.createElement('div');
+    thumb.className = 'media-thumb';
+    if (row.url) {
+      const img = document.createElement('img');
+      img.src = row.url; img.alt = row.alt || row.label || row.key;
+      img.onerror = function () { thumb.innerHTML = '<span class="empty">brak</span>'; };
+      thumb.appendChild(img);
+    } else {
+      thumb.innerHTML = '<span class="empty">brak</span>';
+    }
+
+    const info = document.createElement('div');
+    info.className = 'media-info';
+    info.innerHTML = '<div class="label-text">' + escapeHtml(row.label || row.key) + '</div><div class="url">' + escapeHtml(row.url || '') + '</div>';
+
+    const state = document.createElement('span');
+    state.className = 'save-state';
+
+    const btn = document.createElement('button');
+    btn.className = 'upload-btn';
+    btn.textContent = 'Wymień zdjęcie';
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file'; fileInput.accept = 'image/*'; fileInput.style.display = 'none';
+    btn.addEventListener('click', function () { fileInput.click(); });
+    fileInput.addEventListener('change', async function () {
+      const f = fileInput.files && fileInput.files[0];
+      if (!f) return;
+      state.textContent = 'Wgrywam…'; state.className = 'save-state';
+      try {
+        const url = await uploadFile(f);
+        await updateMediaUrl(row.key, url);
+        row.url = url;
+        info.querySelector('.url').textContent = url;
+        thumb.innerHTML = ''; const img = document.createElement('img'); img.src = url; thumb.appendChild(img);
+        state.textContent = 'Zapisano ✓'; state.className = 'save-state ok';
+        setTimeout(function(){ if (state.textContent === 'Zapisano ✓') state.textContent = ''; }, 2000);
+      } catch (e) {
+        state.textContent = 'Błąd: ' + e.message; state.className = 'save-state err';
+      }
+      fileInput.value = '';
+    });
+
+    wrap.appendChild(thumb);
+    wrap.appendChild(info);
+    wrap.appendChild(state);
+    wrap.appendChild(btn);
+    wrap.appendChild(fileInput);
+    return wrap;
+  }
+
+  // ====== Region (block list + add) ======
+  function renderRegion(page, region) {
+    const wrap = document.createElement('div');
+    wrap.className = 'region';
+
+    const head = document.createElement('div');
+    head.className = 'region-head';
+    const meta = REGION_LABELS[region] || { name: region, desc: '' };
+    const left = document.createElement('div');
+    left.innerHTML = '<h4>' + escapeHtml(meta.name) + '</h4><div class="desc">' + escapeHtml(meta.desc) + '</div>';
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-btn';
+    addBtn.textContent = '+ Dodaj blok';
+    addBtn.addEventListener('click', function () { openTypePicker(page, region); });
+    head.appendChild(left);
+    head.appendChild(addBtn);
+    wrap.appendChild(head);
+
+    const regionBlocks = blocks.filter(function (b) { return b.region === region; })
+      .sort(function (a, b) { return a.order_index - b.order_index; });
+
+    if (!regionBlocks.length) {
+      const e = document.createElement('div');
+      e.className = 'empty-state';
+      e.textContent = 'Brak bloków w tym regionie.';
+      wrap.appendChild(e);
+    } else {
+      regionBlocks.forEach(function (b) { wrap.appendChild(renderBlockCard(b)); });
+    }
+
+    return wrap;
+  }
+
+  function renderBlockCard(b) {
+    const wrap = document.createElement('div');
+    wrap.className = 'block-card';
+
+    // order
+    const order = document.createElement('div'); order.className = 'order';
+    const orderIn = document.createElement('input'); orderIn.type = 'number'; orderIn.step = '0.5'; orderIn.value = b.order_index;
+    orderIn.addEventListener('change', async function () {
+      try {
+        const v = parseFloat(orderIn.value);
+        await setBlockOrder(b.id, v); b.order_index = v;
+        toast('Kolejność zapisana', 'ok');
+        renderPage(currentTab);
+      } catch (e) { toast('Błąd: ' + e.message, 'err'); orderIn.value = b.order_index; }
+    });
+    order.appendChild(orderIn);
+
+    // summary
+    const summary = document.createElement('div'); summary.className = 'summary';
+    const chip = document.createElement('span'); chip.className = 'type-chip';
+    chip.textContent = (BLOCK_SCHEMA[b.type] && BLOCK_SCHEMA[b.type].label) || b.type;
+    summary.appendChild(chip);
+    summary.appendChild(document.createTextNode(blockSummary(b)));
+
+    // visible toggle
+    const vis = document.createElement('button');
+    vis.className = 'visible-toggle' + (b.visible ? '' : ' hidden');
+    vis.textContent = b.visible ? 'Widoczny' : 'Ukryty';
+    vis.addEventListener('click', async function () {
+      try {
+        await setBlockVisibility(b.id, !b.visible); b.visible = !b.visible;
+        renderPage(currentTab);
+        toast(b.visible ? 'Pokazano' : 'Ukryto', 'ok');
+      } catch (e) { toast('Błąd: ' + e.message, 'err'); }
+    });
+
+    // edit
+    const editBtn = document.createElement('button'); editBtn.className = 'edit-btn'; editBtn.textContent = 'Edytuj';
+    editBtn.addEventListener('click', function () { openBlockEditor(b); });
+
+    // delete
+    const delBtn = document.createElement('button'); delBtn.className = 'del-btn'; delBtn.textContent = 'Usuń';
+    delBtn.addEventListener('click', async function () {
+      if (!confirm('Usunąć blok? Tej operacji nie można cofnąć w panelu (historia zapisana w bazie).')) return;
+      try {
+        await deleteBlock(b.id);
+        blocks = blocks.filter(function (x) { return x.id !== b.id; });
+        renderPage(currentTab);
+        toast('Usunięto', 'ok');
+      } catch (e) { toast('Błąd: ' + e.message, 'err'); }
+    });
+
+    wrap.appendChild(order);
+    wrap.appendChild(summary);
+    wrap.appendChild(vis);
+    wrap.appendChild(editBtn);
+    wrap.appendChild(delBtn);
+    return wrap;
+  }
+
+  function blockSummary(b) {
+    const d = b.data || {};
+    if (b.type === 'model_card') return d.name || '(bez nazwy)';
+    if (b.type === 'team_member') return d.name || '(bez nazwy)';
+    if (b.type === 'promo_strip') return (d.text || '').slice(0, 60);
+    if (b.type === 'quote_ribbon') return (d.text || '').slice(0, 60);
+    if (b.type === 'cta_section') return (d.title || '') + ' ' + (d.title_bold || '');
+    if (b.type === 'text_section') return (d.title || d.eyebrow || '').slice(0, 60);
+    if (b.type === 'feature_split') return (d.title || d.eyebrow || '').slice(0, 60);
+    if (b.type === 'image_full') return d.caption || '(zdjęcie)';
+    return '';
+  }
+
+  // ====== Type picker modal ======
+  function openTypePicker(page, region) {
+    const ov = document.getElementById('modal-overlay');
+    document.getElementById('modal-title').textContent = 'Dodaj blok — wybierz typ';
+    const body = document.getElementById('modal-body');
+    const foot = document.getElementById('modal-foot');
+    body.innerHTML = '';
+    foot.innerHTML = '';
+    const grid = document.createElement('div'); grid.className = 'type-picker';
+    Object.keys(BLOCK_SCHEMA).forEach(function (type) {
+      const meta = BLOCK_SCHEMA[type];
+      // Filter: if type has explicit regions, only allow there; if universal, allow anywhere except restricted lists
+      const allowed = meta.universal
+        ? !['mercedes.models','zespol-mercedes.team-list','zespol-maybach.team-list'].includes(region)
+        : (meta.regions || []).indexOf(region) >= 0;
+      if (!allowed) return;
+      const btn = document.createElement('button');
+      btn.innerHTML = '<b>' + escapeHtml(meta.label) + '</b><span>' + escapeHtml(meta.desc) + '</span>';
+      btn.addEventListener('click', function () {
+        closeModal();
+        openBlockEditor({ page: page, region: region, type: type, data: {}, order_index: nextOrderIndex(region), visible: true });
+      });
+      grid.appendChild(btn);
+    });
+    if (!grid.children.length) {
+      grid.innerHTML = '<div class="empty-state">Brak dostępnych typów dla tego regionu.</div>';
+    }
+    body.appendChild(grid);
+    const cancel = document.createElement('button');
+    cancel.textContent = 'Anuluj';
+    cancel.addEventListener('click', closeModal);
+    foot.appendChild(cancel);
+    ov.classList.add('open');
+  }
+
+  function nextOrderIndex(region) {
+    const rb = blocks.filter(function (b) { return b.region === region; });
+    if (!rb.length) return 1;
+    return Math.max.apply(null, rb.map(function (b) { return b.order_index; })) + 1;
+  }
+
+  // ====== Block editor modal ======
+  function openBlockEditor(b) {
+    const isNew = !b.id;
+    const schema = BLOCK_SCHEMA[b.type];
+    const ov = document.getElementById('modal-overlay');
+    document.getElementById('modal-title').textContent = (isNew ? 'Dodaj — ' : 'Edytuj — ') + (schema ? schema.label : b.type);
+    const body = document.getElementById('modal-body');
+    const foot = document.getElementById('modal-foot');
+    body.innerHTML = '';
+    foot.innerHTML = '';
+
+    const draft = Object.assign({}, b.data || {});
+
+    schema.fields.forEach(function (f) {
+      const wrap = document.createElement('div'); wrap.className = 'modal-field';
+      const lbl = document.createElement('label'); lbl.textContent = f.label;
+      wrap.appendChild(lbl);
+
+      if (f.kind === 'image') {
+        const row = document.createElement('div'); row.className = 'upload-img';
+        const prev = document.createElement('div'); prev.className = 'preview';
+        if (draft[f.key]) { const i = document.createElement('img'); i.src = draft[f.key]; prev.appendChild(i); }
+        const urlIn = document.createElement('input'); urlIn.type = 'url'; urlIn.value = draft[f.key] || ''; urlIn.placeholder = 'URL zdjęcia lub wgraj plik →';
+        const btn = document.createElement('button'); btn.textContent = 'Wgraj plik'; btn.type='button';
+        btn.style.cssText = 'padding:8px 14px;background:var(--accent);color:#0a1430;border:none;border-radius:6px;font-weight:500;white-space:nowrap;';
+        const fileIn = document.createElement('input'); fileIn.type='file'; fileIn.accept='image/*'; fileIn.style.display='none';
+        btn.addEventListener('click', function(){ fileIn.click(); });
+        fileIn.addEventListener('change', async function(){
+          const f2 = fileIn.files && fileIn.files[0]; if (!f2) return;
+          btn.textContent = 'Wgrywam…'; btn.disabled = true;
+          try {
+            const url = await uploadFile(f2);
+            urlIn.value = url; draft[f.key] = url;
+            prev.innerHTML = ''; const i = document.createElement('img'); i.src = url; prev.appendChild(i);
+            toast('Wgrane', 'ok');
+          } catch (e) { toast('Błąd: ' + e.message, 'err'); }
+          btn.textContent = 'Wgraj plik'; btn.disabled = false; fileIn.value = '';
+        });
+        urlIn.addEventListener('input', function(){ draft[f.key] = urlIn.value; });
+        row.appendChild(prev); row.appendChild(urlIn); row.appendChild(btn); row.appendChild(fileIn);
+        wrap.appendChild(row);
+      } else if (f.kind === 'longtext' || f.kind === 'lines') {
+        const ta = document.createElement('textarea');
+        ta.value = f.kind === 'lines'
+          ? (Array.isArray(draft[f.key]) ? draft[f.key].join('\n') : (draft[f.key] || ''))
+          : (draft[f.key] || '');
+        ta.addEventListener('input', function(){
+          if (f.kind === 'lines') draft[f.key] = ta.value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+          else draft[f.key] = ta.value;
+        });
+        wrap.appendChild(ta);
+      } else if (f.kind === 'select') {
+        const sel = document.createElement('select');
+        f.options.forEach(function (opt) {
+          const o = document.createElement('option'); o.value = opt[0]; o.textContent = opt[1];
+          sel.appendChild(o);
+        });
+        sel.value = draft[f.key] || f.default || f.options[0][0];
+        draft[f.key] = sel.value;
+        sel.addEventListener('change', function(){ draft[f.key] = sel.value; });
+        wrap.appendChild(sel);
+      } else {
+        const inp = document.createElement('input');
+        inp.type = (f.kind === 'url') ? 'url' : 'text';
+        inp.value = draft[f.key] || '';
+        inp.addEventListener('input', function(){ draft[f.key] = inp.value; });
+        wrap.appendChild(inp);
+      }
+
+      body.appendChild(wrap);
+    });
+
+    const cancel = document.createElement('button'); cancel.textContent = 'Anuluj';
+    cancel.addEventListener('click', closeModal);
+    const save = document.createElement('button'); save.textContent = 'Zapisz'; save.className = 'primary';
+    save.addEventListener('click', async function () {
+      save.disabled = true; save.textContent = 'Zapisuję…';
+      try {
+        const payload = Object.assign({}, b, { data: draft });
+        const res = await upsertBlock(payload);
+        const saved = Array.isArray(res) ? res[0] : res;
+        if (isNew) {
+          if (saved && saved.id) blocks.push(saved);
+        } else {
+          const idx = blocks.findIndex(function (x) { return x.id === b.id; });
+          if (idx >= 0 && saved) blocks[idx] = saved;
+        }
+        closeModal();
+        renderPage(currentTab);
+        toast(isNew ? 'Dodano' : 'Zapisano', 'ok');
+      } catch (e) { toast('Błąd: ' + e.message, 'err'); save.disabled = false; save.textContent = 'Zapisz'; }
+    });
+    foot.appendChild(cancel);
+    foot.appendChild(save);
+    ov.classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-overlay').addEventListener('click', function (e) {
+    if (e.target.id === 'modal-overlay') closeModal();
+  });
+
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  // ============================================================
+  // Init
+  // ============================================================
+  (function init() {
+    const a = loadAuth();
+    if (a) {
+      auth = a;
+      bootApp();
+    }
+  })();
+  </script>
+</body>
+</html>
