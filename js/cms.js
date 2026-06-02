@@ -323,6 +323,27 @@
     }
   }
 
+  // Reveal blocks rendered AFTER page.js already wired its IntersectionObserver.
+  // page.js observes only the .reveal nodes present at load; our async-rendered
+  // blocks are added later, so without this they'd stay at opacity:0 (invisible).
+  function revealNewBlocks(root) {
+    const els = root.querySelectorAll('.reveal:not(.in-view)');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in-view'); });
+      return;
+    }
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
   function patchBlocks(blocksByRegion) {
     document.querySelectorAll('[data-cms-region]').forEach(function (el) {
       const region = el.dataset.cmsRegion;
@@ -332,6 +353,7 @@
         const node = renderBlock(b, i);
         if (node) el.appendChild(node);
       });
+      revealNewBlocks(el);
     });
   }
 

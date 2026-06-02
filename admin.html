@@ -278,8 +278,19 @@
     .page-head .desc {
       color: var(--muted);
       font-size: 0.92rem;
-      margin-bottom: 2.2rem;
       max-width: 640px;
+    }
+    .page-head-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.4rem;
+      margin-bottom: 2.2rem;
+    }
+    .page-head-row > div { min-width: 0; }
+    .preview-link { flex-shrink: 0; }
+    @media (max-width: 560px) {
+      .page-head-row { flex-direction: column; gap: 0.9rem; }
     }
 
     .section {
@@ -845,6 +856,15 @@
     }
   };
 
+  // Live page each tab maps to (for the "Zobacz stronę" preview button)
+  const PAGE_FILE = {
+    landing: 'index.html',
+    mercedes: 'mercedes.html',
+    maybach: 'maybach.html',
+    'zespol-mercedes': 'zespol-mercedes.html',
+    'zespol-maybach': 'zespol-maybach.html'
+  };
+
   const PAGE_REGIONS = {
     landing: ['landing.before-footer'],
     mercedes: ['mercedes.after-hero','mercedes.models','mercedes.after-models','mercedes.after-feature','mercedes.before-footer'],
@@ -1069,7 +1089,13 @@
 
     const info = PAGE_INFO[page] || { name: page, desc: '' };
     const head = document.createElement('div'); head.className = 'page-head';
-    head.innerHTML = '<h2>' + escapeHtml(info.name) + '</h2><div class="desc">' + escapeHtml(info.desc) + '</div>';
+    const file = PAGE_FILE[page];
+    const previewLink = file
+      ? '<a class="btn-ghost preview-link" href="' + file + '?v=' + Date.now() + '" target="_blank" rel="noopener">Zobacz stronę ↗</a>'
+      : '';
+    head.innerHTML = '<div class="page-head-row">' +
+      '<div><h2>' + escapeHtml(info.name) + '</h2><div class="desc">' + escapeHtml(info.desc) + '</div></div>' +
+      previewLink + '</div>';
     main.appendChild(head);
 
     // ---- STRINGS (grouped) ----
@@ -1142,8 +1168,10 @@
     wrap.className = 'field-row';
 
     const lab = document.createElement('div');
+    const KIND_LABEL = { href: 'Link (adres)', url: 'Link (adres)', longtext: 'Dłuższy tekst', html: 'Tekst z formatowaniem' };
+    const kindLabel = KIND_LABEL[row.kind];
     lab.innerHTML = '<span class="label-text">' + escapeHtml(row.label || row.key) + '</span>' +
-                    '<span class="label-key">' + escapeHtml(row.key) + (row.kind && row.kind !== 'text' ? ' · ' + row.kind : '') + '</span>';
+                    (kindLabel ? '<span class="label-key">' + kindLabel + '</span>' : '');
 
     const ctrl = document.createElement('div'); ctrl.className = 'ctrl';
     const input = (row.kind === 'longtext' || row.kind === 'html')

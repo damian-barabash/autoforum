@@ -83,22 +83,30 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 6%;
+  bottom: 0;
   z-index: 2;
-  max-width: 2040px;
   margin: 0 auto;
-  padding: 0 8vw;
+  padding: 17vh 8vw 5vh;
   text-align: center;
   color: rgba(255, 255, 255, 0.92);
+  /* własny gradient u dołu hero — niezależnie od długości tekstu (edytowalnej
+     w CMS) zawsze siedzi na ciemnym pasie i nie wchodzi na jasną część auta */
+  background: linear-gradient(
+    to top,
+    rgba(8, 10, 20, 0.97) 0%,
+    rgba(8, 10, 20, 0.92) 42%,
+    rgba(8, 10, 20, 0.55) 74%,
+    rgba(8, 10, 20, 0) 100%
+  );
 }
 
 .mh-hero__intro p {
   font-family: 'Corporate A', sans-serif;
-  font-size: clamp(1.2rem, 1.55vw, 1.55rem);
-  line-height: 1.7;
-  margin: 0 auto 1.4rem;
+  font-size: clamp(1.05rem, 1.4vw, 1.45rem);
+  line-height: 1.65;
+  margin: 0 auto 1.3rem;
   letter-spacing: 0.01em;
-  max-width: 70ch;
+  max-width: 72ch;
 }
 
 .mh-hero__intro p:first-child {
