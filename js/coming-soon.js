@@ -13,32 +13,35 @@
     return;
   }
 
-  document.title = 'Autoforum Warszawa — Coming soon';
+  document.title = 'Nowy Świat — Zapraszamy wkrótce';
 
   var style = document.createElement('style');
   style.textContent =
-    'html, body { overflow: hidden !important; }' +
+    'html, body { overflow: hidden !important; background: #000 !important; }' +
     'body > *:not(#af-stub) { visibility: hidden !important; }' +
     '#af-stub {' +
       'position: fixed; inset: 0; z-index: 999999;' +
       'display: flex; flex-direction: column; align-items: center; justify-content: center;' +
-      'gap: 42px; background: #f3f3f3; text-align: center; padding: 24px;' +
+      'background: #000; text-align: center; padding: 24px;' +
     '}' +
-    '#af-stub .af-stub__wordmark { position: absolute; top: 34px; left: 40px; height: 22px; width: auto; }' +
-    '#af-stub .af-stub__star { width: clamp(96px, 14vw, 150px); height: auto; filter: brightness(0); opacity: 0.88; }' +
+    '#af-stub .af-stub__star {' +
+      'width: clamp(110px, 10vw, 150px); height: auto;' +
+      'filter: brightness(0) invert(1); margin-top: -10vh;' +
+    '}' +
     '#af-stub .af-stub__text {' +
       "font-family: 'Corporate A', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;" +
-      'font-weight: 400; font-style: normal; color: #0a0a0a;' +
-      'font-size: clamp(1.15rem, 2.6vw, 1.9rem);' +
-      'letter-spacing: 0.24em; text-transform: uppercase;' +
-      'margin: 0; padding-left: 0.24em;' +
+      'font-weight: 400; font-style: normal; color: #fff;' +
+      'font-size: clamp(2rem, 3.4vw, 3.1rem);' +
+      'letter-spacing: 0.03em;' +
+      'margin: 40px 0 0;' +
     '}' +
     '#af-stub .af-stub__sub {' +
-      "font-family: 'Inter', sans-serif; font-weight: 400; color: #6e7780;" +
-      'font-size: 0.78rem; letter-spacing: 0.11em; text-transform: uppercase;' +
-      'margin: -26px 0 0; padding-left: 0.11em;' +
-    '}' +
-    '@media (max-width: 640px) { #af-stub .af-stub__wordmark { top: 24px; left: 24px; height: 18px; } }';
+      "font-family: 'Corporate A', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;" +
+      'font-weight: 400; font-style: normal; color: #fff;' +
+      'font-size: clamp(1.1rem, 1.7vw, 1.6rem);' +
+      'letter-spacing: 0.025em;' +
+      'position: absolute; left: 0; right: 0; bottom: 13vh; margin: 0;' +
+    '}';
   document.head.appendChild(style);
 
   function mount() {
@@ -46,10 +49,9 @@
     var stub = document.createElement('div');
     stub.id = 'af-stub';
     stub.innerHTML =
-      '<img class="af-stub__wordmark" src="assets/img/autoforumlogo.png" alt="Auto Forum">' +
       '<img class="af-stub__star" src="assets/img/Mercedes-Logo.svg.png" alt="Mercedes-Benz">' +
-      '<p class="af-stub__text">Coming soon</p>' +
-      '<p class="af-stub__sub">Autoforum Warszawa</p>';
+      '<p class="af-stub__text">Nowy Świat</p>' +
+      '<p class="af-stub__sub">Zapraszamy wkrótce</p>';
     document.body.appendChild(stub);
   }
 
