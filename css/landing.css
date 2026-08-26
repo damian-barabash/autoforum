@@ -1,12 +1,14 @@
 /* ==========================================================================
    AUTOFORUM Landing — split screen Mercedes-Benz / Mercedes-Maybach
-   Lewa: jasna (białe / Mercedes), prawa: kremowa #e6e0d7 (Maybach)
+   Lewa: czarna (Mercedes-Benz), prawa: biała (Mercedes-Maybach) — paleta
+   Deep Black / Plain White wg brand manualu. Maybach = gwiazda + wordmark
+   MAYBACH (signet nie występuje jako originator).
    ========================================================================== */
 
 .landing {
   height: 100vh;
   background: #fff;
-  color: #0a0a0a;
+  color: #000;
   overflow: hidden;
   position: relative;
 }
@@ -31,7 +33,7 @@
 }
 
 .landing-header__meta {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -78,7 +80,7 @@
 }
 
 .half--mb {
-  background: #0a0a0a;
+  background: #000;
   color: #fff;
   transition: flex 0.9s cubic-bezier(0.77, 0, 0.175, 1),
               filter 0.6s ease,
@@ -87,12 +89,12 @@
 
 /* hover na lewej połowie — tło wjeżdża jasnym zdjęciem, tekst na czarny */
 .half--mb:hover {
-  color: #0a0a0a;
+  color: #000;
 }
 
 .half--mh {
-  background: #e6e0d7;
-  color: #1a1a1a;
+  background: #fff;
+  color: #000;
 }
 
 .half-bg {
@@ -115,7 +117,7 @@
 
 .half--mh .half-bg {
   background-image:
-    linear-gradient(180deg, rgba(230,224,215,0.6) 0%, rgba(230,224,215,0.2) 60%, rgba(230,224,215,0.92) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 60%, rgba(255,255,255,0.92) 100%),
     url('../assets/img/zdj/zdj-mm-index.webp');
 }
 
@@ -125,7 +127,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 26px;
+  gap: var(--gap, 48px);
   transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1),
               opacity 0.5s ease;
 }
@@ -147,13 +149,25 @@
   object-fit: contain;
 }
 
+.half-logo--mh {
+  flex-direction: column;
+  gap: 48px;                         /* ¾ x przy gwieździe 64 px */
+}
+
 .half--mh .half-logo__img {
-  width: 200px;
-  height: auto;
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  filter: brightness(0);             /* flat black star na białym */
+}
+
+.half-wordmark {
+  font-size: 22px;
+  letter-spacing: 0.26em;
 }
 
 .half-brand {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 13px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -173,7 +187,7 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 10px;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -194,7 +208,7 @@
   left: 50%;
   transform: translate(-50%, 30px);
   z-index: 5;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -244,7 +258,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 48px;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -267,7 +281,7 @@
 }
 
 .landing:has(.half--mb:hover) .ft-lead {
-  color: #0a0a0a;
+  color: #000;
 }
 
 .landing:has(.half--mb:hover) .ft-center {
@@ -319,7 +333,9 @@
   }
 
   .half--mb .half-logo__img { width: 90px; height: 90px; }
-  .half--mh .half-logo__img { width: 130px; }
+  .half--mh .half-logo__img { width: 90px; height: 90px; }
+  .half-logo--mh { gap: 28px; }
+  .half-wordmark { font-size: 16px; }
 
   .split:hover .half:not(:hover) {
     flex: 1;
@@ -389,6 +405,8 @@
     font-size: 10px;
   }
   .half--mb .half-logo__img { width: 74px; height: 74px; }
-  .half--mh .half-logo__img { width: 104px; }
+  .half--mh .half-logo__img { width: 74px; height: 74px; }
+  .half-logo--mh { gap: 22px; }
+  .half-wordmark { font-size: 14px; }
   .landing-footer { bottom: 16px; padding: 0 18px; }
 }

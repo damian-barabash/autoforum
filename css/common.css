@@ -1,9 +1,77 @@
 /* ==========================================================================
    AUTOFORUM Demo — common styles
-   Tylko dwa fonty: Corporate A Pro Regular + Inter Regular (lokalne).
-   Brak italica, brak innych wag.
+   Typografia wg brand manualu Mercedes-Benz / Mercedes-Maybach (2026-08):
+     - nagłówki  → MB Corpo A Title/Screen Condensed (oficjalne woff2, lokalne)
+     - copy/UI   → MB Corpo S Text / Title (oficjalne woff2, lokalne)
+   Nagłówki zawsze WYRAŹNIE większe niż copy. Brak italica, brak innych wag.
+   Paleta: Deep Black #000 / Plain White #fff (+ szarości). Brak koloru jako
+   wyróżnienia tekstu.
    ========================================================================== */
 
+/* ===== Oficjalne webfonty Mercedes-Benz (Workbench fonts 2.4.0, WOFF2) =====
+   MB Corpo A Title Condensed  → nagłówki duże (≥ ~40 px)
+   MB Corpo A Screen1/2 Cond   → nagłówki mniejsze (UI, wg manualu)
+   MB Corpo S Text Regular/Bold → copy, UI, przyciski
+   MB Corpo S Title Regular/Bold → subheadline'y
+   Fallback: Corporate A Pro / Inter (lokalne, jak dotąd). */
+
+@font-face {
+  font-family: 'MB Corpo A';
+  src: url('../assets/fonts/MBCorpoATitleCond-Regular-Web.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MB Corpo A Screen1';
+  src: url('../assets/fonts/MBCorpoAScreen1Cond-Regular-Web.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MB Corpo A Screen2';
+  src: url('../assets/fonts/MBCorpoAScreen2Cond-Regular-Web.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MB Corpo S';
+  src: url('../assets/fonts/MBCorpoSText-Regular-Web.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MB Corpo S';
+  src: url('../assets/fonts/MBCorpoSText-Bold-Web.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MB Corpo S Title';
+  src: url('../assets/fonts/MBCorpoSTitle-Regular-Web.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MB Corpo S Title';
+  src: url('../assets/fonts/MBCorpoSTitle-Bold-Web.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* fallbacki lokalne */
 @font-face {
   font-family: 'Corporate A';
   src: url('../assets/fonts/CorporateAPro-Regular.ttf') format('truetype');
@@ -18,6 +86,15 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+:root {
+  --font-head: 'MB Corpo A', 'Corporate A', 'Times New Roman', serif;        /* nagłówki */
+  --font-head-s: 'MB Corpo A Screen1', 'MB Corpo A', 'Corporate A', serif;   /* mniejsze nagłówki */
+  --font-text: 'MB Corpo S', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; /* copy/UI */
+  --font-sub: 'MB Corpo S Title', 'MB Corpo S', 'Inter', sans-serif;         /* subheadline */
+  --black: #000;
+  --white: #fff;
 }
 
 *,
@@ -41,22 +118,69 @@ body {
 }
 
 body {
-  font-family: 'Corporate A', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-text);
   font-weight: 400;
   font-style: normal;
-  line-height: 1.55;
-  color: #0a0a0a;
+  line-height: 1.35;            /* copy: 100–135 % wg manualu */
+  letter-spacing: 0;            /* copy: 0 % */
+  color: #000;
   background: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Corporate A', sans-serif;
+h1, h2, h3 {
+  font-family: var(--font-head);
   font-weight: 400;
   font-style: normal;
-  letter-spacing: 0;
+  letter-spacing: 0;            /* mixed case: 0 % */
+  line-height: 1;               /* headline: 100 % */
+}
+
+h4, h5, h6 {
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Wariant nagłówka „Capitalised” wg manualu: caps, tracking 15–20 %,
+   interlinia 100 %, max ~32 znaki w linii, max 3 linie. */
+.hl-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.17em;
+  line-height: 1;
+}
+
+/* Akcent w nagłówku (<b>) — manual: „do not use colour to emphasise text”,
+   więc <b> nie zmienia ani koloru, ani wagi. */
+h1 b, h2 b, h3 b {
+  font-weight: 400;
+  color: inherit;
+}
+
+/* Gwiazda jako originator (flat, wg manualu — nie chromowana) */
+.brand-star {
+  display: block;
+  width: var(--star, 64px);
+  height: var(--star, 64px);
+  object-fit: contain;
+  filter: brightness(0);              /* czarna na jasnym tle */
+}
+
+.brand-star--white {
+  filter: brightness(0) invert(1);    /* biała na czarnym tle */
+}
+
+/* Wordmark MAYBACH — stand-in tekstowy (docelowo oficjalny wektor od klienta) */
+.wordmark {
+  display: inline-block;
+  font-family: var(--font-sub);
+  font-size: 15px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 img,
@@ -80,7 +204,7 @@ button {
 }
 
 ::selection {
-  background: #0a0a0a;
+  background: #000;
   color: #fff;
 }
 
@@ -135,8 +259,8 @@ em, i {
 }
 
 .topbar-cream.scrolled {
-  background: rgba(230, 224, 215, 0.92);
-  border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .topbar-left,
@@ -149,10 +273,10 @@ em, i {
 .topbar-nav {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  font-family: 'Corporate A', sans-serif;
+  gap: 2.2rem;
+  font-family: var(--font-text);
   font-size: 12px;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -186,9 +310,9 @@ em, i {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 0.75;
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -248,8 +372,14 @@ em, i {
   animation: pageReveal 1.4s cubic-bezier(0.86, 0, 0.07, 1) forwards;
 }
 
-.page-reveal--cream {
-  background: #e6e0d7;
+.page-reveal--cream,
+.page-reveal--black {
+  background: #000;
+}
+
+.page-reveal--cream .page-reveal__mark img,
+.page-reveal--black .page-reveal__mark img {
+  filter: brightness(0) invert(1);
 }
 
 @keyframes pageReveal {
@@ -273,7 +403,7 @@ em, i {
 }
 
 .page-reveal__mark img {
-  width: 110px;
+  width: 96px;
   height: auto;
   display: block;
 }
@@ -349,12 +479,15 @@ em, i {
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
-  padding: 14px 26px;
-  font-family: 'Corporate A', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  padding: 11px 23px;            /* wb-button--medium */
+  font-family: var(--font-text);
+  font-weight: 700;              /* Workbench: label w Corpo S Bold */
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.025em;
+  text-transform: none;
   border: 1px solid currentColor;
+  border-radius: 2px;            /* --wb-radius-s (mercedes-benz.pl) */
   background: transparent;
   color: inherit;
   cursor: pointer;
@@ -381,46 +514,54 @@ em, i {
 }
 
 .btn--solid {
-  background: #0a0a0a;
+  background: #000;
   color: #fff;
-  border-color: #0a0a0a;
+  border-color: #000;
   /* na hover tło znika → etykieta musi być ciemna (nie domyślne #fff) */
-  --btn-hover-color: #0a0a0a;
+  --btn-hover-color: #000;
 }
 
 .btn--solid:hover {
   background: transparent;
-  color: #0a0a0a;
+  color: #000;
 }
 
-.btn--bronze {
-  border-color: #8b6f3f;
-  color: #8b6f3f;
-  --btn-hover-color: #e6e0d7;
-}
-
-.btn--bronze:hover {
-  background: #8b6f3f;
-  color: #e6e0d7;
-}
-
+/* Maybach CTA (nazwa klasy zachowana — używa jej cms.js): czarny pill,
+   na hover outline. Bez brązu / rose gold (manual: tylko fotorealistyczny metal). */
+.btn--bronze,
 .btn--dark {
-  border-color: #1a1a1a;
-  color: #1a1a1a;
+  background: #000;
+  color: #fff;
+  border-color: #000;
+  --btn-hover-color: #000;
 }
 
+.btn--bronze:hover,
 .btn--dark:hover {
-  background: #1a1a1a;
-  color: #e6e0d7;
+  background: transparent;
+  color: #000;
+}
+
+/* odwrotność na czarnych sekcjach */
+.btn--white {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+  --btn-hover-color: #fff;
+}
+
+.btn--white:hover {
+  background: transparent;
+  color: #fff;
 }
 
 /* Helpers */
 
 .eyebrow {
   display: inline-block;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
-  letter-spacing: 0.17em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 1.4rem;
   opacity: 0.7;
@@ -499,17 +640,17 @@ em, i {
 }
 
 .af-modal__title {
-  font-family: 'Corporate A', sans-serif;
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  line-height: 1.12;
-  letter-spacing: -0.005em;
+  font-family: var(--font-head-s);
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: 0;
   margin: 0 0 0.8rem;
 }
 
 .af-modal__sub {
-  font-family: 'Corporate A', sans-serif;
-  font-size: 0.98rem;
-  line-height: 1.7;
+  font-family: var(--font-text);
+  font-size: 0.95rem;
+  line-height: 1.5;
   margin: 0 0 2rem;
   opacity: 0.75;
 }
@@ -536,9 +677,9 @@ em, i {
 }
 
 .af-field label {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 0.7;
 }
@@ -551,7 +692,7 @@ em, i {
 
 .af-field input,
 .af-field textarea {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 1rem;
   padding: 12px 0;
   background: transparent;
@@ -578,10 +719,10 @@ em, i {
 
 .af-modal__note {
   grid-column: 1 / -1;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
-  line-height: 1.6;
-  letter-spacing: 0.02em;
+  line-height: 1.5;
+  letter-spacing: 0;
   opacity: 0.5;
   margin: 0.4rem 0 0;
 }
@@ -643,8 +784,8 @@ em, i {
 }
 
 .team-ph__lead {
-  font-family: 'Corporate A', sans-serif;
-  letter-spacing: 0.22em;
+  font-family: var(--font-text);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
@@ -654,7 +795,7 @@ em, i {
 }
 
 .team-ph__sub {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -698,15 +839,15 @@ em, i {
 }
 
 .team-member__name {
-  font-family: 'Corporate A', sans-serif;
-  font-size: clamp(1.4rem, 2.4vw, 2rem);
-  letter-spacing: -0.005em;
+  font-family: var(--font-head-s);
+  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+  letter-spacing: 0;
 }
 
 .team-member__contact {
-  font-family: 'Corporate A', sans-serif;
-  font-size: 1.02rem;
-  line-height: 1.9;
+  font-family: var(--font-text);
+  font-size: 0.98rem;
+  line-height: 1.7;
   opacity: 0.75;
 }
 
@@ -853,9 +994,9 @@ em, i {
   gap: 1.4rem;
   padding: 1.1rem 6vw;
   text-decoration: none;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-text);
   font-size: 0.86rem;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   background: #0a0a0a;
   color: #fafafa;
@@ -878,26 +1019,25 @@ em, i {
   padding-bottom: 2px;
 }
 
-/* bronze (Maybach) variant */
+/* Maybach variants (nazwy klas zachowane dla cms.js) — paleta B/W */
 .cms-promo-strip--bronze {
-  background: #8b6f3f;
-  color: #f5ede0;
+  background: #000;
+  color: #fff;
   border-color: rgba(255, 255, 255, 0.10);
 }
 
 .cms-promo-strip--bronze:hover {
-  background: #9c7e48;
+  background: #111;
 }
 
-/* cream (Maybach light) variant */
 .cms-promo-strip--cream {
-  background: #dcd2c2;
-  color: #1a1a1a;
+  background: #f2f2f2;
+  color: #000;
   border-color: rgba(0, 0, 0, 0.08);
 }
 
 .cms-promo-strip--cream:hover {
-  background: #d4c9b5;
+  background: #e9e9e9;
 }
 
 @media (max-width: 720px) {

@@ -1,33 +1,40 @@
 /* ==========================================================================
-   AUTOFORUM × Mercedes-Maybach — atelier (1:1 wg makiety Strona_Maybach)
-   Paleta: kremowe tło #e6e0d7, ciemny hero #080a14, brąz #8b6f3f.
-   Tylko Corporate A Pro + Inter. Brak italica.
+   AUTOFORUM × Mercedes-Maybach — atelier
+   Wg brand manualu Mercedes-Maybach (2026-08):
+     - paleta: Deep Black #000 / Plain White #fff (+ neutralne szarości);
+       brak brązu / rose gold (tylko fotorealistyczny metal — nie w web)
+     - nagłówki: MB Corpo A Condensed (stand-in Corporate A Pro), wariant
+       „Capitalised”: caps, tracking 15–20 %, interlinia 100 %, ≤ 3 linie
+     - copy: MB Corpo S (stand-in Inter), mixed case, 60–70 zn./linia,
+       interlinia 100–135 %, tracking 0
+     - odstępy między elementami ≥ ¾ średnicy gwiazdy (--star)
+     - układ centrowany: gwiazda (originator) na górze, wordmark MAYBACH na dole
+     - signet (double-M) NIE występuje obok wordmarka i nie zastępuje gwiazdy
    ========================================================================== */
 
 .mh-page {
-  background: #e6e0d7;
-  color: #1a1a1a;
-  font-family: 'Corporate A', sans-serif;
+  --star: 64px;                      /* średnica gwiazdy = jednostka miary */
+  --gap: calc(var(--star) * 0.75);   /* ¾ x — minimalny odstęp */
+  background: #fff;
+  color: #000;
+  font-family: var(--font-text);
   overflow-x: hidden;
 }
 
 .mh-page h1,
 .mh-page h2,
 .mh-page h3 {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-head);
   font-weight: 400;
 }
 
-/* ----- Topbar (ciemny hero — ciemny tekst na jasnym świetle) -------------- */
+/* ----- Topbar ------------------------------------------------------------- */
 
+/* zdjęcie hero jest jasne u góry → czarne menu; po zjechaniu białe tło */
 .mh-page .topbar,
-.mh-page .topbar a {
-  color: #1a1a1a;
-}
-
-.mh-page .topbar.scrolled,
-.mh-page .topbar.scrolled a {
-  color: #1a1a1a;
+.mh-page .topbar a,
+.mh-page .topbar .topbar-burger {
+  color: #000;
 }
 
 /* menu dokładnie na środku ekranu, logo zostaje po lewej */
@@ -37,11 +44,12 @@
   transform: translateX(-50%);
 }
 
-/* ----- Hero --------------------------------------------------------------- */
+/* ----- Hero (czarny, centrowany wg manualu) ------------------------------- */
 
 .mh-hero {
   position: relative;
-  background: #080a14;
+  background: #000;
+  color: #fff;
 }
 
 .mh-hero__media {
@@ -64,86 +72,95 @@
   100% { transform: scale(1.05); }
 }
 
-/* ciemny scrim u dołu zdjęcia — pod tekst intro */
+/* delikatne przejście zdjęcia w czarny blok tekstu */
 .mh-hero__media::after {
   content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    to top,
-    rgba(8, 10, 20, 0.97) 0%,
-    rgba(8, 10, 20, 0.85) 16%,
-    rgba(8, 10, 20, 0.4) 33%,
-    rgba(8, 10, 20, 0) 52%
-  );
-}
-
-.mh-hero__intro {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
+  height: 22%;
+  pointer-events: none;
+  background: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* blok wg manualu (centre-aligned): gwiazda → headline → copy → wordmark,
+   odstępy ¾ x; blok jest STATYCZNY pod zdjęciem — długość tekstu z CMS
+   nigdy nie wchodzi na auto */
+.mh-hero__intro {
+  position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 17vh 8vw 5vh;
+  padding: var(--gap) 8vw calc(var(--gap) * 2);
   text-align: center;
-  color: rgba(255, 255, 255, 0.92);
-  /* własny gradient u dołu hero — niezależnie od długości tekstu (edytowalnej
-     w CMS) zawsze siedzi na ciemnym pasie i nie wchodzi na jasną część auta */
-  background: linear-gradient(
-    to top,
-    rgba(8, 10, 20, 0.97) 0%,
-    rgba(8, 10, 20, 0.92) 42%,
-    rgba(8, 10, 20, 0.55) 74%,
-    rgba(8, 10, 20, 0) 100%
-  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap);
+  background: #000;
+}
+
+.mh-hero__intro .brand-star {
+  flex: 0 0 auto;
+}
+
+/* headline „Capitalised”: caps, tracking 17 %, interlinia 100 %,
+   rozmiar ½–1 średnicy gwiazdy */
+.mh-hero__title {
+  font-size: clamp(1.5rem, 3.4vw, 3.2rem);
+  max-width: min(100%, 26ch);
+  margin: 0;
+  color: #fff;
+  overflow-wrap: anywhere;
 }
 
 .mh-hero__intro p {
-  font-family: 'Corporate A', sans-serif;
-  font-size: clamp(1.05rem, 1.4vw, 1.45rem);
-  line-height: 1.65;
-  margin: 0 auto 1.3rem;
-  letter-spacing: 0.01em;
-  max-width: 72ch;
+  font-family: var(--font-text);
+  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+  line-height: 1.35;
+  margin: 0;
+  letter-spacing: 0;
+  max-width: min(100%, 64ch);       /* 60–70 znaków / linia */
+  color: rgba(255, 255, 255, 0.86);
 }
 
-.mh-hero__intro p:first-child {
-  max-width: none;
+.mh-hero__intro p + p {
+  margin-top: calc(var(--gap) * -0.5);
 }
 
-.mh-hero__intro p:last-child {
-  margin-bottom: 0;
+/* wordmark na dole bloku — centrowany, z clear-space */
+.mh-hero__wordmark {
+  margin-top: calc(var(--gap) * 0.5);
+  color: #fff;
 }
 
-.mh-hero__intro p:last-child {
-  margin-bottom: 0;
-}
-
-/* ----- Quote ribbon ------------------------------------------------------- */
+/* ----- Quote ribbon (używany też przez blok quote_ribbon z CMS) ----------- */
 
 .mh-quote {
-  background: #dcd2c2;
-  padding: 14vh 8vw;
+  background: #f2f2f2;
+  padding: calc(var(--gap) * 2.5) 8vw;
   text-align: center;
 }
 
 .mh-quote__text {
-  font-family: 'Corporate A', sans-serif;
-  font-size: clamp(1.5rem, 3.1vw, 2.7rem);
-  line-height: 1.3;
-  color: #0a0a0a;
-  max-width: 36ch;
+  font-family: var(--font-head);
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  line-height: 1;
+  color: #000;
+  max-width: 32ch;
   margin: 0 auto;
-  letter-spacing: 0.005em;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
 }
 
-/* ----- Salon feature (stand-in) ------------------------------------------- */
+/* ----- Full-bleed foto salonu -------------------------------------------- */
 
 .mh-standin {
   position: relative;
   line-height: 0;
+  background: #000;
 }
 
 .mh-standin__img {
@@ -159,7 +176,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #d9d0bf;
+  background: #fff;
   padding: 30px 64px;
   text-align: center;
   display: flex;
@@ -169,54 +186,59 @@
 }
 
 .mh-standin__lead {
-  font-family: 'Corporate A', sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.24em;
+  font-family: var(--font-text);
+  font-size: 13px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #6f5a32;
+  color: #000;
 }
 
 .mh-standin__sub {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.5);
+  color: rgba(0, 0, 0, 0.5);
 }
 
-/* ----- Shared eyebrow ----------------------------------------------------- */
+/* ----- Eyebrow (subheadline wg manualu: Corpo S, mały, caps) -------------- */
 
 .mh-eyebrow {
   display: inline-block;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #8b6f3f;
-  margin-bottom: 1.6rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: var(--gap);
 }
 
-/* ----- Headline section --------------------------------------------------- */
+/* ----- Headline section (centrowana) -------------------------------------- */
 
 .mh-headline {
-  background: #e6e0d7;
-  padding: 17vh 8vw;
+  background: #fff;
+  padding: calc(var(--gap) * 3) 8vw;
   text-align: center;
 }
 
+.mh-headline .brand-star {
+  margin: 0 auto var(--gap);
+}
+
 .mh-headline__title {
-  font-family: 'Corporate A', sans-serif;
-  font-size: clamp(2.3rem, 5vw, 4.4rem);
-  line-height: 1.12;
-  color: #0a0a0a;
-  max-width: 20ch;
+  font-family: var(--font-head);
+  font-size: clamp(2rem, 4.6vw, 4rem);
+  line-height: 1;
+  color: #000;
+  max-width: 24ch;
   margin: 0 auto;
-  letter-spacing: -0.005em;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
 }
 
 .mh-headline__title b {
   font-weight: 400;
-  color: #8b6f3f;
+  color: inherit;
 }
 
 /* ----- Atelier split ------------------------------------------------------ */
@@ -224,7 +246,7 @@
 .mh-split {
   max-width: 1320px;
   margin: 0 auto;
-  padding: 4vh 8vw 16vh;
+  padding: var(--gap) 8vw calc(var(--gap) * 3);
   display: grid;
   grid-template-columns: 0.85fr 1fr;
   gap: 7vw;
@@ -234,7 +256,7 @@
 .mh-split__media {
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: #cfc3ad;
+  background: #e9e9e9;
 }
 
 .mh-split__media img {
@@ -249,21 +271,21 @@
 }
 
 .mh-split__title {
-  font-family: 'Corporate A', sans-serif;
-  font-size: clamp(2rem, 3.6vw, 3.1rem);
-  line-height: 1.12;
-  color: #0a0a0a;
-  margin: 0 0 2rem;
-  letter-spacing: -0.005em;
+  font-family: var(--font-head-s);
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1;
+  color: #000;
+  margin: 0 0 var(--gap);
+  letter-spacing: 0;               /* wariant mixed case: 0 % */
 }
 
 .mh-split__copy p {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 1rem;
-  line-height: 1.85;
-  color: rgba(26, 26, 26, 0.78);
-  max-width: 42ch;
-  margin: 0 0 1.6rem;
+  line-height: 1.35;
+  color: rgba(0, 0, 0, 0.78);
+  max-width: 62ch;
+  margin: 0 0 1.2rem;
 }
 
 .mh-split__rule {
@@ -271,51 +293,70 @@
   width: 56%;
   max-width: 320px;
   height: 1px;
-  margin-top: 1.6rem;
-  background: rgba(139, 111, 63, 0.35);
+  margin-top: var(--gap);
+  background: rgba(0, 0, 0, 0.25);
 }
 
-/* ----- Visit -------------------------------------------------------------- */
+/* ----- Visit (czarna sekcja — centrowana, gwiazda na górze) --------------- */
 
 .mh-visit {
-  background: #e6e0d7;
-  padding: 16vh 8vw 18vh;
+  background: #000;
+  color: #fff;
+  padding: calc(var(--gap) * 3) 8vw;
   text-align: center;
 }
 
+.mh-visit .brand-star {
+  margin: 0 auto var(--gap);
+}
+
 .mh-visit h2 {
-  font-family: 'Corporate A', sans-serif;
-  font-size: clamp(2.4rem, 5vw, 4.4rem);
-  line-height: 1.12;
-  color: #0a0a0a;
-  max-width: 18ch;
-  margin: 0 auto 1.8rem;
-  letter-spacing: -0.005em;
+  font-family: var(--font-head);
+  font-size: clamp(2rem, 4.6vw, 4rem);
+  line-height: 1;
+  color: #fff;
+  max-width: 24ch;
+  margin: 0 auto var(--gap);
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
 }
 
 .mh-visit h2 b {
   font-weight: 400;
-  color: #8b6f3f;
+  color: inherit;
 }
 
 .mh-visit p {
-  font-family: 'Corporate A', sans-serif;
-  font-size: 1.02rem;
-  line-height: 1.8;
-  color: rgba(26, 26, 26, 0.7);
-  max-width: 46ch;
-  margin: 0 auto 3rem;
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 62ch;
+  margin: 0 auto var(--gap);
 }
 
 .mh-visit .btn {
   margin: 0 auto;
 }
 
-/* ----- Map (stand-in) ----------------------------------------------------- */
+/* na czarnym tle CTA Maybach jest biały (cms.js też renderuje .btn--bronze) */
+.mh-visit .btn--bronze {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+  --btn-hover-color: #fff;
+}
+
+.mh-visit .btn--bronze:hover {
+  background: transparent;
+  color: #fff;
+}
+
+/* ----- Map ---------------------------------------------------------------- */
 
 .mh-map {
-  background: #d4c9b5;
-  padding: 12vh 8vw;
+  background: #f2f2f2;
+  padding: calc(var(--gap) * 2) 8vw;
 }
 
 .mh-map__frame {
@@ -324,8 +365,8 @@
   margin: 0 auto;
   aspect-ratio: 16 / 7;
   overflow: hidden;
-  border: 1px solid rgba(139, 111, 63, 0.4);
-  background: #e6e0d7;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
 }
 
 .mh-map__embed {
@@ -333,60 +374,18 @@
   height: 100%;
   border: 0;
   display: block;
-  /* dopasowanie kolorystyki mapy do kremowo-brązowej palety strony */
-  filter: grayscale(0.65) sepia(0.42) saturate(0.78)
-          contrast(1.04) brightness(0.97);
-}
-
-.mh-map__pin {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 58px;
-  height: 80px;
-  transform: translate(-50%, -100%);
-  z-index: 3;
-  pointer-events: none;
-  filter: drop-shadow(0 10px 14px rgba(10, 10, 10, 0.35));
-  animation: mhPinDrop 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.mh-map__pin svg {
-  display: block;
-}
-
-.mh-map__pulse {
-  position: absolute;
-  left: 50%;
-  bottom: 2px;
-  width: 26px;
-  height: 26px;
-  transform: translate(-50%, 50%);
-  border-radius: 50%;
-  background: rgba(139, 111, 63, 0.35);
-  animation: mhPinPulse 2.4s ease-out infinite;
-}
-
-@keyframes mhPinPulse {
-  0%   { transform: translate(-50%, 50%) scale(0.4); opacity: 0.8; }
-  70%  { transform: translate(-50%, 50%) scale(2.6); opacity: 0; }
-  100% { opacity: 0; }
-}
-
-@keyframes mhPinDrop {
-  0%   { transform: translate(-50%, -180%); opacity: 0; }
-  100% { transform: translate(-50%, -100%); opacity: 1; }
+  filter: grayscale(1) contrast(1.05) brightness(1.02);
 }
 
 .mh-map__card {
   position: absolute;
   top: 0;
   left: 0;
-  background: #e6e0d7;
+  background: #fff;
   padding: 2.4rem 3rem 2.6rem;
   max-width: 320px;
-  border-right: 1px solid rgba(139, 111, 63, 0.4);
-  border-bottom: 1px solid rgba(139, 111, 63, 0.4);
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .mh-map__card .mh-eyebrow {
@@ -394,23 +393,23 @@
 }
 
 .mh-map__addr {
-  font-family: 'Corporate A', sans-serif;
-  font-size: clamp(1.25rem, 1.8vw, 1.7rem);
-  line-height: 1.35;
-  color: #0a0a0a;
+  font-family: var(--font-head-s);
+  font-size: clamp(1.4rem, 1.9vw, 1.8rem);
+  line-height: 1.1;
+  color: #000;
   margin: 0 0 1.6rem;
-  letter-spacing: -0.005em;
+  letter-spacing: 0;
 }
 
 .mh-map__link {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-family: 'Corporate A', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-family: var(--font-text);
+  font-size: 12px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #8b6f3f;
+  color: #000;
   transition: gap 0.3s ease;
 }
 
@@ -418,13 +417,12 @@
   gap: 0.9rem;
 }
 
-/* ----- Footer ------------------------------------------------------------- */
+/* ----- Footer (czarny, wordmark MAYBACH centrowany na dole) --------------- */
 
 .mh-footer {
-  background: #1a1a1a;
-  color: rgba(230, 224, 215, 0.65);
-  padding: 8vh 8vw 4vh;
-  border-top: 1px solid rgba(139, 111, 63, 0.2);
+  background: #000;
+  color: rgba(255, 255, 255, 0.65);
+  padding: calc(var(--gap) * 2) 8vw var(--gap);
 }
 
 .mh-footer__top {
@@ -433,8 +431,8 @@
   gap: 3rem;
   max-width: 1440px;
   margin: 0 auto;
-  padding-bottom: 4vh;
-  border-bottom: 1px solid rgba(139, 111, 63, 0.15);
+  padding-bottom: var(--gap);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .mh-footer__brand .af-logo {
@@ -442,19 +440,19 @@
 }
 
 .mh-footer__brand p {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 13px;
-  line-height: 1.7;
-  max-width: 32ch;
-  opacity: 0.7;
+  line-height: 1.5;
+  max-width: 40ch;
+  opacity: 0.8;
 }
 
 .mh-footer h4 {
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 12px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #c8a26b;
+  color: #fff;
   margin-bottom: 1.2rem;
 }
 
@@ -463,32 +461,41 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 13px;
 }
 
 .mh-footer ul a {
-  opacity: 0.7;
-  transition: opacity 0.25s ease, color 0.25s ease;
+  opacity: 0.75;
+  transition: opacity 0.25s ease;
 }
 
 .mh-footer ul a:hover {
   opacity: 1;
-  color: #c8a26b;
+  color: #fff;
+}
+
+.mh-footer__mark {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--gap) 0;
+  text-align: center;
+  color: #fff;
 }
 
 .mh-footer__bottom {
   max-width: 1440px;
   margin: 0 auto;
-  padding-top: 3vh;
+  padding-top: var(--gap);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Corporate A', sans-serif;
+  font-family: var(--font-text);
   font-size: 11px;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(230, 224, 215, 0.45);
+  color: rgba(255, 255, 255, 0.5);
   flex-wrap: wrap;
   gap: 1rem;
 }
@@ -496,10 +503,12 @@
 /* ----- Responsive --------------------------------------------------------- */
 
 @media (max-width: 1024px) {
+  .mh-page { --star: 56px; }
+
   .mh-split {
     grid-template-columns: 1fr;
     gap: 3rem;
-    padding-bottom: 12vh;
+    padding-bottom: calc(var(--gap) * 2);
   }
 
   .mh-split__media {
@@ -521,25 +530,11 @@
     border-right: 0;
   }
 
-  /* iPad: intro pod zdjęciem (na ciemnym tle hero), nie absolutnie
-     na krótkim foto — biały tekst nie nachodzi już na auto */
-  .mh-hero__media::after {
-    display: none;
-  }
-
-  .mh-hero__intro {
-    position: static;
-    transform: none;
-    max-width: none;
-    padding: 7vh 8vw 8vh;
-  }
-
-  .mh-hero__intro p {
-    max-width: none;
-  }
 }
 
 @media (max-width: 640px) {
+  .mh-page { --star: 48px; }
+
   .mh-hero__intro,
   .mh-quote,
   .mh-headline,
@@ -556,8 +551,7 @@
 
   /* wyższa mapa na telefonie — karta adresu i pin się nie nakładają.
      height jawny (nie min-height): iframe ma height:100%, a % rozwiązuje
-     się tylko względem OKREŚLONEJ wysokości rodzica — min-height nie wystarcza
-     (mapa zapadała się do ~150px → wyglądała jakby się nie ładowała) */
+     się tylko względem OKREŚLONEJ wysokości rodzica */
   .mh-map__frame {
     aspect-ratio: auto;
     height: 620px;
@@ -581,24 +575,24 @@
   }
 }
 
-/* ----- Booking modal — motyw Maybach (kremowy / brąz) -------------------- */
+/* ----- Booking modal — motyw Maybach (biały / czarny) -------------------- */
 
 .mh-page .af-modal__overlay {
-  background: rgba(20, 16, 10, 0.55);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .mh-page .af-modal__dialog {
-  background: #e6e0d7;
-  color: #1a1a1a;
-  border: 1px solid rgba(139, 111, 63, 0.35);
+  background: #fff;
+  color: #000;
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .mh-page .af-modal__close {
-  color: #1a1a1a;
+  color: #000;
 }
 
 .mh-page .af-modal__title {
-  color: #0a0a0a;
+  color: #000;
 }
 
 .mh-page .af-modal__form .mh-eyebrow,
@@ -608,60 +602,75 @@
 
 .mh-page .af-field input,
 .mh-page .af-field textarea {
-  border-bottom-color: rgba(139, 111, 63, 0.4);
+  border-bottom-color: rgba(0, 0, 0, 0.3);
 }
 
 .mh-page .af-field input:focus,
 .mh-page .af-field textarea:focus {
-  border-bottom-color: #8b6f3f;
+  border-bottom-color: #000;
 }
 
 .mh-page .af-field input::placeholder,
 .mh-page .af-field textarea::placeholder {
-  color: rgba(26, 26, 26, 0.4);
+  color: rgba(0, 0, 0, 0.4);
 }
 
-/* ----- Team page — motyw Maybach (kremowy / brąz, wg makiety) ------------ */
+/* ----- Team page — motyw Maybach (biały / czarny) ------------------------ */
 
 .mh-page .team-hero {
-  background: #e6e0d7;
+  background: #000;
 }
 
 .mh-page .team-hero__ph {
-  background: #d9d0bf;
+  background: #f2f2f2;
 }
 
 .mh-page .team-hero__ph .team-ph__lead {
-  color: #6f5a32;
+  color: #000;
 }
 
 .mh-page .team-list {
-  background: #d4c9b5;
+  background: #fff;
 }
 
-.mh-page .team-member + .team-member {
-  border-top: 1px solid rgba(139, 111, 63, 0.18);
+.mh-page .team-member {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mh-page .team-member:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .mh-page .team-member__ph {
-  background: #e6e0d7;
+  background: #f2f2f2;
 }
 
 .mh-page .team-member__ph .team-ph__lead {
-  color: #0a0a0a;
+  color: #000;
 }
 
 .mh-page .team-member__ph .team-ph__sub {
-  color: #8b6f3f;
+  color: rgba(0, 0, 0, 0.5);
   opacity: 1;
 }
 
 .mh-page .team-member__name {
-  color: #0a0a0a;
+  color: #000;
 }
 
 .mh-page .team-member__contact {
-  color: rgba(26, 26, 26, 0.72);
+  color: rgba(0, 0, 0, 0.72);
+}
+
+/* strona zespołu: topbar na jasnym tle (brak czarnego hero) */
+.mh-page .topbar--solid:not(.scrolled),
+.mh-page .topbar--solid:not(.scrolled) a,
+.mh-page .topbar--solid:not(.scrolled) .topbar-burger {
+  color: #000;
+}
+
+.mh-page .topbar--solid:not(.scrolled) .af-logo__img {
+  filter: none;
 }
 
 /* ----- Responsive: mobilne menu + hero intro pod zdjęciem --------------- */
@@ -674,36 +683,31 @@
     left: 0;
     right: 0;
     transform: translateY(-100%);
-    background: #e6e0d7;
+    background: #fff;
   }
 
   .mh-page .topbar.nav-open .topbar-nav {
     transform: translateY(0);
   }
 
-  /* hero: tekst intro pod zdjęciem (nie absolutnie na krótkim foto) */
-  .mh-hero__media::after {
-    display: none;
+  .mh-page .topbar.nav-open .topbar-nav a,
+  .mh-page .topbar.nav-open .topbar-burger {
+    color: #000;
   }
 
   .mh-hero__intro {
-    position: static;
-    transform: none;
-    max-width: none;
-    padding: 7vh 22px 8vh;
+    padding: var(--gap) 22px calc(var(--gap) * 1.5);
   }
 
   .mh-hero__intro p {
-    font-size: 1.05rem;
-    max-width: none;
-    margin-bottom: 1.2rem;
+    font-size: 0.98rem;
   }
 
   .mh-headline {
-    padding: 13vh 22px;
+    padding: calc(var(--gap) * 2.5) 22px;
   }
 
   .mh-visit {
-    padding: 13vh 22px 15vh;
+    padding: calc(var(--gap) * 2.5) 22px;
   }
 }
