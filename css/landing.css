@@ -1,7 +1,7 @@
 /* ==========================================================================
    AUTOFORUM Landing — split screen Mercedes-Benz / Mercedes-Maybach
    Lewa: czarna (Mercedes-Benz), prawa: biała (Mercedes-Maybach) — paleta
-   Deep Black / Plain White wg brand manualu. Maybach = gwiazda + wordmark
+   Deep Black / Plain White wg brand manualu. Maybach = sam wordmark
    MAYBACH (signet nie występuje jako originator).
    ========================================================================== */
 
@@ -149,20 +149,9 @@
   object-fit: contain;
 }
 
-.half-logo--mh {
-  flex-direction: column;
-  gap: 48px;                         /* ¾ x przy gwieździe 64 px */
-}
-
-.half--mh .half-logo__img {
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
-  filter: brightness(0);             /* flat black star na białym */
-}
-
+/* prawa połowa: tylko wordmark MAYBACH (bez gwiazdy) */
 .half-wordmark {
-  --wm: 22px;
+  --wm: 30px;
   filter: none;                      /* czarny wordmark na białej połowie */
 }
 
@@ -333,9 +322,7 @@
   }
 
   .half--mb .half-logo__img { width: 90px; height: 90px; }
-  .half--mh .half-logo__img { width: 90px; height: 90px; }
-  .half-logo--mh { gap: 28px; }
-  .half-wordmark { --wm: 15px; }
+  .half-wordmark { --wm: 18px; }
 
   .split:hover .half:not(:hover) {
     flex: 1;
@@ -405,8 +392,6 @@
     font-size: 10px;
   }
   .half--mb .half-logo__img { width: 74px; height: 74px; }
-  .half--mh .half-logo__img { width: 74px; height: 74px; }
-  .half-logo--mh { gap: 22px; }
-  .half-wordmark { --wm: 13px; }
+  .half-wordmark { --wm: 15px; }
   .landing-footer { bottom: 16px; padding: 0 18px; }
 }
