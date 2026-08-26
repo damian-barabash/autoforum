@@ -132,8 +132,9 @@
 
 /* wordmark na dole bloku — centrowany, z clear-space */
 .mh-hero__wordmark {
+  --wm: 14px;
   margin-top: calc(var(--gap) * 0.5);
-  color: #fff;
+  filter: brightness(0) invert(1);
 }
 
 /* ----- Quote ribbon (używany też przez blok quote_ribbon z CMS) ----------- */
@@ -478,9 +479,14 @@
 .mh-footer__mark {
   max-width: 1440px;
   margin: 0 auto;
-  padding: var(--gap) 0;
-  text-align: center;
-  color: #fff;
+  padding: calc(var(--gap) - 14px) 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mh-footer__mark .wordmark {
+  --wm: 14px;
+  filter: brightness(0) invert(1);
 }
 
 .mh-footer__bottom {

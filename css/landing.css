@@ -162,8 +162,8 @@
 }
 
 .half-wordmark {
-  font-size: 22px;
-  letter-spacing: 0.26em;
+  --wm: 22px;
+  filter: none;                      /* czarny wordmark na białej połowie */
 }
 
 .half-brand {
@@ -335,7 +335,7 @@
   .half--mb .half-logo__img { width: 90px; height: 90px; }
   .half--mh .half-logo__img { width: 90px; height: 90px; }
   .half-logo--mh { gap: 28px; }
-  .half-wordmark { font-size: 16px; }
+  .half-wordmark { --wm: 15px; }
 
   .split:hover .half:not(:hover) {
     flex: 1;
@@ -407,6 +407,6 @@
   .half--mb .half-logo__img { width: 74px; height: 74px; }
   .half--mh .half-logo__img { width: 74px; height: 74px; }
   .half-logo--mh { gap: 22px; }
-  .half-wordmark { font-size: 14px; }
+  .half-wordmark { --wm: 13px; }
   .landing-footer { bottom: 16px; padding: 0 18px; }
 }
