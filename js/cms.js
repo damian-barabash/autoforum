@@ -23,6 +23,21 @@
 
   const isMaybachBrand = body.classList.contains('mh-page');
 
+  // ====== Edit mode (visual editor) ======
+  // ?edit=1 + zalogowany edytor (token z admin.html w localStorage) -> tryb edycji.
+  var EDIT_MODE = false;
+  try {
+    if (/[?&]edit=1(&|$)/.test(location.search)) {
+      var rawAuth = localStorage.getItem('cms.auth');
+      if (rawAuth && JSON.parse(rawAuth).access_token) {
+        EDIT_MODE = true;
+        document.documentElement.classList.add('cms-edit');
+      } else {
+        location.replace('admin.html?next=' + encodeURIComponent(location.pathname.split('/').pop() || 'index.html'));
+      }
+    }
+  } catch (_) { EDIT_MODE = false; }
+
   // ====== Fetch helpers ======
   function fetchJSON(path) {
     return fetch(SUPABASE_URL + '/rest/v1/' + path, {
@@ -95,23 +110,114 @@
     });
   }
 
-  // ====== Patch media (src + background-image) ======
-  function patchMedia(mediaByKey) {
-    document.querySelectorAll('[data-cms-src]').forEach(function (el) {
-      const url = mediaByKey.get(el.dataset.cmsSrc);
-      if (url) el.src = url;
+  // ====== Media: zdjecie LUB wideo pod tym samym kluczem ======
+  var VIDEO_RE = /\.(mp4|webm|mov|m4v|ogv)(\?|#|$)/i;
+  function mediaKind(url) {
+    if (!url) return 'image';
+    if (VIDEO_RE.test(url)) return 'video';
+    if (/(youtube\.com|youtu\.be|vimeo\.com)\//i.test(url)) return 'embed';
+    return 'image';
+  }
+  function embedUrl(url) {
+    var m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+    if (m) return 'https://www.youtube-nocookie.com/embed/' + m[1] + '?autoplay=1&mute=1&loop=1&playlist=' + m[1] + '&controls=0&rel=0&modestbranding=1&playsinline=1';
+    m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    if (m) return 'https://player.vimeo.com/video/' + m[1] + '?autoplay=1&muted=1&loop=1&background=1';
+    return url;
+  }
+  function copyAttrs(from, to) {
+    Array.prototype.forEach.call(from.attributes, function (a) {
+      if (a.name === 'src' || a.name === 'alt' || a.name === 'srcset' || a.name === 'controls' || a.name === 'autoplay' || a.name === 'loop' || a.name === 'muted' || a.name === 'playsinline' || a.name === 'preload') return;
+      to.setAttribute(a.name, a.value);
     });
-
-    document.querySelectorAll('[data-cms-bg]').forEach(function (el) {
-      const url = mediaByKey.get(el.dataset.cmsBg);
-      if (!url) return;
-      // Preserve any existing gradient overlay; replace only the url(...) part.
-      const current = el.style.backgroundImage;
+  }
+  // Podmienia media w elemencie z data-cms-src (img / video / .cms-embed). Zwraca (nowy) element.
+  function applyMedia(el, url) {
+    if (!el || !url) return el;
+    var kind = mediaKind(url);
+    var cur = el.tagName === 'IMG' ? 'image' : (el.tagName === 'VIDEO' ? 'video' : (el.classList.contains('cms-embed') ? 'embed' : 'image'));
+    if (kind === cur) {
+      if (kind === 'image' || kind === 'video') el.src = url;
+      else { var f = el.querySelector('iframe'); if (f) f.src = embedUrl(url); }
+      el.setAttribute('data-cms-url', url);
+      return el;
+    }
+    var next;
+    if (kind === 'image') {
+      next = document.createElement('img');
+      copyAttrs(el, next);
+      next.src = url;
+      next.alt = el.getAttribute('data-alt') || '';
+    } else if (kind === 'video') {
+      next = document.createElement('video');
+      copyAttrs(el, next);
+      next.autoplay = true; next.muted = true; next.loop = true; next.playsInline = true;
+      next.setAttribute('autoplay', ''); next.setAttribute('muted', ''); next.setAttribute('loop', '');
+      next.setAttribute('playsinline', ''); next.setAttribute('preload', 'metadata');
+      next.src = url;
+    } else {
+      next = document.createElement('div');
+      copyAttrs(el, next);
+      next.classList.add('cms-embed');
+      var ifr = document.createElement('iframe');
+      ifr.src = embedUrl(url);
+      ifr.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+      ifr.setAttribute('allowfullscreen', '');
+      ifr.setAttribute('loading', 'lazy');
+      ifr.setAttribute('title', 'Wideo');
+      next.appendChild(ifr);
+    }
+    if (el.tagName === 'IMG' && el.getAttribute('alt')) next.setAttribute('data-alt', el.getAttribute('alt'));
+    next.setAttribute('data-cms-url', url);
+    el.parentNode.replaceChild(next, el);
+    return next;
+  }
+  // Tlo (data-cms-bg): zdjecie -> background-image, wideo/embed -> warstwa <video>/<iframe> pod trescia.
+  function applyBgMedia(el, url) {
+    if (!el || !url) return;
+    var kind = mediaKind(url);
+    var old = el.querySelector(':scope > .cms-bg-video');
+    if (old) old.remove();
+    if (kind === 'image') {
+      var current = el.style.backgroundImage;
       if (current && /url\([^)]+\)/.test(current)) {
         el.style.backgroundImage = current.replace(/url\([^)]+\)/, "url('" + url + "')");
       } else {
         el.style.backgroundImage = "url('" + url + "')";
       }
+    } else {
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      el.style.overflow = 'hidden';
+      var v;
+      if (kind === 'video') {
+        v = document.createElement('video');
+        v.autoplay = true; v.muted = true; v.loop = true; v.playsInline = true;
+        v.setAttribute('autoplay', ''); v.setAttribute('muted', ''); v.setAttribute('loop', '');
+        v.setAttribute('playsinline', ''); v.setAttribute('preload', 'metadata');
+        v.src = url;
+      } else {
+        v = document.createElement('div');
+        var ifr = document.createElement('iframe');
+        ifr.src = embedUrl(url);
+        ifr.setAttribute('allow', 'autoplay; fullscreen');
+        ifr.setAttribute('title', 'Wideo');
+        v.appendChild(ifr);
+      }
+      v.className = 'cms-bg-video';
+      el.insertBefore(v, el.firstChild);
+    }
+    el.setAttribute('data-cms-url', url);
+  }
+
+  // ====== Patch media (src + background-image) ======
+  function patchMedia(mediaByKey) {
+    document.querySelectorAll('[data-cms-src]').forEach(function (el) {
+      const url = mediaByKey.get(el.dataset.cmsSrc);
+      if (url) applyMedia(el, url);
+    });
+    document.querySelectorAll('[data-cms-bg]').forEach(function (el) {
+      const url = mediaByKey.get(el.dataset.cmsBg);
+      if (url) applyBgMedia(el, url);
     });
   }
 
@@ -216,6 +322,31 @@
       return sec;
     },
 
+    media: function (d) {
+      const kind = d.kind || mediaKind(d.src || '');
+      const contained = d.layout === 'contained';
+      const sec = $el('section', {
+        class: 'cms-media-block' + (contained ? ' cms-media-block--contained' : '') + (isMaybachBrand ? ' cms-media-block--mh' : ''),
+        'data-block-type': 'media'
+      });
+      const box = $el('div', { class: 'cms-media-block__box' + (kind === 'embed' ? ' cms-media-block__box--embed' : '') });
+      if (kind === 'video' && d.src) {
+        const v = $el('video', { src: d.src, class: 'cms-media-block__media', preload: 'metadata' });
+        v.muted = true; v.loop = true; v.playsInline = true;
+        v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('loop', '');
+        if (d.controls) { v.controls = true; } else { v.autoplay = true; v.setAttribute('autoplay', ''); }
+        box.appendChild(v);
+      } else if (kind === 'embed' && d.src) {
+        box.appendChild($el('iframe', { src: embedUrl(d.src), allow: 'autoplay; fullscreen; picture-in-picture', allowfullscreen: '', loading: 'lazy', title: d.alt || 'Wideo' }));
+      } else {
+        box.appendChild($el('img', { src: d.src || '', alt: d.alt || '', class: 'cms-media-block__media', loading: 'lazy' }));
+      }
+      sec.appendChild(box);
+      if (d.caption) {
+        sec.appendChild($el('p', { class: (isMaybachBrand ? 'mh-eyebrow' : 'eyebrow') + ' cms-media-block__caption', text: d.caption }));
+      }
+      return sec;
+    },
     cta_section: function (d) {
       const sec = $el('section', { class: isMaybachBrand ? 'mh-visit' : 'mb-visit' });
       const h2 = $el('h2', { class: 'reveal' });
@@ -383,8 +514,44 @@
       patchBlocks(blocksByRegion);
 
       document.documentElement.classList.add('cms-loaded');
+      publish(stringsByKey, mediaByKey, blocksByRegion, blocks);
     }).catch(function (e) {
-      console.warn('[cms] fetch failed — keeping inline fallback', e);
+      console.warn('[cms] fetch failed - keeping inline fallback', e);
+      publish(new Map(), new Map(), new Map(), []);
     });
   })();
+
+  // ====== Publiczne API + zdarzenie (cookies.js, editor.js) ======
+  function publish(stringsByKey, mediaByKey, blocksByRegion, rawBlocks) {
+    window.AFCMS = {
+      strings: stringsByKey,
+      media: mediaByKey,
+      blocks: blocksByRegion,
+      rawBlocks: rawBlocks,
+      page: page,
+      isMaybachBrand: isMaybachBrand,
+      TEMPLATES: TEMPLATES,
+      renderBlock: renderBlock,
+      revealNewBlocks: revealNewBlocks,
+      applyMedia: applyMedia,
+      applyBgMedia: applyBgMedia,
+      mediaKind: mediaKind,
+      embedUrl: embedUrl,
+      SUPABASE_URL: SUPABASE_URL,
+      SUPABASE_KEY: SUPABASE_KEY,
+      editMode: EDIT_MODE
+    };
+    try {
+      document.dispatchEvent(new CustomEvent('cms:loaded', { detail: { strings: stringsByKey, media: mediaByKey, blocks: blocksByRegion } }));
+    } catch (_) {}
+    if (EDIT_MODE) {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'css/editor.css';
+      document.head.appendChild(link);
+      var sc = document.createElement('script');
+      sc.src = 'js/editor.js';
+      document.body.appendChild(sc);
+    }
+  }
 })();

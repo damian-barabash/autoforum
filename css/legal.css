@@ -1,0 +1,220 @@
+/* ==========================================================================
+   AUTOFORUM — strony prawne (Dostawca serwisu / Cookies / Ochrona danych /
+   Informacje prawne / Warunki korzystania)
+   Wg brand manualu: #000 / #fff, nagłówki MB Corpo A, copy MB Corpo S,
+   brak italica, brak kolorowych akcentów.
+   ========================================================================== */
+
+.legal-page {
+  background: #fff;
+  color: #000;
+}
+
+/* Topbar na białym tle — czarne elementy (brak ciemnego hero) */
+.legal-page .topbar--solid:not(.scrolled),
+.legal-page .topbar--solid:not(.scrolled) a {
+  color: #000;
+}
+
+.legal {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 168px 6vw 0;
+}
+
+.legal .eyebrow {
+  letter-spacing: 0.1em;
+  margin-bottom: 1.2rem;
+}
+
+.legal__title {
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1;
+  letter-spacing: 0;
+  margin: 0 0 2rem;
+}
+
+.legal__lede {
+  font-family: var(--font-sub);
+  font-size: 20px;
+  line-height: 1.35;
+  max-width: 62ch;
+  margin: 0 0 2.5rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.legal__body {
+  font-family: var(--font-text);
+  font-size: 17px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.legal__body h2 {
+  font-family: var(--font-head-s);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: 0;
+  margin: 3rem 0 1rem;
+}
+
+.legal__body h2:first-child {
+  margin-top: 0;
+}
+
+.legal__body h3 {
+  font-family: var(--font-head-s);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.15;
+  margin: 2rem 0 0.6rem;
+}
+
+.legal__body h4 {
+  font-family: var(--font-sub);
+  font-weight: 700;
+  font-size: 17px;
+  margin: 1.6rem 0 0.4rem;
+}
+
+.legal__body p,
+.legal__body li {
+  max-width: 70ch;
+  margin: 0 0 1.1rem;
+}
+
+.legal__body li {
+  margin-bottom: 0.5rem;
+}
+
+.legal__body ul,
+.legal__body ol {
+  padding-left: 1.2rem;
+  margin: 0 0 1.4rem;
+}
+
+.legal__body strong {
+  font-weight: 700;
+}
+
+.legal__body em {
+  font-style: normal;
+}
+
+.legal__body a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity 0.3s ease;
+  word-break: break-word;
+}
+
+.legal__body a:hover {
+  opacity: 0.6;
+}
+
+.legal__body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0 2rem;
+  font-size: 15px;
+}
+
+.legal__body th,
+.legal__body td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.8rem 0.8rem 0.8rem 0;
+  border-top: 1px solid #000;
+}
+
+.legal__body tr:last-child td {
+  border-bottom: 1px solid #000;
+}
+
+.legal__body th {
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Nawigacja między stronami prawnymi */
+.legal__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  margin-top: 5rem;
+  padding: 1.6rem 0 0;
+  border-top: 1px solid #000;
+  font-family: var(--font-text);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.legal__nav a {
+  color: #000;
+  text-decoration: none;
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+}
+
+.legal__nav a:hover,
+.legal__nav a[aria-current="page"] {
+  opacity: 1;
+}
+
+.legal__nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Stopka */
+.legal-footer {
+  margin-top: 6rem;
+  padding: 3rem 6vw;
+  background: #000;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  font-family: var(--font-text);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.legal-footer .legal-links a {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.legal-footer .legal-links a:hover {
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .legal {
+    padding-top: 128px;
+  }
+
+  .legal__body {
+    font-size: 16px;
+  }
+
+  .legal__body h2 {
+    font-size: 26px;
+  }
+
+  .legal-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

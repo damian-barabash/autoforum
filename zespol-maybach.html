@@ -155,6 +155,7 @@
     <div class="mh-footer__bottom">
       <span data-cms="maybach.footer.copyright">© 2026 Autoforum sp. z o.o.</span>
       <span data-cms="maybach.footer.dealer_line">Mercedes-Maybach · Authorised Atelier</span>
+      <nav class="legal-links" aria-label="Informacje prawne"><a href="dostawca-serwisu.html">Dostawca serwisu</a><a href="cookies.html">Cookies</a><a href="ochrona-danych.html">Ochrona danych</a><a href="informacje-prawne.html">Informacje prawne</a><a href="warunki-korzystania.html">Warunki korzystania</a><a href="#" data-cookie-settings>Ustawienia cookies</a></nav>
     </div>
   </footer>
 
@@ -200,13 +201,19 @@
             <textarea id="bk-msg" name="message" rows="3"></textarea>
           </div>
 
+          <input type="text" name="website" tabindex="-1" autocomplete="off" class="af-hp" aria-hidden="true" />
+          <div class="af-consent">
+            <p class="af-consent__info" data-cms="global.form.rodo_info">Administratorem Państwa danych osobowych jest Auto Forum 2 Sp. z o.o., ul. Jana Skrzetuskiego 11, Nowe Gulczewo, 09-410 Płock (KRS 0000129329). Dane podane w formularzu przetwarzamy w celu odpowiedzi na zapytanie i umówienia wizyty (art. 6 ust. 1 lit. b i f RODO). Podanie danych jest dobrowolne, ale niezbędne do kontaktu. Przysługuje Państwu prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu oraz skargi do Prezesa UODO. Kontakt: <a href="mailto:rodo@autoforum.pl">rodo@autoforum.pl</a>. Pełna informacja: <a href="ochrona-danych.html" target="_blank" rel="noopener">Ochrona danych</a>.</p>
+            <label class="af-check"><input type="checkbox" name="consent_privacy" required /><span data-cms="global.form.consent_privacy">Zapoznałem/am się z informacją o przetwarzaniu danych osobowych. *</span></label>
+            <label class="af-check"><input type="checkbox" name="consent_marketing_email" /><span data-cms="global.form.consent_marketing_email">Wyrażam zgodę na otrzymywanie od Auto Forum 2 Sp. z o.o. informacji handlowych drogą elektroniczną (e-mail) dotyczących ofert Mercedes-Benz i Mercedes-Maybach.</span></label>
+            <label class="af-check"><input type="checkbox" name="consent_marketing_phone" /><span data-cms="global.form.consent_marketing_phone">Wyrażam zgodę na kontakt telefoniczny (połączenia, SMS) w celach marketingowych dotyczących ofert Mercedes-Benz i Mercedes-Maybach.</span></label>
+            <p class="af-consent__note" data-cms="global.form.consent_note">Zgody marketingowe są dobrowolne i można je wycofać w dowolnym momencie, pisząc na rodo@autoforum.pl.</p>
+          </div>
+
           <button class="btn btn--bronze af-modal__submit" type="submit">
             <span class="btn-label">Wyślij zgłoszenie</span>
             <span class="btn-arrow" aria-hidden="true">→</span>
           </button>
-          <p class="af-modal__note">
-            Wysyłając formularz wyrażają Państwo zgodę na kontakt w sprawie wizyty.
-          </p>
         </form>
 
         <div class="af-modal__success" hidden>
@@ -226,5 +233,6 @@
 
   <script src="js/cms.js"></script>
   <script src="js/page.js"></script>
+  <script src="js/cookies.js"></script>
 </body>
 </html>

@@ -607,6 +607,102 @@
       .block-card .visible-toggle, .block-card .edit-btn { grid-column: span 1; }
       .type-picker { grid-template-columns: 1fr; }
     }
+
+    /* ============ Zgłoszenia (leads) ============ */
+    .leads-badge {
+      display: inline-block;
+      min-width: 20px;
+      padding: 0 6px;
+      margin-left: 6px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--accent-on);
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 20px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .sidebar .tab.active .leads-badge { background: var(--accent-on); color: var(--accent); }
+    .leads-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+    .leads-toolbar input[type=search] { flex: 1 1 220px; max-width: 360px; }
+    .leads-toolbar .spacer { flex: 1; }
+    .leads-chip {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      border-radius: 999px;
+      padding: 0.38rem 0.85rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+    }
+    .leads-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .leads-chip.active { background: var(--accent); color: var(--accent-on); border-color: var(--accent); }
+    .leads-stats { display: flex; gap: 1.6rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .leads-stat { font-size: 0.82rem; color: var(--muted); }
+    .leads-stat b { display: block; font-size: 1.5rem; color: var(--text); font-weight: 500; line-height: 1.1; }
+    .leads-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    .leads-table th {
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .leads-table td { padding: 0.65rem 0.6rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .leads-table tr:hover td { background: var(--panel-2); }
+    .leads-table td.nowrap { white-space: nowrap; }
+    .leads-table .muted { color: var(--muted); }
+    .leads-table select { padding: 0.3rem 0.5rem; font-size: 0.8rem; }
+    .lead-brand {
+      display: inline-block;
+      padding: 0.14rem 0.5rem;
+      border: 1px solid var(--border-2);
+      border-radius: 4px;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    .lead-brand--maybach { border-color: var(--accent); color: var(--accent); }
+    .lead-status--new td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+    .leads-empty { padding: 2rem 0; color: var(--muted); font-size: 0.9rem; }
+    .lead-detail dl { display: grid; grid-template-columns: 150px 1fr; gap: 0.5rem 1rem; font-size: 0.88rem; }
+    .lead-detail dt { color: var(--muted); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; padding-top: 2px; }
+    .lead-detail dd { margin: 0; word-break: break-word; }
+    .lead-detail .consent-row { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.82rem; margin-bottom: 0.5rem; }
+    .lead-detail .consent-row .mark { flex: 0 0 18px; font-weight: 600; }
+    .lead-detail .consent-row .mark.no { color: var(--muted); }
+    .lead-detail .consent-row .wording { color: var(--text-soft); line-height: 1.45; }
+    .lead-detail textarea { width: 100%; min-height: 90px; margin-top: 0.4rem; }
+    .lead-detail h5 { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 1.4rem 0 0.6rem; font-weight: 500; }
+    .leads-cards { display: none; }
+    @media (max-width: 760px) {
+      .leads-table { display: none; }
+      .leads-cards { display: grid; gap: 0.8rem; }
+      .lead-card { background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1rem; font-size: 0.86rem; }
+      .lead-card .row { display: flex; justify-content: space-between; gap: 0.6rem; align-items: center; margin-bottom: 0.35rem; }
+      .lead-card .name { font-weight: 500; font-size: 0.98rem; }
+      .lead-card .acts { display: flex; gap: 0.5rem; margin-top: 0.6rem; align-items: center; }
+      .lead-detail dl { grid-template-columns: 1fr; }
+    }
+    /* Edytor wizualny — wybór strony */
+    .editor-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.9rem; }
+    .editor-pick__card { border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.2rem; background: var(--panel); display: flex; flex-direction: column; gap: 0.5rem; }
+    .editor-pick__name { font-size: 1.05rem; font-weight: 600; }
+    .editor-pick__desc { color: var(--muted); font-size: 0.85rem; line-height: 1.5; flex: 1; }
+    .editor-pick__actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.4rem; }
+    .editor-pick__actions a { text-decoration: none; display: inline-flex; align-items: center; }
   </style>
 </head>
 <body>
@@ -650,6 +746,8 @@
     </div>
 
     <aside class="sidebar">
+      <h4>Edytor wizualny</h4>
+      <button class="tab" data-tab="editor">Edytuj stronę</button>
       <h4>Strony</h4>
       <button class="tab" data-tab="landing">Strona główna</button>
       <button class="tab" data-tab="mercedes">Mercedes-Benz</button>
@@ -658,6 +756,8 @@
       <button class="tab" data-tab="zespol-maybach">Zespół — Maybach</button>
       <h4>Wspólne</h4>
       <button class="tab" data-tab="global">Logo na wszystkich stronach</button>
+      <h4>Zgłoszenia</h4>
+      <button class="tab" data-tab="leads" id="tab-leads">Zgłoszenia z formularza <span class="leads-badge" id="leads-badge" hidden>0</span></button>
     </aside>
 
     <main class="main" id="main"></main>
@@ -696,6 +796,7 @@
     maybach: { name: 'Mercedes-Maybach', desc: 'Strona atelier Maybach: hero, cytat, headline, opis atelier, mapa, stopka. Estetyka cream + bronze.' },
     'zespol-mercedes': { name: 'Zespół — Mercedes', desc: 'Strona zespołu salonu Mercedes-Benz. Górne zdjęcie, lista doradców (w zakładce "Bloki" niżej), CTA wizyty.' },
     'zespol-maybach':  { name: 'Zespół — Maybach',  desc: 'Strona zespołu atelier Maybach. Górne zdjęcie, lista doradców, CTA spotkania.' },
+    editor: { name: 'Edytuj stronę', desc: 'Wybierz stronę — otworzy się z włączonym trybem edycji.' },
     global: { name: 'Wspólne logo', desc: 'Logotypy używane na wielu stronach naraz. Zmieniasz w jednym miejscu — aktualizuje się wszędzie.' }
   };
 
@@ -829,6 +930,18 @@
         { key: 'image_url', label: 'Zdjęcie', kind: 'image', hint: 'Bardzo szerokie zdjęcie, ~2400×1200 px.' },
         { key: 'alt',       label: 'Tekst alternatywny', kind: 'text' },
         { key: 'caption',   label: 'Podpis (opcjonalny)', kind: 'text', hint: 'Wyświetla się pod zdjęciem małymi literami.' }
+      ]
+    },
+    media: {
+      label: 'Media — zdjęcie lub wideo',
+      desc: 'Pełna szerokość: zdjęcie, plik wideo (mp4/webm, odtwarzane automatycznie bez dźwięku) albo link YouTube / Vimeo. Opcjonalny podpis.',
+      universal: true,
+      fields: [
+        { key: 'src',      label: 'Zdjęcie lub wideo', kind: 'media', hint: 'Wgraj plik (JPG/PNG/WebP lub MP4/WebM do 50 MB) albo wklej link — także YouTube / Vimeo.' },
+        { key: 'alt',      label: 'Tekst alternatywny', kind: 'text', hint: 'Krótki opis dla wyszukiwarek i czytników.' },
+        { key: 'caption',  label: 'Podpis (opcjonalny)', kind: 'text', hint: 'Wyświetla się pod mediami małymi literami.' },
+        { key: 'layout',   label: 'Układ', kind: 'select', options: [['full','Na całą szerokość ekranu'],['contained','Z marginesami (w kontenerze)']], default: 'full' },
+        { key: 'controls', label: 'Sterowanie wideo', kind: 'select', options: [['','Autoodtwarzanie w pętli, bez przycisków'],['1','Pokaż przyciski odtwarzania']], default: '' }
       ]
     },
     cta_section: {
@@ -1068,7 +1181,8 @@
     document.querySelectorAll('.sidebar .tab').forEach(function (btn) {
       btn.addEventListener('click', function () { activateTab(btn.dataset.tab); });
     });
-    activateTab('landing');
+    activateTab('editor');
+    refreshLeadsBadge();
   }
 
   // ============================================================
@@ -1086,6 +1200,9 @@
   function renderPage(page) {
     const main = document.getElementById('main');
     main.innerHTML = '';
+    if (page === 'editor') { renderEditorPicker(main); return; }
+
+    if (page === 'leads') { renderLeads(main); return; }
 
     const info = PAGE_INFO[page] || { name: page, desc: '' };
     const head = document.createElement('div'); head.className = 'page-head';
@@ -1137,6 +1254,47 @@
       e.textContent = 'Brak elementów do edycji na tej stronie.';
       main.appendChild(e);
     }
+  }
+
+  // ---- Edytor wizualny: wybór strony ----
+  const EDITOR_PAGES = [
+    { group: 'Strony salonów', items: [
+      { file: 'index.html',           name: 'Strona główna',        desc: 'Wybór salonu — logo, etykiety, stopka.' },
+      { file: 'mercedes.html',        name: 'Mercedes-Benz',        desc: 'Hero (zdjęcie lub wideo), modele, salon, mapa, stopka.' },
+      { file: 'maybach.html',         name: 'Mercedes-Maybach',     desc: 'Hero (zdjęcie lub wideo), headline, atelier, mapa, stopka.' },
+      { file: 'zespol-mercedes.html', name: 'Zespół — Mercedes',    desc: 'Zdjęcie zespołu, karty doradców, CTA.' },
+      { file: 'zespol-maybach.html',  name: 'Zespół — Maybach',     desc: 'Zdjęcie zespołu, karty doradców, CTA.' }
+    ]},
+    { group: 'Strony prawne', items: [
+      { file: 'dostawca-serwisu.html',    name: 'Dostawca serwisu',    desc: 'Dane spółki, KRS, NIP, zarząd.' },
+      { file: 'cookies.html',             name: 'Cookies',             desc: 'Informacja o plikach cookies.' },
+      { file: 'ochrona-danych.html',      name: 'Ochrona danych',      desc: 'Polityka prywatności (RODO).' },
+      { file: 'informacje-prawne.html',   name: 'Informacje prawne',   desc: 'Prawa autorskie, produkty i ceny, odpowiedzialność.' },
+      { file: 'warunki-korzystania.html', name: 'Warunki korzystania', desc: 'Regulamin serwisu.' }
+    ]}
+  ];
+
+  function renderEditorPicker(main) {
+    const head = document.createElement('div'); head.className = 'page-head';
+    head.innerHTML = '<div class="page-head-row"><div><h2>Edytuj stronę</h2>' +
+      '<div class="desc">Kliknij „Edytuj na stronie” — otworzy się strona z włączonym trybem edycji: klikasz tekst i piszesz, klikasz zdjęcie lub wideo i wymieniasz, „+ Dodaj blok” dodaje nowe sekcje (karty modeli, doradców, media, CTA…). „Zapisz” publikuje od razu na stronie.</div></div></div>';
+    main.appendChild(head);
+    EDITOR_PAGES.forEach(function (g) {
+      const sec = makeSection(g.group, '');
+      const grid = document.createElement('div'); grid.className = 'editor-pick';
+      g.items.forEach(function (p) {
+        const card = document.createElement('div'); card.className = 'editor-pick__card';
+        card.innerHTML = '<div class="editor-pick__name">' + escapeHtml(p.name) + '</div>' +
+          '<div class="editor-pick__desc">' + escapeHtml(p.desc) + '</div>' +
+          '<div class="editor-pick__actions">' +
+            '<a class="btn-primary" href="' + p.file + '?edit=1" target="_blank" rel="noopener">Edytuj na stronie ↗</a>' +
+            '<a class="btn-ghost" href="' + p.file + '?v=' + Date.now() + '" target="_blank" rel="noopener">Podgląd</a>' +
+          '</div>';
+        grid.appendChild(card);
+      });
+      sec.appendChild(grid);
+      main.appendChild(sec);
+    });
   }
 
   function makeSection(title, help) {
@@ -1402,13 +1560,15 @@
       const lbl = document.createElement('label'); lbl.textContent = f.label;
       wrap.appendChild(lbl);
 
-      if (f.kind === 'image') {
+      if (f.kind === 'image' || f.kind === 'media') {
+        const isMedia = f.kind === 'media';
         const row = document.createElement('div'); row.className = 'upload-img';
         const prev = document.createElement('div'); prev.className = 'preview';
-        if (draft[f.key]) { const i = document.createElement('img'); i.src = draft[f.key]; prev.appendChild(i); }
-        const urlIn = document.createElement('input'); urlIn.type = 'url'; urlIn.value = draft[f.key] || ''; urlIn.placeholder = 'URL zdjęcia lub wgraj plik →';
+        const setPreview = function (u) { prev.innerHTML = ''; if (!u) return; if (isMedia && /\.(mp4|webm|mov|m4v|ogv)(\?|#|$)/i.test(u)) { const v = document.createElement('video'); v.src = u; v.muted = true; v.playsInline = true; v.style.maxWidth = '100%'; prev.appendChild(v); } else if (isMedia && /(youtube\.com|youtu\.be|vimeo\.com)\//i.test(u)) { const t = document.createElement('div'); t.textContent = '▶ ' + u; t.style.fontSize = '0.8rem'; prev.appendChild(t); } else { const i = document.createElement('img'); i.src = u; prev.appendChild(i); } };
+        setPreview(draft[f.key]);
+        const urlIn = document.createElement('input'); urlIn.type = 'url'; urlIn.value = draft[f.key] || ''; urlIn.placeholder = isMedia ? 'URL zdjęcia / wideo / YouTube lub wgraj plik →' : 'URL zdjęcia lub wgraj plik →';
         const btn = document.createElement('button'); btn.textContent = 'Wgraj plik'; btn.type = 'button'; btn.className = 'btn-primary';
-        const fileIn = document.createElement('input'); fileIn.type = 'file'; fileIn.accept = 'image/*'; fileIn.style.display = 'none';
+        const fileIn = document.createElement('input'); fileIn.type = 'file'; fileIn.accept = isMedia ? 'image/*,video/mp4,video/webm,video/quicktime' : 'image/*'; fileIn.style.display = 'none';
         btn.addEventListener('click', function () { fileIn.click(); });
         fileIn.addEventListener('change', async function () {
           const f2 = fileIn.files && fileIn.files[0]; if (!f2) return;
@@ -1416,12 +1576,12 @@
           try {
             const url = await uploadFile(f2);
             urlIn.value = url; draft[f.key] = url;
-            prev.innerHTML = ''; const i = document.createElement('img'); i.src = url; prev.appendChild(i);
+            setPreview(url);
             toast('Wgrane', 'ok');
           } catch (e) { toast('Błąd: ' + e.message, 'err'); }
           btn.textContent = 'Wgraj plik'; btn.disabled = false; fileIn.value = '';
         });
-        urlIn.addEventListener('input', function () { draft[f.key] = urlIn.value; });
+        urlIn.addEventListener('input', function () { draft[f.key] = urlIn.value; setPreview(urlIn.value); });
         row.appendChild(prev); row.appendChild(urlIn); row.appendChild(btn); row.appendChild(fileIn);
         wrap.appendChild(row);
       } else if (f.kind === 'longtext' || f.kind === 'lines') {
@@ -1504,6 +1664,290 @@
     const a = loadAuth();
     if (a) { auth = a; bootApp(); }
   })();
+
+  // ============================================================
+  // Zgłoszenia z formularza (cms_leads)
+  // ============================================================
+  const LEAD_STATUS = { new: 'Nowe', in_progress: 'W toku', closed: 'Zamknięte' };
+  let leadsCache = [];
+  let leadsFilter = 'all';
+  let leadsQuery = '';
+
+  async function refreshLeadsBadge() {
+    try {
+      const rows = await apiFetch('/rest/v1/cms_leads?select=id&status=eq.new');
+      const badge = document.getElementById('leads-badge');
+      if (!badge) return;
+      const n = (rows || []).length;
+      badge.textContent = n;
+      badge.hidden = n === 0;
+    } catch (_) { /* brak uprawnień / tabela nieosiągalna — cicho */ }
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    const p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+  function fmtDay(s) {
+    if (!s) return '—';
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+    return m ? (m[3] + '.' + m[2] + '.' + m[1]) : s;
+  }
+
+  function leadMatches(l) {
+    if (leadsFilter === 'new' || leadsFilter === 'in_progress' || leadsFilter === 'closed') {
+      if (l.status !== leadsFilter) return false;
+    } else if (leadsFilter === 'mercedes' || leadsFilter === 'maybach') {
+      if (l.brand !== leadsFilter) return false;
+    }
+    if (leadsQuery) {
+      const q = leadsQuery.toLowerCase();
+      const hay = [l.name, l.phone, l.email, l.model].filter(Boolean).join(' ').toLowerCase();
+      if (hay.indexOf(q) < 0) return false;
+    }
+    return true;
+  }
+
+  async function renderLeads(main) {
+    const head = document.createElement('div'); head.className = 'page-head';
+    head.innerHTML = '<div class="page-head-row"><div><h2>Zgłoszenia z formularza</h2>' +
+      '<div class="desc">Zgłoszenia z okna „Umów wizytę” na stronach Mercedes-Benz i Mercedes-Maybach. Każde zgłoszenie zawiera zapis dokładnej treści zgód, które klient zaznaczył.</div></div>' +
+      '<button class="btn-ghost" id="leads-reload">Odśwież</button></div>';
+    main.appendChild(head);
+
+    const sec = makeSection('Lista zgłoszeń', '');
+    sec.querySelector('.help') && sec.querySelector('.help').remove();
+    const body = document.createElement('div'); body.id = 'leads-body';
+    body.innerHTML = '<div class="leads-empty">Ładowanie…</div>';
+    sec.appendChild(body);
+    main.appendChild(sec);
+
+    head.querySelector('#leads-reload').addEventListener('click', function () { loadLeads(body); });
+    loadLeads(body);
+  }
+
+  async function loadLeads(body) {
+    try {
+      leadsCache = await apiFetch('/rest/v1/cms_leads?select=*&order=created_at.desc&limit=500') || [];
+    } catch (e) {
+      body.innerHTML = '<div class="leads-empty">Błąd ładowania zgłoszeń: ' + escapeHtml(e.message) + '</div>';
+      return;
+    }
+    refreshLeadsBadge();
+    drawLeads(body);
+  }
+
+  function drawLeads(body) {
+    body.innerHTML = '';
+    const all = leadsCache;
+    const cnt = { new: 0, in_progress: 0, closed: 0 };
+    all.forEach(function (l) { if (cnt[l.status] !== undefined) cnt[l.status]++; });
+
+    const stats = document.createElement('div'); stats.className = 'leads-stats';
+    stats.innerHTML = '<div class="leads-stat"><b>' + cnt.new + '</b>Nowe</div>' +
+      '<div class="leads-stat"><b>' + cnt.in_progress + '</b>W toku</div>' +
+      '<div class="leads-stat"><b>' + cnt.closed + '</b>Zamknięte</div>' +
+      '<div class="leads-stat"><b>' + all.length + '</b>Razem</div>';
+    body.appendChild(stats);
+
+    const bar = document.createElement('div'); bar.className = 'leads-toolbar';
+    [['all','Wszystkie'],['new','Nowe'],['in_progress','W toku'],['closed','Zamknięte'],['mercedes','Mercedes'],['maybach','Maybach']].forEach(function (f) {
+      const b = document.createElement('button');
+      b.className = 'leads-chip' + (leadsFilter === f[0] ? ' active' : '');
+      b.textContent = f[1];
+      b.addEventListener('click', function () { leadsFilter = f[0]; drawLeads(body); });
+      bar.appendChild(b);
+    });
+    const search = document.createElement('input');
+    search.type = 'search'; search.placeholder = 'Szukaj: imię, telefon, e-mail…'; search.value = leadsQuery;
+    search.addEventListener('input', function () { leadsQuery = search.value.trim(); drawList(); });
+    bar.appendChild(search);
+    const sp = document.createElement('span'); sp.className = 'spacer'; bar.appendChild(sp);
+    const csv = document.createElement('button'); csv.className = 'btn-ghost'; csv.textContent = 'Eksport CSV';
+    csv.addEventListener('click', function () { exportLeadsCsv(all.filter(leadMatches)); });
+    bar.appendChild(csv);
+    body.appendChild(bar);
+
+    const listWrap = document.createElement('div');
+    body.appendChild(listWrap);
+
+    function drawList() {
+      const rows = all.filter(leadMatches);
+      listWrap.innerHTML = '';
+      if (!rows.length) {
+        listWrap.innerHTML = '<div class="leads-empty">Brak zgłoszeń dla wybranego filtra.</div>';
+        return;
+      }
+      // ---- table (desktop)
+      const table = document.createElement('table'); table.className = 'leads-table';
+      table.innerHTML = '<thead><tr><th>Data</th><th>Marka</th><th>Imię i nazwisko</th><th>Telefon</th><th>E-mail</th><th>Model</th><th>Termin</th><th>Status</th><th></th></tr></thead>';
+      const tb = document.createElement('tbody');
+      rows.forEach(function (l) {
+        const tr = document.createElement('tr'); tr.className = 'lead-status--' + l.status;
+        tr.innerHTML =
+          '<td class="nowrap">' + escapeHtml(fmtDate(l.created_at)) + '</td>' +
+          '<td>' + brandBadge(l.brand) + '</td>' +
+          '<td>' + escapeHtml(l.name || '') + (l.message ? ' <span class="muted" title="Wiadomość">✎</span>' : '') + '</td>' +
+          '<td class="nowrap"><a href="tel:' + escapeHtml((l.phone || '').replace(/\s+/g, '')) + '">' + escapeHtml(l.phone || '') + '</a></td>' +
+          '<td>' + (l.email ? '<a href="mailto:' + escapeHtml(l.email) + '">' + escapeHtml(l.email) + '</a>' : '<span class="muted">—</span>') + '</td>' +
+          '<td>' + (l.model ? escapeHtml(l.model) : '<span class="muted">—</span>') + '</td>' +
+          '<td class="nowrap">' + escapeHtml(fmtDay(l.preferred_date)) + '</td>' +
+          '<td></td><td class="nowrap"></td>';
+        tr.children[7].appendChild(statusSelect(l, function () { drawLeads(body); }));
+        const det = document.createElement('button'); det.className = 'btn-ghost'; det.textContent = 'Szczegóły';
+        det.addEventListener('click', function () { openLeadDetail(l, function () { drawLeads(body); }); });
+        tr.children[8].appendChild(det);
+        tb.appendChild(tr);
+      });
+      table.appendChild(tb);
+      listWrap.appendChild(table);
+
+      // ---- cards (mobile)
+      const cards = document.createElement('div'); cards.className = 'leads-cards';
+      rows.forEach(function (l) {
+        const c = document.createElement('div'); c.className = 'lead-card';
+        c.innerHTML =
+          '<div class="row"><span class="name">' + escapeHtml(l.name || '') + '</span>' + brandBadge(l.brand) + '</div>' +
+          '<div class="row"><span class="muted">' + escapeHtml(fmtDate(l.created_at)) + '</span><span>' + escapeHtml(fmtDay(l.preferred_date)) + '</span></div>' +
+          '<div><a href="tel:' + escapeHtml((l.phone || '').replace(/\s+/g, '')) + '">' + escapeHtml(l.phone || '') + '</a>' +
+          (l.email ? ' · <a href="mailto:' + escapeHtml(l.email) + '">' + escapeHtml(l.email) + '</a>' : '') + '</div>' +
+          (l.model ? '<div class="muted">' + escapeHtml(l.model) + '</div>' : '') +
+          '<div class="acts"></div>';
+        const acts = c.querySelector('.acts');
+        acts.appendChild(statusSelect(l, function () { drawLeads(body); }));
+        const det = document.createElement('button'); det.className = 'btn-ghost'; det.textContent = 'Szczegóły';
+        det.addEventListener('click', function () { openLeadDetail(l, function () { drawLeads(body); }); });
+        acts.appendChild(det);
+        cards.appendChild(c);
+      });
+      listWrap.appendChild(cards);
+    }
+    drawList();
+  }
+
+  function brandBadge(brand) {
+    return brand === 'maybach'
+      ? '<span class="lead-brand lead-brand--maybach">Maybach</span>'
+      : '<span class="lead-brand">MB</span>';
+  }
+
+  function statusSelect(lead, onChange) {
+    const sel = document.createElement('select');
+    Object.keys(LEAD_STATUS).forEach(function (k) {
+      const o = document.createElement('option'); o.value = k; o.textContent = LEAD_STATUS[k];
+      if (lead.status === k) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', async function () {
+      const prev = lead.status;
+      sel.disabled = true;
+      try {
+        await patchLead(lead.id, { status: sel.value });
+        lead.status = sel.value;
+        toast('Status: ' + LEAD_STATUS[sel.value]);
+        refreshLeadsBadge();
+        if (onChange) onChange();
+      } catch (e) {
+        sel.value = prev;
+        toast('Błąd zapisu: ' + e.message, 'err');
+      } finally { sel.disabled = false; }
+    });
+    return sel;
+  }
+
+  async function patchLead(id, fields) {
+    return apiFetch('/rest/v1/cms_leads?id=eq.' + encodeURIComponent(id), {
+      method: 'PATCH', prefer: 'return=minimal',
+      body: Object.assign({ updated_at: new Date().toISOString(), updated_by: auth.user.id }, fields)
+    });
+  }
+
+  function openLeadDetail(l, onChange) {
+    const ov = document.getElementById('modal-overlay');
+    document.getElementById('modal-eyebrow').textContent = 'Zgłoszenie';
+    document.getElementById('modal-title').textContent = l.name || '';
+    document.getElementById('modal-desc').textContent = fmtDate(l.created_at) + ' · ' + (l.brand === 'maybach' ? 'Mercedes-Maybach' : 'Mercedes-Benz') + ' · strona: ' + (l.page || '—');
+    const body = document.getElementById('modal-body'); body.innerHTML = '';
+    const foot = document.getElementById('modal-foot'); foot.innerHTML = '';
+
+    const wrap = document.createElement('div'); wrap.className = 'lead-detail';
+    const t = l.consent_texts || {};
+    const consentRow = function (ok, wording) {
+      return '<div class="consent-row"><span class="mark' + (ok ? '' : ' no') + '">' + (ok ? '✓' : '—') + '</span><span class="wording">' + escapeHtml(wording || '') + '</span></div>';
+    };
+    wrap.innerHTML =
+      '<dl>' +
+      '<dt>Telefon</dt><dd><a href="tel:' + escapeHtml((l.phone || '').replace(/\s+/g, '')) + '">' + escapeHtml(l.phone || '') + '</a></dd>' +
+      '<dt>E-mail</dt><dd>' + (l.email ? '<a href="mailto:' + escapeHtml(l.email) + '">' + escapeHtml(l.email) + '</a>' : '—') + '</dd>' +
+      '<dt>Model</dt><dd>' + escapeHtml(l.model || '—') + '</dd>' +
+      '<dt>Preferowany termin</dt><dd>' + escapeHtml(fmtDay(l.preferred_date)) + '</dd>' +
+      '<dt>Wiadomość</dt><dd>' + (l.message ? escapeHtml(l.message).replace(/\n/g, '<br>') : '—') + '</dd>' +
+      '<dt>Status</dt><dd id="lead-status-slot"></dd>' +
+      '</dl>' +
+      '<h5>Zgody (treść w chwili wysłania)</h5>' +
+      consentRow(l.consent_privacy, t.consent_privacy || 'Zapoznanie z informacją o przetwarzaniu danych') +
+      consentRow(l.consent_marketing_email, t.consent_marketing_email || 'Marketing e-mail') +
+      consentRow(l.consent_marketing_phone, t.consent_marketing_phone || 'Marketing telefon / SMS') +
+      (t.rodo_info ? '<details style="margin-top:.6rem;font-size:.8rem;color:var(--muted)"><summary>Informacja RODO pokazana klientowi</summary><div style="margin-top:.4rem;line-height:1.5">' + escapeHtml(t.rodo_info) + '</div></details>' : '') +
+      '<h5>Notatka</h5>' +
+      '<textarea id="lead-note" placeholder="Notatka wewnętrzna (nie widoczna dla klienta)…">' + escapeHtml(l.note || '') + '</textarea>' +
+      '<h5>Techniczne</h5>' +
+      '<dl><dt>Źródło</dt><dd>' + (l.source_url ? '<a href="' + escapeHtml(l.source_url) + '" target="_blank" rel="noopener">' + escapeHtml(l.source_url) + '</a>' : '—') + '</dd>' +
+      '<dt>Przeglądarka</dt><dd style="font-size:.78rem;color:var(--muted)">' + escapeHtml(l.user_agent || '—') + '</dd>' +
+      '<dt>ID</dt><dd style="font-size:.78rem;color:var(--muted)">' + escapeHtml(l.id) + '</dd></dl>';
+    body.appendChild(wrap);
+    wrap.querySelector('#lead-status-slot').appendChild(statusSelect(l, onChange));
+
+    const save = document.createElement('button'); save.className = 'btn-primary'; save.textContent = 'Zapisz notatkę';
+    save.addEventListener('click', async function () {
+      save.disabled = true;
+      try {
+        const note = wrap.querySelector('#lead-note').value;
+        await patchLead(l.id, { note: note });
+        l.note = note;
+        toast('Notatka zapisana');
+      } catch (e) { toast('Błąd zapisu: ' + e.message, 'err'); }
+      finally { save.disabled = false; }
+    });
+    const close = document.createElement('button'); close.className = 'btn-ghost'; close.textContent = 'Zamknij';
+    close.addEventListener('click', closeModal);
+    foot.appendChild(close); foot.appendChild(save);
+    ov.classList.add('open');
+  }
+
+  function exportLeadsCsv(rows) {
+    const cols = [
+      ['created_at', 'Data', function (l) { return fmtDate(l.created_at); }],
+      ['brand', 'Marka', function (l) { return l.brand === 'maybach' ? 'Mercedes-Maybach' : 'Mercedes-Benz'; }],
+      ['page', 'Strona', function (l) { return l.page || ''; }],
+      ['name', 'Imię i nazwisko', function (l) { return l.name || ''; }],
+      ['phone', 'Telefon', function (l) { return l.phone || ''; }],
+      ['email', 'E-mail', function (l) { return l.email || ''; }],
+      ['model', 'Model', function (l) { return l.model || ''; }],
+      ['preferred_date', 'Termin', function (l) { return fmtDay(l.preferred_date); }],
+      ['message', 'Wiadomość', function (l) { return l.message || ''; }],
+      ['status', 'Status', function (l) { return LEAD_STATUS[l.status] || l.status; }],
+      ['consent_privacy', 'Zgoda RODO', function (l) { return l.consent_privacy ? 'TAK' : 'NIE'; }],
+      ['consent_marketing_email', 'Marketing e-mail', function (l) { return l.consent_marketing_email ? 'TAK' : 'NIE'; }],
+      ['consent_marketing_phone', 'Marketing telefon', function (l) { return l.consent_marketing_phone ? 'TAK' : 'NIE'; }],
+      ['note', 'Notatka', function (l) { return l.note || ''; }],
+      ['source_url', 'Źródło', function (l) { return l.source_url || ''; }]
+    ];
+    const esc = function (v) { v = String(v == null ? '' : v); return '"' + v.replace(/"/g, '""') + '"'; };
+    const lines = [cols.map(function (c) { return esc(c[1]); }).join(';')];
+    rows.forEach(function (l) { lines.push(cols.map(function (c) { return esc(c[2](l)); }).join(';')); });
+    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    const d = new Date(); const p = function (n) { return (n < 10 ? '0' : '') + n; };
+    a.download = 'zgloszenia-autoforum-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '.csv';
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    toast('Wyeksportowano ' + rows.length + ' zgłoszeń');
+  }
   </script>
 </body>
 </html>

@@ -148,16 +148,108 @@
     });
 
     if (form) {
+      // --- zgłoszenie → Supabase (tabela cms_leads, RLS: anon = tylko INSERT) ---
+      const SB_URL = 'https://wjxatkkftxuztgsvrnkl.supabase.co';
+      const SB_KEY = 'sb_publishable_g1ViZZHf6mUXxw9e5DOaeQ_GQZmgFfa';
+      const submitBtn = form.querySelector('.af-modal__submit');
+      const submitLabel = submitBtn ? submitBtn.querySelector('.btn-label') : null;
+      const submitText = submitLabel ? submitLabel.textContent : '';
+      const txt = (sel) => {
+        const el = form.querySelector(sel);
+        return el ? el.textContent.trim() : '';
+      };
+      const val = (name) => {
+        const el = form.elements[name];
+        return el ? String(el.value || '').trim() : '';
+      };
+      const chk = (name) => {
+        const el = form.elements[name];
+        return !!(el && el.checked);
+      };
+      const showError = () => {
+        let err = form.querySelector('.af-modal__error');
+        if (!err) {
+          err = document.createElement('p');
+          err.className = 'af-modal__error';
+          form.appendChild(err);
+        }
+        const phoneEl = document.querySelector('[data-cms$=".footer.phone.label"]');
+        const phone = phoneEl ? phoneEl.textContent.trim() : '';
+        err.textContent = 'Nie udało się wysłać zgłoszenia. ';
+        if (phone) {
+          err.appendChild(document.createTextNode('Prosimy o telefon: '));
+          const a = document.createElement('a');
+          a.href = 'tel:' + phone.replace(/\s+/g, '');
+          a.textContent = phone;
+          err.appendChild(a);
+          err.appendChild(document.createTextNode('.'));
+        } else {
+          err.appendChild(document.createTextNode('Prosimy spróbować ponownie za chwilę.'));
+        }
+      };
+      const setBusy = (busy) => {
+        if (!submitBtn) return;
+        submitBtn.disabled = busy;
+        if (submitLabel) submitLabel.textContent = busy ? 'Wysyłanie…' : submitText;
+      };
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (!form.checkValidity()) {
           form.reportValidity();
           return;
         }
-        form.hidden = true;
-        success.hidden = false;
-        const f = success.querySelector('button, a');
-        if (f) f.focus();
+        if (val('website')) return; // honeypot — bot
+        if (!chk('consent_privacy')) {
+          form.reportValidity();
+          return;
+        }
+        const oldErr = form.querySelector('.af-modal__error');
+        if (oldErr) oldErr.remove();
+
+        const payload = {
+          page: document.body.dataset.cmsPage || location.pathname.replace(/^.*\//, '').replace(/\.html$/, '') || 'unknown',
+          brand: document.body.classList.contains('mh-page') ? 'maybach' : 'mercedes',
+          name: val('name'),
+          phone: val('phone'),
+          email: val('email') || null,
+          model: val('model') || null,
+          preferred_date: val('date') || null,
+          message: val('message') || null,
+          consent_privacy: chk('consent_privacy'),
+          consent_marketing_email: chk('consent_marketing_email'),
+          consent_marketing_phone: chk('consent_marketing_phone'),
+          consent_texts: {
+            rodo_info: txt('[data-cms="global.form.rodo_info"]'),
+            consent_privacy: txt('[data-cms="global.form.consent_privacy"]'),
+            consent_marketing_email: txt('[data-cms="global.form.consent_marketing_email"]'),
+            consent_marketing_phone: txt('[data-cms="global.form.consent_marketing_phone"]')
+          },
+          source_url: location.href,
+          user_agent: navigator.userAgent
+        };
+
+        setBusy(true);
+        fetch(SB_URL + '/rest/v1/cms_leads', {
+          method: 'POST',
+          headers: {
+            apikey: SB_KEY,
+            Authorization: 'Bearer ' + SB_KEY,
+            'Content-Type': 'application/json',
+            Prefer: 'return=minimal'
+          },
+          body: JSON.stringify(payload)
+        }).then((r) => {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          form.reset();
+          form.hidden = true;
+          success.hidden = false;
+          const f = success.querySelector('button, a');
+          if (f) f.focus();
+        }).catch((err) => {
+          console.warn('[lead] send failed', err);
+          showError();
+        }).finally(() => setBusy(false));
       });
     }
   }
