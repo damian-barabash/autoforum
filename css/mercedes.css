@@ -271,7 +271,7 @@
   font-size: 1rem;
   line-height: 1.35;
   max-width: 62ch;
-  opacity: 0.75;
+  color: rgba(0, 0, 0, 0.75);   /* było opacity — teraz wewnątrz są śródtytuły w pełnej czerni */
 }
 
 /* ----- Models grid -------------------------------------------------------- */

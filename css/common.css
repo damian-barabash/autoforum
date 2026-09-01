@@ -1192,26 +1192,34 @@ em, i {
   text-underline-offset: 3px;
 }
 
-/* landing: dyskretny rząd po prawej w fixed stopce */
+/* landing: wiersz linków prawnych wycentrowany pod „Dwa salony”, na samym dole */
 .landing-footer {
   flex-wrap: wrap;
 }
 
 .landing-footer .ft-legal {
-  flex-basis: 50%;
-  margin-left: 50%;
-  padding-left: 24px;
-  justify-content: flex-end;
-  gap: 0.3rem 1rem;
-  margin-top: 1.6rem;
+  flex-basis: 100%;
+  justify-content: center;
+  gap: 0.3rem 1.25rem;
+  margin-top: 1.7rem;
   font-size: 10px;
 }
 
-@media (max-width: 1024px) {
+/* stopka ma pointer-events: none (żeby nie blokować hover połówek) —
+   same linki muszą być klikalne */
+.landing-footer .ft-legal a {
+  pointer-events: auto;
+}
+
+/* dopóki baner cookies (lewy dolny róg, 520px) jest otwarty — wiersz linków
+   centruje się w wolnej przestrzeni na prawo od banera, potem wraca na środek */
+@media (min-width: 1025px) {
   .landing-footer .ft-legal {
-    flex-basis: 100%;
-    margin-left: 0;
-    padding-left: 0;
+    transition: padding-left 0.5s ease;
+  }
+
+  body:has(.cookie-banner.is-open) .landing-footer .ft-legal {
+    padding-left: 568px;
   }
 }
 
@@ -1219,6 +1227,76 @@ em, i {
   .landing-footer .ft-legal a:not([href="cookies.html"]):not([href="ochrona-danych.html"]) {
     display: none;
   }
+}
+
+/* ----- Bogaty tekst z CMS (kind=html): śródtytuły, podtytuły, listy ------- */
+
+.cms-rich > * {
+  margin: 0 0 1rem;
+}
+
+.cms-rich > :last-child {
+  margin-bottom: 0;
+}
+
+.cms-rich > p,
+.cms-rich > ul,
+.cms-rich > ol {
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: rgba(0, 0, 0, 0.78);
+  max-width: 62ch;
+}
+
+.cms-rich > h3 {
+  font-family: var(--font-head-s);
+  font-weight: 400;
+  font-size: clamp(1.45rem, 2vw, 1.9rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: #000;
+  margin: 2rem 0 0.65rem;
+  max-width: 32ch;
+}
+
+.cms-rich > h3:first-child {
+  margin-top: 0;
+}
+
+.cms-rich > h4 {
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.55);
+  margin: -0.25rem 0 0.9rem;
+}
+
+.cms-rich > ul,
+.cms-rich > ol {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.cms-rich > ul > li,
+.cms-rich > ol > li {
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.cms-rich > ul > li::before,
+.cms-rich > ol > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.66em;
+  width: 8px;
+  height: 1px;
+  background: currentColor;
 }
 
 /* ----- Baner cookies ------------------------------------------------------ */

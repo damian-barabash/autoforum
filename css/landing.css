@@ -240,7 +240,7 @@
 
 .landing-footer {
   position: fixed;
-  bottom: 28px;
+  bottom: 20px;
   left: 0;
   right: 0;
   z-index: 30;
@@ -252,7 +252,10 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   pointer-events: none;
-  color: rgba(0, 0, 0, 0.55);
+  /* difference-blend: ten sam kolor czyta się na czarnej i białej połowie
+     (wiersz linków prawnych biegnie przez środek, ponad obiema połowami) */
+  color: rgba(255, 255, 255, 0.72);
+  mix-blend-mode: difference;
 }
 
 .landing-footer .ft-center {
@@ -262,15 +265,9 @@
   transition: left 0.9s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-/* "Dwa salony" — białe nad czarną lewą połową, czarne gdy lewa podświetlona;
-   "· jedna pasja" zostaje w domyślnym kolorze stopki */
+/* "Dwa salony" — pełna biel; blend „difference” sam odwraca ją na białej połowie */
 .landing-footer .ft-lead {
   color: #fff;
-  transition: color 0.5s ease;
-}
-
-.landing:has(.half--mb:hover) .ft-lead {
-  color: #000;
 }
 
 .landing:has(.half--mb:hover) .ft-center {

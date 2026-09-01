@@ -166,9 +166,11 @@
 
 .mh-standin__img {
   width: 100%;
-  height: clamp(560px, 82vh, 920px);
+  /* zdjęcie atelier 1500×560 (2.68:1) — naturalna proporcja na desktopie,
+     min. 360px na mobile (kadr środkowy: logo + „Welcome to Beyond”) */
+  height: clamp(360px, 37.33vw, 82vh);
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center;
   display: block;
 }
 
